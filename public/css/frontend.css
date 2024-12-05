@@ -1,0 +1,410 @@
+.lucky_numbers {
+    width: 80%;
+    margin: auto;
+    margin-top: 1rem;
+}
+
+.lucky_numbers .main_title {
+    font-size: 5rem;
+    text-align: center;
+    font-family: sans-serif;
+    font-weight: 600;
+    color: #646464;
+    text-shadow: 7px 4px 4px #d3d3d3;
+    margin-bottom: 3rem;
+}
+
+.lucky_numbers .sub_title {
+    font-size: 2rem;
+    text-align: center;
+    font-family: sans-serif;
+    color: #646464;
+}
+
+.lucky_numbers .item_container {
+    padding: 1rem;
+    border: 0.01rem solid #cdcdcd;
+    border-radius: 1rem;
+    box-shadow: inset 2px 1px 5px #b3b3b3;
+}
+
+.lucky_numbers .item {
+    box-shadow: inset 1px 1px 4px #8d8d8d;
+    border-radius: 0.3rem;
+    aspect-ratio: 2 / 1;
+    text-align: center;
+    font-size: 5rem;
+    color: #8d8d8d;
+    /* color: #f16868; */
+    font-weight: 700;
+}
+
+.lucky_numbers .item.active {
+    background-color: #f16868;
+    color: #fff;
+}
+
+.lucky_numbers .header .logo {
+  width: 10rem;
+}
+.custom_button {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: inset 1px 1px 8px #6a6a6a;
+}
+
+.custom_button .icon {
+  width: 6rem;
+  height: 5rem;
+  display: block;
+  margin: auto;
+  box-shadow: 1px 1px 3px #6e6e6e;
+  border-radius: 0.5rem;
+}
+
+.custom_button:hover {
+    background-color: #f1aa68;
+    color: #fff;
+}
+
+.custom_button:focus {
+  outline: none !important;
+  border-color: #f16868;
+}
+
+.list-group .list-group-item {
+    font-size: 1.5rem;
+    text-shadow: none;
+    font-weight: 500;
+    color: #6a6a6a;
+    display: flex;
+}
+
+.list-group .list-group-item i {
+  font-size: 3rem;
+  color: #ffb555;
+  margin: 0 1rem;
+}
+
+.list-group .list-group-item .emphasize {
+    color: #f16868;
+    font-weight: 600;
+}
+
+.full_modal_dialog {
+    max-width: 90% !important;
+    height: 80vh;
+}
+
+#winner {
+    font-size: 5rem;
+    font-weight: 800;
+    color: #ff9626;
+}
+
+/* background animation */
+@keyframes backgroundColorPalette {
+  0% {
+    background: #ffc3c3;
+    color: #fff;
+  }
+  10% {
+    background: #ffffff;
+    color: #fff;
+  }
+  20% {
+    background: #ffc3c3;
+    color: #fff;
+  }
+  30% {
+    background: #ffffff;
+    color: #fff;
+  }
+  40% {
+    background: #ffc3c3;
+    color: #fff;
+  }
+  50% {
+    background: #ffffff;
+    color: #fff;
+  }
+  60% {
+    background: #ffc3c3;
+    color: #fff;
+  }
+  70% {
+    background: #ffffff;
+    color: #fff;
+  }
+  80% {
+    background: #ffc3c3;
+    color: #fff;
+  }
+  90% {
+    background: #ffffff;
+    color: #fff;
+  }  
+  100% {
+    background: #ffc3c3;
+    color: #fff;
+  }
+}
+
+.backgroundAnimated{    
+  animation-name: backgroundColorPalette;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+/* end background animation */
+
+/* swing image */
+.swing {
+  animation: swing ease-in-out 1s infinite alternate;
+  transform-origin: center -20px;
+  float:left;
+  box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+}
+.swing img {
+  border: 5px solid #f8f8f8;
+  display: block;
+}
+.swing:after{
+  content: '';
+  position: absolute;  
+  width: 20px; height: 20px;  
+  border: 1px solid #999;
+  top: -10px; left: 50%;
+  z-index: 0;
+  border-bottom: none;
+  border-right: none;
+  transform: rotate(45deg);
+}
+/* nail */
+.swing:before{
+  content: '';
+  position: absolute;
+  width: 5px; height: 5px;
+  top: -14px;left: 54%;
+  z-index: 5;
+  border-radius: 50% 50%;
+  background: #000;
+}
+
+@keyframes swing {
+  0% { transform: rotate(3deg); }
+  100% { transform: rotate(-3deg); }
+}
+/* end swing image */
+
+/* CHUC MUNG */
+@keyframes confetti-slow {
+    0% { transform: translate3d(0, 0, 0) rotateX(0) rotateY(0); }
+    
+    100% { transform: translate3d(25px, 105vh, 0) rotateX(360deg) rotateY(180deg); }
+  }
+  
+  @keyframes confetti-medium {
+    0% { transform: translate3d(0, 0, 0) rotateX(0) rotateY(0); }
+    
+    100% { transform: translate3d(100px, 105vh, 0) rotateX(100deg) rotateY(360deg); }
+  }
+  
+  @keyframes confetti-fast {
+    0% { transform: translate3d(0, 0, 0) rotateX(0) rotateY(0); }
+    
+    100% { transform: translate3d(-50px, 105vh, 0) rotateX(10deg) rotateY(250deg); }
+  }
+  
+  .container {
+    width: 100vw;
+    height: 100vh;
+    background: #ffffff;
+    border:1px solid white;
+    display:fixed;
+    top:0px;
+  }
+  
+  .confetti-container {
+    perspective: 700px;
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  
+  .confetti {
+    position: absolute;
+    z-index: 1;
+    top: -10px;
+    border-radius: 0%;
+  
+    &--animation-slow {
+      animation: confetti-slow 2.25s linear 1 forwards;
+    }
+    
+    &--animation-medium {
+      animation: confetti-medium 1.75s linear 1 forwards;
+    }
+    
+    &--animation-fast {
+      animation: confetti-fast 1.25s linear 1 forwards;
+    }
+  }
+  
+  
+  
+  
+  
+  /* Checkmark */
+  .checkmark-circle {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .checkmark-circle .background {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: #00C09D;
+    position: absolute;
+  }
+  .checkmark-circle .checkmark {
+    border-radius: 5px;
+  }
+  .checkmark-circle .checkmark.draw:after {
+    -webkit-animation-delay: 100ms;
+    -moz-animation-delay: 100ms;
+    animation-delay: 100ms;
+    -webkit-animation-duration: 3s;
+    -moz-animation-duration: 3s;
+    animation-duration: 3s;
+    -webkit-animation-timing-function: ease;
+    -moz-animation-timing-function: ease;
+    animation-timing-function: ease;
+    -webkit-animation-name: checkmark;
+    -moz-animation-name: checkmark;
+    animation-name: checkmark;
+    -webkit-transform: scaleX(-1) rotate(135deg);
+    -moz-transform: scaleX(-1) rotate(135deg);
+    -ms-transform: scaleX(-1) rotate(135deg);
+    -o-transform: scaleX(-1) rotate(135deg);
+    transform: scaleX(-1) rotate(135deg);
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+  }
+  .checkmark-circle .checkmark:after {
+    opacity: 1;
+    height: 75px;
+    width: 37.5px;
+    -webkit-transform-origin: left top;
+    -moz-transform-origin: left top;
+    -ms-transform-origin: left top;
+    -o-transform-origin: left top;
+    transform-origin: left top;
+    border-right: 15px solid white;
+    border-top: 15px solid white;
+    border-radius: 2.5px !important;
+    content: '';
+    left: 25px;
+    top: 75px;
+    position: absolute;
+  }
+  
+  @-webkit-keyframes checkmark {
+    0% {
+      height: 0;
+      width: 0;
+      opacity: 1;
+    }
+    20% {
+      height: 0;
+      width: 37.5px;
+      opacity: 1;
+    }
+    40% {
+      height: 75px;
+      width: 37.5px;
+      opacity: 1;
+    }
+    100% {
+      height: 75px;
+      width: 37.5px;
+      opacity: 1;
+    }
+  }
+  @-moz-keyframes checkmark {
+    0% {
+      height: 0;
+      width: 0;
+      opacity: 1;
+    }
+    20% {
+      height: 0;
+      width: 37.5px;
+      opacity: 1;
+    }
+    40% {
+      height: 75px;
+      width: 37.5px;
+      opacity: 1;
+    }
+    100% {
+      height: 75px;
+      width: 37.5px;
+      opacity: 1;
+    }
+  }
+  @keyframes checkmark {
+    0% {
+      height: 0;
+      width: 0;
+      opacity: 1;
+    }
+    20% {
+      height: 0;
+      width: 37.5px;
+      opacity: 1;
+    }
+    40% {
+      height: 75px;
+      width: 37.5px;
+      opacity: 1;
+    }
+    100% {
+      height: 75px;
+      width: 37.5px;
+      opacity: 1;
+    }
+  }
+  
+  
+  
+  .submit-btn {
+      height: 45px;
+      width: 200px;
+      font-size: 15px;
+      background-color: #00c09d;
+      border: 1px solid #00ab8c;
+      color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px 0 rgba(87,71,81,.2);
+      cursor: pointer;
+      transition: all 2s ease-out;
+      transition: all .2s ease-out;
+  }
+  
+  .submit-btn:hover {
+      background-color: #2ca893;
+      transition: all .2s ease-out;
+  }
+
