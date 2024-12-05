@@ -1,6 +1,7 @@
 //Some parameters
 var audio = document.getElementById("bg-sound");
-
+var audio_url = $('#audio_url').val();
+var audio = new Audio(audio_url);
 var results = "";
 
 var number = 1;
@@ -11,7 +12,8 @@ $(document).ready(function() {
     var winner = '12345';
     var winner_arr = winner.split('');
     $("#start").click(function() { 
-        document.body.classList.add("backgroundAnimated");       
+        document.body.classList.add("backgroundAnimated");     
+        audio.play();  
         $('#start').hide();
         startRandom(1, duration_setting - duration_device * 4, winner_arr);
         startRandom(2, duration_setting - duration_device * 3, winner_arr);
@@ -43,7 +45,10 @@ function startRandom(number, duration_setting, winner_arr = []) {
                     var winner = '';
                     for (let i = 1; i <= 5; i++) {
                         winner = winner + $('#number_' + i).text();
-                    }                    
+                    }              
+                        
+                    audio.pause();
+                    audio.currentTime = 0;     
                     document.body.classList.remove("backgroundAnimated");
                     $('#winner').html(winner);
                     $('#resultModel').modal('show'); 

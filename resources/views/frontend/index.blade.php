@@ -11,7 +11,8 @@
         <script src="{{asset('public/libs/bootstrap/js/bootstrap.min.js')}}"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </head>
-    <body>         
+    <body>   
+        <input type="hidden" id="audio_url" value="{{asset('public/audio/amthanhnen.mp3')}}" />
         <div class="background">
             <img class="top_background" src='{{asset("public/images/top_background.png")}}' />
         </div>   
