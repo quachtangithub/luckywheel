@@ -14,3 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'App\\Http\\Controllers\\IndexController@index')->name('/');
+Route::get('/login', 'App\\Http\\Controllers\\AdminController@login')->name('login');
+Route::post('/login', 'App\\Http\\Controllers\\AdminController@loginAdmin')->name('login');
+
+
+Route::get('/admin', 'App\\Http\\Controllers\\IndexController@index')->name('admin');
