@@ -1,20 +1,22 @@
 .lucky_numbers {
-    width: 80%;
+    width: 60%;
     margin: auto;
     margin-top: 1rem;
+    z-index: 1;
+    position: relative;
 }
 
 .lucky_numbers .main_title {
-    font-size: 5rem;
+  font-size: 3rem;
     text-align: center;
     font-family: sans-serif;
     font-weight: 600;
     color: #646464;
-    text-shadow: 7px 4px 4px #d3d3d3;
-    margin-bottom: 3rem;
+    text-shadow: 3px 0px 4px #a3a3a3c7;
+    line-height: 2rem;
 }
 
-.lucky_numbers .sub_title {
+.sub_title {
     font-size: 2rem;
     text-align: center;
     font-family: sans-serif;
@@ -22,29 +24,36 @@
 }
 
 .lucky_numbers .item_container {
-    padding: 1rem;
-    border: 0.01rem solid #cdcdcd;
-    border-radius: 1rem;
-    box-shadow: inset 2px 1px 5px #b3b3b3;
+  padding: 0 0.4rem;
+  margin: auto;
+  width: 80%;
+  border: 0.01rem solid #cdcdcd;
+  border-radius: 1rem;
+  box-shadow: inset 2px 1px 5px #b3b3b3;
 }
 
 .lucky_numbers .item {
-    box-shadow: inset 1px 1px 4px #8d8d8d;
-    border-radius: 0.3rem;
-    aspect-ratio: 2 / 1;
-    text-align: center;
-    font-size: 5rem;
-    color: #8d8d8d;
-    /* color: #f16868; */
-    font-weight: 700;
+  box-shadow: inset 1px 1px 4px #8d8d8d;
+  border-radius: 0.3rem;
+  aspect-ratio: 2 / 1;
+  text-align: center;
+  font-size: 4rem;
+  color: #8d8d8d;
+  /* color: #f16868; */
+  font-weight: 700;
 }
 
 .lucky_numbers .item.active {
     background-color: #f16868;
     color: #fff;
 }
-
-.lucky_numbers .header .logo {
+.header {
+  text-align: center;
+  margin-top: -18rem;
+  z-index: 1;
+  position: relative;
+}
+.header .logo {
   width: 10rem;
 }
 .custom_button {
@@ -56,7 +65,7 @@
 }
 
 .custom_button .icon {
-  width: 6rem;
+  width: 5rem;
   height: 5rem;
   display: block;
   margin: auto;
@@ -74,16 +83,24 @@
   border-color: #f16868;
 }
 
+.list-group {
+  width: 95%;
+  margin: auto;
+}
+
 .list-group .list-group-item {
-    font-size: 1.2rem;
+  font-size: 1rem;
     text-shadow: none;
     font-weight: 500;
     color: #6a6a6a;
-    display: flex;
+    padding: 0.5rem;
+    text-align: center;
+    border-radius: 0.5rem !important;
+    border: 0.1rem solid #ff6252;
 }
 
 .list-group .list-group-item i {
-  font-size: 3rem;
+  font-size: 2rem;
   color: #ffb555;
   margin: 0 1rem;
 }
@@ -104,6 +121,16 @@
     color: #ff9626;
 }
 
+.lion_img {
+  width: 9rem;
+  margin-bottom: -12rem;
+  z-index: 1;
+  position: relative;
+}
+
+.item_div {
+  padding: 0.8rem 0.4rem !important;
+}
 /* background animation */
 @keyframes backgroundColorPalette {
   0% {
@@ -412,3 +439,133 @@
       transition: all .2s ease-out;
   }
 
+  .background {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    z-index: 0;
+    position: relative;
+  }
+
+  .top_background {
+    width: 100%;
+    top: -3rem;
+    position: relative;
+  }
+
+  .left_background {
+    position: fixed;
+    z-index: -5;
+    right: -24rem;
+    top: -10px;
+    opacity: 0.5;
+  }
+
+  .left_background img {
+    width: 48rem;
+    animation: animName 20s linear infinite;
+  }
+
+  @keyframes animName {
+    0%{
+       transform: rotate(0deg);
+      }
+   100%{
+       transform: rotate(360deg);
+      }
+   }
+
+@media only screen and (max-width : 1200px) {
+  .header {
+    margin-top: -15rem;
+  }
+
+  .top_background {
+    top: -2rem;
+  }
+}
+
+@media only screen and (max-width : 991px) {
+  .top_background {
+    top: -2rem;
+  }
+
+  .lucky_numbers {
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  .item_container {
+    margin: 0 3rem;
+  }
+
+  .lion_img {
+    width: 7rem;
+    margin-bottom: -18rem;
+    margin-left: -1rem;
+    z-index: 1;
+    position: relative;
+  }
+
+  .header {
+    text-align: center;
+    margin-top: -12rem;
+    z-index: 1;
+    position: relative;
+  }
+}
+
+@media only screen and (max-width : 768px) {
+  .custom_button .icon {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .top_background {
+    top: -1rem;
+  }
+
+  .header {
+    text-align: center;
+    margin-top: -9rem;
+    z-index: 1;
+    position: relative;
+  }
+
+  .header .logo {
+    width: 6rem;
+  }
+}
+
+@media only screen and (max-width : 576px) {
+  .header {
+    text-align: center;
+    margin-top: -6rem;
+    z-index: 1;
+    position: relative;
+  }
+
+  .lucky_numbers .main_title {
+    font-size: 2rem;
+    text-align: center;
+    font-family: sans-serif;
+    font-weight: 600;
+    color: #646464;
+    text-shadow: 7px 4px 4px #d3d3d3;
+    line-height: 2rem;
+  }
+
+  .item_div {
+    width: fit-content !important;
+    padding: 0.3rem !important;
+  }
+
+  .lucky_numbers .item {
+    width: 3rem;
+    font-size: 2rem;
+  }
+
+  .lucky_numbers .item_container {
+    display: flex;
+  }
+}

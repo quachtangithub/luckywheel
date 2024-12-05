@@ -11,63 +11,95 @@
         <script src="{{asset('public/libs/bootstrap/js/bootstrap.min.js')}}"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </head>
-    <body>
+    <body>         
+        <div class="background">
+            <img class="top_background" src='{{asset("public/images/top_background.png")}}' />
+        </div>   
+        <div class="header">
+            <img class="logo" src='{{asset("public/images/logo.png")}}' />
+        </div>
+        <div class="left_background">
+            <img src='{{asset("public/images/left_background.png")}}' />
+        </div>
         <div class="lucky_numbers">
-            <div class="header">
-                <img class="logo" src='{{asset("public/images/logo.png")}}' />
-            </div>
-            <div class="main_title">VÒNG QUAY THIỆN ÁC</div>
+            <div class="main_title">VÒNG QUAY MAY MẮN</div>
             <div class="row">
-                <div class="col-md-8">
-                    <div id="myBar"></div>
+                <div class="col-md-12">
+                    <div id="myBar">
+                        
+                    </div>
+                    <img class="lion_img" src='{{asset("public/images/lion_background.png")}}' />
                     <div class="row item_container">
-                        <div class="col-md-2">
+                        <div class="col-md-2 col-sm-2 item_div">
                             <div class="item" id="number_1">0</div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2 col-sm-2 item_div">
                             <div class="item" id="number_2">0</div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2 col-sm-2 item_div">
                             <div class="item" id="number_3">0</div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2 col-sm-2 item_div">
                             <div class="item" id="number_4">0</div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2 col-sm-2 item_div">
                             <div class="item" id="number_5">0</div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2 col-sm-2 item_div">
                             <button class="custom_button" id="start" autofocus>
                                 <img class="icon" src='{{asset("public/images/play_icon.png")}}' />
                             </button>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <!-- <div class="col-md-12">
                         <figure class="swing">
                             <img src='{{asset("public/images/pham_long_khanh.png")}}' width="200" >
                         </figure>  
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <ul class="list-group">
-                        <li class="list-group-item text-center">
-                            <div class="sub_title">KẾT QUẢ GIẢI THƯỞNG</div>
-                        </li>
-                        <li class="list-group-item">
-                            <i class="fa-solid fa-award"></i>
-                            <p>giải 1: thuốc cúc dịch - <span class="emphasize">Hồ Quốc Tuấn</span></p>
-                        </li>
-                        <li class="list-group-item">
-                            <i class="fa-solid fa-award"></i>
-                            <p>giải 2: thuốc ngừa - <span class="emphasize">Phạm Long Khánh</span></p>
-                        </li>
-                        <li class="list-group-item">
-                            <i class="fa-solid fa-award"></i>
-                            <p>giải 3: thuốc ngừa thai - <span class="emphasize">Khách mời</span></p>
-                        </li>
-                    </ul>
+                    </div> -->
                 </div>
             </div>            
+        </div>
+        
+        <div class="list-group">
+            <div class="sub_title">KẾT QUẢ GIẢI THƯỞNG</div>
+            <div class="row">
+                <div class="col-md-2 col-sm-3">
+                    <div class="list-group-item">
+                        <i class="fa-solid fa-award"></i>
+                        <p>giải 1: thuốc cúc dịch - <span class="emphasize">Hồ Quốc Tuấn</span></p>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-3">
+                    <div class="list-group-item">
+                        <i class="fa-solid fa-award"></i>
+                        <p>giải 1: thuốc cúc dịch - <span class="emphasize">Hồ Quốc Tuấn</span></p>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-3">
+                    <div class="list-group-item">
+                        <i class="fa-solid fa-award"></i>
+                        <p>giải 1: thuốc cúc dịch - <span class="emphasize">Hồ Quốc Tuấn</span></p>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-3">
+                    <div class="list-group-item">
+                        <i class="fa-solid fa-award"></i>
+                        <p>giải 1: thuốc cúc dịch - <span class="emphasize">Hồ Quốc Tuấn</span></p>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-3">
+                    <div class="list-group-item">
+                        <i class="fa-solid fa-award"></i>
+                        <p>giải 1: thuốc cúc dịch - <span class="emphasize">Hồ Quốc Tuấn</span></p>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-3">
+                    <div class="list-group-item">
+                        <i class="fa-solid fa-award"></i>
+                        <p>giải 1: thuốc cúc dịch - <span class="emphasize">Hồ Quốc Tuấn</span></p>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="modal fade" id="resultModel" tabindex="-1" role="dialog" 
             aria-labelledby="resultModelLabel" aria-hidden="true">
