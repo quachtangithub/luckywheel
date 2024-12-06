@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 
 use App\Models\DanhSachGiaiThuong;
+use App\Models\DanhSachNguoiDung;
 
 class AdminController extends Controller
 {
@@ -36,10 +37,62 @@ class AdminController extends Controller
     public function updateWinner (Request $request) {
         $giaithuong_obj = DanhSachGiaiThuong::find($request->ma_giai_thuong);
         if ($giaithuong_obj !=  null) {
+            $ten_nguoi_nhan_giai = $giaithuong_obj->ten_nguoi_nhan_giai;
+            if ($giaithuong_obj->ma_so_nhan_giai != '' && $ten_nguoi_nhan_giai == '') {
+                // neu có mã mà không có tên
+                $dsnguoidung_obj = DanhSachNguoiDung::where('ma_nguoi_dung', $giaithuong_obj->ma_so_nhan_giai)->first();
+                if ($dsnguoidung_obj !=  null) {
+                    $ten_nguoi_nhan_giai = $dsnguoidung_obj->ten_nguoi_dung;
+                }
+            } 
             $giaithuong_obj->ma_so_nhan_giai = $request->ma_so_nhan_giai;
-            $giaithuong_obj->ten_nguoi_nhan_giai = 'HỒ QUỐC TUẤN';
+            $giaithuong_obj->ten_nguoi_nhan_giai = $ten_nguoi_nhan_giai;
+            $giaithuong_obj->da_nhan_giai = 1;
             $giaithuong_obj->update();
             return view('frontend.congratulation')->with('giaithuong_obj', $giaithuong_obj)->render();
         }
+    }
+
+    public function index () {
+        $giaithuong_obj = DanhSachGiaiThuong::orderBy('so_thu_tu', 'asc')->get();
+        return view('backend.index')->with('giaithuong_obj', $giaithuong_obj);
+    }
+
+    public function updatePrize (Request $request) {
+        $request->validate([
+            'noi_dung'=>'required',
+            'so_thu_tu' => 'numeric|min:0'
+        ], [
+            'noi_dung.required' => 'Bắt buộc nhập tên giải',
+            'so_thu_tu.numberic' => 'Số thứ tự phải là số',
+            'so_thu_tu.min' => 'Số thứ tự phải lớn hơn 0'
+        ]);
+
+        if ($request->ma_giai_thuong == '') {
+            // them moi
+            $request_data = $request->except('ma_giai_thuong');
+            $giaithuong_obj = DanhSachGiaiThuong::create($request_data);
+            return redirect()->route('admin')->with('success', 'Thêm mới thành công ' . $giaithuong_obj->noi_dung);
+        } else {
+            // cap nhat
+            $giaithuong_obj = DanhSachGiaiThuong::find($request->ma_giai_thuong);
+            $giaithuong_obj->noi_dung = $request->noi_dung;
+            $giaithuong_obj->so_thu_tu = $request->so_thu_tu;
+            $giaithuong_obj->ma_so_nhan_giai = $request->ma_so_nhan_giai;
+            $giaithuong_obj->ten_nguoi_nhan_giai = $request->ten_nguoi_nhan_giai;
+            $giaithuong_obj->save();
+            return redirect()->route('admin')->with('success', 'Cập nhật thành công ' . $giaithuong_obj->noi_dung);
+        }
+    }
+
+    public function getConfigWinner(Request $request) {
+        $giaithuong_obj = DanhSachGiaiThuong::find($request->mgt);
+        if ($giaithuong_obj != null) {
+            if ($giaithuong_obj->ma_so_nhan_giai != '') {
+                return response()->json(['success'=> 'Lấy dữ liệu thành công', 'ma_so_nhan_giai' => $giaithuong_obj->ma_so_nhan_giai,
+                'thoi_gian_cho' => $giaithuong_obj->thoi_gian_cho]);
+            }
+        }
+        return response()->json(['success'=> 'Lấy dữ liệu thành công', 'ma_so_nhan_giai' => '00000', 'thoi_gian_cho' => 5]);
     }
 }

@@ -25,3 +25,73 @@ a{
     border-radius: 3rem;
     margin-top: 3rem;
 }
+
+/* backend */
+.backend_container {
+    z-index: 1;
+    position: relative;
+}
+
+.backend_container .header {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding: 1rem;
+}
+
+.backend_container .header .item {
+    background-color: #961f3b;
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 1px 1px 8px #000000;
+    font-size: 1.5rem;
+}
+
+.backend_container .header .item .inside_item {
+    border: 0.01rem solid #fff;
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+.backend_container .header .item .inside_item.active {
+    border: 0.01rem solid #fff;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background-color: #fff;
+    color:#961f3b;
+}
+
+.background-image {
+    position: absolute;
+    z-index: 0;
+}
+
+.content .item {
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 0.3rem;
+    box-shadow: inset -1px 3px 5px #919191;
+    margin: 0.3rem;
+}
+
+.content .item.active {
+    background-color: #9e848a;
+}
+
+.content .item.active input[name="ma_so_nhan_giai"], .content .item.active input[name="ten_nguoi_nhan_giai"] {
+    background-color: #c0c0c0;
+    text-align: center;
+    color: #fff;
+}
+
+.content .item input {
+    margin-bottom: 0.3rem;
+}
+
+.content .item button {
+    width: 100%;
+    color: #961f3b;
+    font-size: 1.2rem;
+    font-weight: 600;
+}

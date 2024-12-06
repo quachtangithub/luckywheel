@@ -17,6 +17,7 @@
         <input type="hidden" id="audio_url" value="{{asset('public/audio/amthanhnen.mp3')}}" />  
         <input type="hidden" id="magiaithuong" value="" />
         <input type="hidden" id="update_winner_url" value="{{route('updatewinner')}}" />
+        <input type="hidden" id="config_winner_url" value="{{route('getconfigwinner')}}" />
         <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
         <div class="background">
             <img class="top_background" src='{{asset("public/images/top_background.png")}}' />
@@ -69,12 +70,12 @@
             <div class="sub_title">DANH SÁCH GIẢI THƯỞNG</div>
             <div class="row">
                 @foreach ($danhsachgiaithuong as $giaithuong)
-                <div class="col-md-2 col-sm-3" style="padding: 0.2rem;">
-                    <div class="list-group-item {{$giaithuong->ten_nguoi_nhan_giai != '' ? 'active' : ''}}" data-magiaithuong="{{$giaithuong->ma_giai_thuong ?? ''}}" 
+                <div class="col-md-2 col-sm-3" style="padding: 0.2rem; min-height: 6rem;">
+                    <div class="list-group-item {{$giaithuong->da_nhan_giai == 1 ? 'active' : ''}}" data-magiaithuong="{{$giaithuong->ma_giai_thuong ?? ''}}" 
                         data-tengiaithuong="{{$giaithuong->noi_dung ?? ''}}">
                         <!-- <i class="fa-solid fa-award"></i> -->
                         <p class="prize">{{$giaithuong->noi_dung ?? ''}}</p>
-                        @if ($giaithuong->ten_nguoi_nhan_giai != '') 
+                        @if ($giaithuong->ten_nguoi_nhan_giai != '' && $giaithuong->da_nhan_giai == 1) 
                             <span class="emphasize">{{$giaithuong->ten_nguoi_nhan_giai ?? ''}}</span>
                         @endif
                     </div>

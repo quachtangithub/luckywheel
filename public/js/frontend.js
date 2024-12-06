@@ -5,23 +5,12 @@ var audio = new Audio(audio_url);
 var results = "";
 
 var number = 1;
-$(document).ready(function() {
-    var duration_setting = 10;
-    var duration_device = duration_setting / 5;
-    duration_device = duration_device.toFixed();
-    var winner = '12345';
-    var winner_arr = winner.split('');
+$(document).ready(function() {  
     $("#start").click(function() { 
         document.body.classList.add("backgroundAnimated");     
         audio.play();  
-        $('#start').hide();        
-        var started = new Date().getTime();
-        startRandom(1, started, duration_setting - duration_device * 4, winner_arr);
-        startRandom(2, started, duration_setting - duration_device * 3, winner_arr);
-        startRandom(3, started, duration_setting - duration_device * 2, winner_arr);
-        startRandom(4, started, duration_setting - duration_device, winner_arr);
-        startRandom(5, started, duration_setting, winner_arr);
-        // startRandom(6, started, duration_setting);
+        $('#start').hide();
+        getConfigWinner();
     });
 
     $('.list-group-item').on('click', function () {
@@ -29,9 +18,41 @@ $(document).ready(function() {
         var tengiaithuong = $(this).data('tengiaithuong');
         $('#tengiaithuong').html(tengiaithuong);
         $('#magiaithuong').val(magiaithuong);
+        $('.lucky_numbers').show();
         $('#start').show();
     });
 });
+
+function getConfigWinner () {
+    var magiaithuong = $('#magiaithuong').val();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    var url = $('#config_winner_url').val() + '?mgt=' + magiaithuong;
+    $.ajax({
+        // dataType: 'json',
+        url: url,
+        type: 'GET',
+        contentType: false,
+        processData: false,
+        success: function(result){            
+            var duration_setting = result.thoi_gian_cho;
+            var duration_device = duration_setting / 5;
+            duration_device = duration_device.toFixed();  
+            var started = new Date().getTime();
+            var winner = result.ma_so_nhan_giai;
+            var winner_arr = winner.split('');
+            startRandom(1, started, duration_setting - duration_device * 4, winner_arr);
+            startRandom(2, started, duration_setting - duration_device * 3, winner_arr);
+            startRandom(3, started, duration_setting - duration_device * 2, winner_arr);
+            startRandom(4, started, duration_setting - duration_device, winner_arr);
+            startRandom(5, started, duration_setting, winner_arr);
+            // startRandom(6, started, duration_setting);         
+        }
+    });
+}
 
 function startRandom(number, started, duration_setting, winner_arr = []) {
     var output = $('#number_' + number);

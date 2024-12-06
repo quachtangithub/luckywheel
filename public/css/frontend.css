@@ -1,9 +1,10 @@
 .lucky_numbers {
-    width: 60%;
+    width: 80%;
     margin: auto;
     margin-top: 1rem;
     z-index: 1;
     position: relative;
+    display: none;
 }
 
 .lucky_numbers .main_title {
@@ -17,16 +18,17 @@
 }
 
 .sub_title {
-    font-size: 2rem;
-    text-align: center;
-    font-family: sans-serif;
-    color: #646464;
+  font-size: 3rem;
+  text-align: center;
+  font-family: sans-serif;
+  color: #646464;
+  font-weight: 600;
 }
 
 .lucky_numbers .item_container {
   padding: 0 0.4rem;
   margin: auto;
-  width: 80%;
+  /* width: 80%; */
   border: 0.01rem solid #cdcdcd;
   border-radius: 1rem;
   box-shadow: inset 2px 1px 5px #b3b3b3;
@@ -35,16 +37,16 @@
 .lucky_numbers .item {
   box-shadow: inset 1px 1px 4px #8d8d8d;
   border-radius: 0.3rem;
-  aspect-ratio: 2 / 1;
+  aspect-ratio: 3 / 2;
   text-align: center;
-  font-size: 4rem;
+  font-size: 6rem;
   color: #8d8d8d;
   /* color: #f16868; */
   font-weight: 700;
 }
 
 .lucky_numbers .item.active {
-    background-color: #f16868;
+    background-color: #db0000;
     color: #fff;
 }
 .header {
@@ -79,8 +81,8 @@
 
 .prize {
   margin: 0 !important;
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-size: 1.8rem;
+  font-weight: 600;
   color: #767676;
   font-family: system-ui;
 }
@@ -163,10 +165,11 @@
 }
 
 .lion_img {
-  width: 9rem;
+  width: 14rem;
   margin-bottom: -12rem;
   z-index: 1;
   position: relative;
+  margin-left: -9rem;
 }
 
 .item_div {
