@@ -40,8 +40,8 @@ class AdminController extends Controller
             $ten_nguoi_nhan_giai = $giaithuong_obj->ten_nguoi_nhan_giai;
             if ($giaithuong_obj->ma_so_nhan_giai != '' && $ten_nguoi_nhan_giai == '') {
                 // neu có mã mà không có tên
-                $dsnguoidung_obj = DanhSachNguoiDung::where('ma_nguoi_dung', $giaithuong_obj->ma_so_nhan_giai)->first();
-                if ($dsnguoidung_obj !=  null) {
+                $dsnguoidung_obj = DanhSachNguoiDung::where('ma_nguoi_dung', $request->ma_so_nhan_giai)->first();
+                if ($dsnguoidung_obj != null) {
                     $ten_nguoi_nhan_giai = $dsnguoidung_obj->ten_nguoi_dung;
                 }
             } 
@@ -90,7 +90,14 @@ class AdminController extends Controller
         if ($giaithuong_obj != null) {
             if ($giaithuong_obj->ma_so_nhan_giai != '') {
                 return response()->json(['success'=> 'Lấy dữ liệu thành công', 'ma_so_nhan_giai' => $giaithuong_obj->ma_so_nhan_giai,
-                'thoi_gian_cho' => $giaithuong_obj->thoi_gian_cho]);
+                    'thoi_gian_cho' => $giaithuong_obj->thoi_gian_cho]);
+            } else {
+                // nếu chưa cấu hình thì lấy ngẫu nhiên
+                $dsnguoidung_obj = DanhSachNguoiDung::inRandomOrder()->first();
+                if ($dsnguoidung_obj != null) {
+                    return response()->json(['success'=> 'Lấy dữ liệu thành công', 'ma_so_nhan_giai' => $dsnguoidung_obj->ma_nguoi_dung,
+                        'thoi_gian_cho' => $giaithuong_obj->thoi_gian_cho]);
+                }
             }
         }
         return response()->json(['success'=> 'Lấy dữ liệu thành công', 'ma_so_nhan_giai' => '00000', 'thoi_gian_cho' => 5]);
