@@ -49,7 +49,7 @@
 }
 .header {
   text-align: center;
-  margin-top: -18rem;
+  margin-top: -23rem;
   z-index: 1;
   position: relative;
 }
@@ -69,8 +69,20 @@
   height: 5rem;
   display: block;
   margin: auto;
-  box-shadow: 1px 1px 3px #6e6e6e;
-  border-radius: 0.5rem;
+  /* box-shadow: 1px 1px 3px #6e6e6e; */
+  /* border-radius: 0.5rem; */
+}
+
+#start {
+  display: none;
+}
+
+.prize {
+  margin: 0 !important;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #767676;
+  font-family: system-ui;
 }
 
 .custom_button:hover {
@@ -86,6 +98,7 @@
 .list-group {
   width: 95%;
   margin: auto;
+  margin-top: 1rem;
 }
 
 .list-group .list-group-item {
@@ -97,6 +110,21 @@
     text-align: center;
     border-radius: 0.5rem !important;
     border: 0.1rem solid #ff6252;
+    cursor: pointer;
+    height: 100%;
+}
+
+.list-group .list-group-item.active {
+  background-color: #ffb555;
+}
+
+.list-group .list-group-item.active .prize{
+  color: #ffffff;
+}
+
+.list-group .list-group-item:hover {
+  background-color: #ffb555;
+  color: #6a6a6a;
 }
 
 .list-group .list-group-item i {
@@ -106,19 +134,32 @@
 }
 
 .list-group .list-group-item .emphasize {
-    color: #f16868;
-    font-weight: 600;
+  color: #ff0000;
+  font-weight: 800;
+  font-size: 1.8rem;
 }
 
 .full_modal_dialog {
-    max-width: 90% !important;
-    height: 80vh;
+    max-width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;    
+}
+
+.full_modal_dialog .modal-content {
+  border: none !important;
 }
 
 #winner {
     font-size: 5rem;
     font-weight: 800;
     color: #ff9626;
+}
+
+#winner_name {
+  font-size: 3rem;
+  font-weight: 500;
+  color: #dc3545;
 }
 
 .lion_img {
@@ -188,6 +229,9 @@
 /* end background animation */
 
 /* swing image */
+/* canvas{
+  background:#000;
+} */
 .swing {
   animation: swing ease-in-out 1s infinite alternate;
   transform-origin: center -20px;
@@ -293,15 +337,22 @@
   
   /* Checkmark */
   .checkmark-circle {
-    width: 150px;
-    height: 150px;
+    width: 15rem;
+    height: 15rem;
     position: relative;
     display: inline-block;
     vertical-align: top;
     margin-left: auto;
     margin-right: auto;
   }
-  .checkmark-circle .background {
+
+  .checkmark-circle img {
+    position: absolute;
+    width: 15rem;
+    left: 0;
+    top: 0;
+  }
+  /* .checkmark-circle .background {
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -349,7 +400,7 @@
     left: 25px;
     top: 75px;
     position: absolute;
-  }
+  } */
   
   @-webkit-keyframes checkmark {
     0% {
@@ -443,7 +494,7 @@
     width: 100%;
     margin: auto;
     text-align: center;
-    z-index: 0;
+    z-index: -1;
     position: relative;
   }
 
@@ -466,14 +517,16 @@
     animation: animName 20s linear infinite;
   }
 
-  @keyframes animName {
-    0%{
-       transform: rotate(0deg);
-      }
-   100%{
-       transform: rotate(360deg);
-      }
-   }
+@keyframes animName {
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
+
+
 
 @media only screen and (max-width : 1200px) {
   .header {
@@ -569,3 +622,17 @@
     display: flex;
   }
 }
+
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar {
+  width: 0;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+  background: #FF0000;
+}
+

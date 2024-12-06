@@ -9,10 +9,15 @@
         <link href="{{asset('public/libs/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
         <script src="{{asset('public/libs/jquery/jquery.min.js')}}"></script>
         <script src="{{asset('public/libs/bootstrap/js/bootstrap.min.js')}}"></script>
+        <script src="{{asset('public/libs/dat-gui/0.7.2/dat.gui.js')}}"></script>
+        <script src="{{asset('public/libs/animejs/3.2.0/anime.min.js')}}"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </head>
     <body>   
-        <input type="hidden" id="audio_url" value="{{asset('public/audio/amthanhnen.mp3')}}" />
+        <input type="hidden" id="audio_url" value="{{asset('public/audio/amthanhnen.mp3')}}" />  
+        <input type="hidden" id="magiaithuong" value="" />
+        <input type="hidden" id="update_winner_url" value="{{route('updatewinner')}}" />
+        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
         <div class="background">
             <img class="top_background" src='{{asset("public/images/top_background.png")}}' />
         </div>   
@@ -23,11 +28,10 @@
             <img src='{{asset("public/images/left_background.png")}}' />
         </div>
         <div class="lucky_numbers">
-            <div class="main_title">VÒNG QUAY MAY MẮN</div>
+            <div class="main_title" id="tengiaithuong">VÒNG QUAY MAY MẮN</div>
             <div class="row">
                 <div class="col-md-12">
-                    <div id="myBar">
-                        
+                    <div id="myBar">                        
                     </div>
                     <img class="lion_img" src='{{asset("public/images/lion_background.png")}}' />
                     <div class="row item_container">
@@ -62,61 +66,26 @@
         </div>
         
         <div class="list-group">
-            <div class="sub_title">KẾT QUẢ GIẢI THƯỞNG</div>
+            <div class="sub_title">DANH SÁCH GIẢI THƯỞNG</div>
             <div class="row">
-                <div class="col-md-2 col-sm-3">
-                    <div class="list-group-item">
-                        <i class="fa-solid fa-award"></i>
-                        <p>giải 1: thuốc cúc dịch - <span class="emphasize">Hồ Quốc Tuấn</span></p>
+                @foreach ($danhsachgiaithuong as $giaithuong)
+                <div class="col-md-2 col-sm-3" style="padding: 0.2rem;">
+                    <div class="list-group-item {{$giaithuong->ten_nguoi_nhan_giai != '' ? 'active' : ''}}" data-magiaithuong="{{$giaithuong->ma_giai_thuong ?? ''}}" 
+                        data-tengiaithuong="{{$giaithuong->noi_dung ?? ''}}">
+                        <!-- <i class="fa-solid fa-award"></i> -->
+                        <p class="prize">{{$giaithuong->noi_dung ?? ''}}</p>
+                        @if ($giaithuong->ten_nguoi_nhan_giai != '') 
+                            <span class="emphasize">{{$giaithuong->ten_nguoi_nhan_giai ?? ''}}</span>
+                        @endif
                     </div>
                 </div>
-                <div class="col-md-2 col-sm-3">
-                    <div class="list-group-item">
-                        <i class="fa-solid fa-award"></i>
-                        <p>giải 1: thuốc cúc dịch - <span class="emphasize">Hồ Quốc Tuấn</span></p>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-3">
-                    <div class="list-group-item">
-                        <i class="fa-solid fa-award"></i>
-                        <p>giải 1: thuốc cúc dịch - <span class="emphasize">Hồ Quốc Tuấn</span></p>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-3">
-                    <div class="list-group-item">
-                        <i class="fa-solid fa-award"></i>
-                        <p>giải 1: thuốc cúc dịch - <span class="emphasize">Hồ Quốc Tuấn</span></p>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-3">
-                    <div class="list-group-item">
-                        <i class="fa-solid fa-award"></i>
-                        <p>giải 1: thuốc cúc dịch - <span class="emphasize">Hồ Quốc Tuấn</span></p>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-3">
-                    <div class="list-group-item">
-                        <i class="fa-solid fa-award"></i>
-                        <p>giải 1: thuốc cúc dịch - <span class="emphasize">Hồ Quốc Tuấn</span></p>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
         <div class="modal fade" id="resultModel" tabindex="-1" role="dialog" 
             aria-labelledby="resultModelLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered full_modal_dialog" role="document">
-                <div class="modal-content">
-                    <div class="js-container container" style="top:0px !important;"></div>
-                    <div style="text-align:center;margin-top:30px;position:  fixed;width:100%;height:100%;top:0px;left:0px;">
-                        <div class="checkmark-circle">
-                            <div class="background"></div>
-                            <div class="checkmark draw"></div>
-                        </div>
-                        <h1>XIN CHÚC MỪNG!</h1>
-                        <p id="winner"></p>
-                        <a href="{{route('/')}}" class="btn submit-btn" type="submit">TIẾP TỤC</a>
-                    </div>  
-                </div>
+                <div id="congratulation"></div>
             </div>
         </div>
         <script src="{{asset('public/js/frontend.js')}}"></script>

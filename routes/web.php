@@ -19,3 +19,5 @@ Route::post('/login', 'App\\Http\\Controllers\\AdminController@loginAdmin')->nam
 
 
 Route::get('/admin', 'App\\Http\\Controllers\\IndexController@index')->name('admin');
+
+Route::post('/updatewinner', 'App\\Http\\Controllers\\AdminController@updateWinner')->name('updatewinner');

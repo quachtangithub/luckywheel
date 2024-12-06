@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 
+use App\Models\DanhSachGiaiThuong;
+
 class AdminController extends Controller
 {
     public function login () {
@@ -28,6 +30,16 @@ class AdminController extends Controller
             return redirect('admin');
         } else {
             return redirect()->back()->with('status', 'Email hoặc Password không chính xác');
+        }
+    }
+
+    public function updateWinner (Request $request) {
+        $giaithuong_obj = DanhSachGiaiThuong::find($request->ma_giai_thuong);
+        if ($giaithuong_obj !=  null) {
+            $giaithuong_obj->ma_so_nhan_giai = $request->ma_so_nhan_giai;
+            $giaithuong_obj->ten_nguoi_nhan_giai = 'HỒ QUỐC TUẤN';
+            $giaithuong_obj->update();
+            return view('frontend.congratulation')->with('giaithuong_obj', $giaithuong_obj)->render();
         }
     }
 }
