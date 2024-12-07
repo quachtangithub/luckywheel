@@ -30,6 +30,7 @@ a{
 .backend_container {
     z-index: 1;
     position: relative;
+    overflow-x: hidden;
 }
 
 .backend_container .header {
