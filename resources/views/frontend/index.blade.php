@@ -21,7 +21,7 @@
         <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
         <div class="background">
             <img class="top_background" src='{{asset("public/images/top_background.png")}}' />
-        </div>   
+        </div>
         <div class="header">
             <img class="logo" src='{{asset("public/images/logo.png")}}' />
         </div>
@@ -37,19 +37,19 @@
                     <img class="lion_img" src='{{asset("public/images/lion_background.png")}}' />
                     <div class="row item_container">
                         <div class="col-md-2 col-sm-2 item_div">
-                            <div class="item" id="number_1">0</div>
+                            <div class="item" id="number_1"></div>
                         </div>
                         <div class="col-md-2 col-sm-2 item_div">
-                            <div class="item" id="number_2">0</div>
+                            <div class="item" id="number_2"></div>
                         </div>
                         <div class="col-md-2 col-sm-2 item_div">
-                            <div class="item" id="number_3">0</div>
+                            <div class="item" id="number_3"></div>
                         </div>
                         <div class="col-md-2 col-sm-2 item_div">
-                            <div class="item" id="number_4">0</div>
+                            <div class="item" id="number_4"></div>
                         </div>
                         <div class="col-md-2 col-sm-2 item_div">
-                            <div class="item" id="number_5">0</div>
+                            <div class="item" id="number_5"></div>
                         </div>
                         <div class="col-md-2 col-sm-2 item_div">
                             <button class="custom_button" id="start" autofocus>
@@ -73,7 +73,9 @@
                 <div class="col-md-2 col-sm-3" style="padding: 0.2rem; min-height: 6rem;">
                     <div class="list-group-item {{$giaithuong->da_nhan_giai == 1 ? 'active' : ''}}" data-magiaithuong="{{$giaithuong->ma_giai_thuong ?? ''}}" 
                         data-tengiaithuong="{{$giaithuong->noi_dung ?? ''}}">
-                        <!-- <i class="fa-solid fa-award"></i> -->
+                        @if ($giaithuong->da_nhan_giai == 0)
+                            <i class="fa-solid fa-award"></i>
+                        @endif
                         <p class="prize">{{$giaithuong->noi_dung ?? ''}}</p>
                         @if ($giaithuong->ten_nguoi_nhan_giai != '' && $giaithuong->da_nhan_giai == 1) 
                             <span class="emphasize">{{$giaithuong->ten_nguoi_nhan_giai ?? ''}}</span>

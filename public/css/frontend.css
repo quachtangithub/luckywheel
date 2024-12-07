@@ -32,6 +32,7 @@
   border: 0.01rem solid #cdcdcd;
   border-radius: 1rem;
   box-shadow: inset 2px 1px 5px #b3b3b3;
+  background-color: #f31036;
 }
 
 .lucky_numbers .item {
@@ -40,9 +41,9 @@
   aspect-ratio: 3 / 2;
   text-align: center;
   font-size: 6rem;
-  color: #8d8d8d;
-  /* color: #f16868; */
+  color: #ffb555;
   font-weight: 700;
+  background-color: #ffffff;
 }
 
 .lucky_numbers .item.active {
@@ -51,7 +52,7 @@
 }
 .header {
   text-align: center;
-  margin-top: -23rem;
+  margin-top: -19rem;
   z-index: 1;
   position: relative;
 }
@@ -105,19 +106,21 @@
 
 .list-group .list-group-item {
   font-size: 1rem;
-    text-shadow: none;
-    font-weight: 500;
-    color: #6a6a6a;
-    padding: 0.5rem;
-    text-align: center;
-    border-radius: 0.5rem !important;
-    border: 0.1rem solid #ff6252;
-    cursor: pointer;
-    height: 100%;
+  text-shadow: none;
+  font-weight: 500;
+  color: #6a6a6a;
+  padding: 0.5rem;
+  text-align: center;
+  border-radius: 0.5rem !important;
+  border: 0.2rem solid #ffb555;
+  cursor: pointer;
+  height: 100%;
+  box-shadow: inset 1px 1px 5px #727272;
 }
 
 .list-group .list-group-item.active {
   background-color: #ffb555;
+  border: 0.2rem solid #ffb555;
 }
 
 .list-group .list-group-item.active .prize{
@@ -136,9 +139,14 @@
 }
 
 .list-group .list-group-item .emphasize {
-  color: #ff0000;
-  font-weight: 800;
-  font-size: 1.8rem;
+  color: #ffffff;
+  font-size: 1.5rem;
+  width: 100%;
+  display: block;
+  box-shadow: inset 1px 1px 3px #7a7a7a;
+  border-radius: 0.3rem;
+  background-color: #ff0000;
+  padding: 0.5rem;
 }
 
 .full_modal_dialog {
@@ -638,4 +646,35 @@ html {
 ::-webkit-scrollbar-thumb {
   background: #FF0000;
 }
-
+body, ::backdrop {
+  background: #fff;
+}
+#fullscreen-button {
+  position: absolute;
+  top: 1.3rem;
+  right: 1.5rem;
+  background: rgb(229 229 229);
+  border: 0;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  box-sizing: border-box;
+  transition: transform .3s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2000;
+}
+#fullscreen-button:hover {
+  transform: scale(1.125);
+}
+#fullscreen-button svg:nth-child(2) { 
+  display: none;
+}
+[fullscreen] #fullscreen-button svg:nth-child(1) {
+  display: none;
+}
+[fullscreen] #fullscreen-button svg:nth-child(2) {
+  display: inline-block;
+}

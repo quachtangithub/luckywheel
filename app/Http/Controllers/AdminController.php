@@ -38,7 +38,7 @@ class AdminController extends Controller
         $giaithuong_obj = DanhSachGiaiThuong::find($request->ma_giai_thuong);
         if ($giaithuong_obj !=  null) {
             $ten_nguoi_nhan_giai = $giaithuong_obj->ten_nguoi_nhan_giai;
-            if ($giaithuong_obj->ma_so_nhan_giai != '' && $ten_nguoi_nhan_giai == '') {
+            if ($request->ma_so_nhan_giai != '' && $ten_nguoi_nhan_giai == '') {
                 // neu có mã mà không có tên
                 $dsnguoidung_obj = DanhSachNguoiDung::where('ma_nguoi_dung', $request->ma_so_nhan_giai)->first();
                 if ($dsnguoidung_obj != null) {
@@ -80,6 +80,8 @@ class AdminController extends Controller
             $giaithuong_obj->so_thu_tu = $request->so_thu_tu;
             $giaithuong_obj->ma_so_nhan_giai = $request->ma_so_nhan_giai;
             $giaithuong_obj->ten_nguoi_nhan_giai = $request->ten_nguoi_nhan_giai;
+            $giaithuong_obj->da_nhan_giai = $request->da_nhan_giai;
+            $giaithuong_obj->thoi_gian_cho = $request->thoi_gian_cho;
             $giaithuong_obj->save();
             return redirect()->route('admin')->with('success', 'Cập nhật thành công ' . $giaithuong_obj->noi_dung);
         }
@@ -101,5 +103,35 @@ class AdminController extends Controller
             }
         }
         return response()->json(['success'=> 'Lấy dữ liệu thành công', 'ma_so_nhan_giai' => '00000', 'thoi_gian_cho' => 5]);
+    }
+
+    public function user () {        
+        $dsnguoidung_obj = DanhSachNguoiDung::orderBy('ma_nguoi_dung', 'asc')->get();
+        return view('backend.user')->with('dsnguoidung_obj', $dsnguoidung_obj);
+    }
+
+    public function updateUser (Request $request) {
+        $request->validate([
+            'ma_nguoi_dung'=> 'required|unique:danh_sach_nguoi_dung,ma_nguoi_dung,' . $request->id_nguoi_dung . ',id_nguoi_dung',
+            'ten_nguoi_dung' => 'required'
+        ], [
+            'ma_nguoi_dung.required' => 'Bắt buộc nhập mã',
+            'ma_nguoi_dung.unique' => 'Mã này đã tồn tại',
+            'ten_nguoi_dung.required' => 'Bắt buộc nhập tên'
+        ]);
+
+        if ($request->id_nguoi_dung == '') {
+            // them moi
+            $request_data = $request->except('id_nguoi_dung');
+            $dsnguoidung_obj = DanhSachNguoiDung::create($request_data);
+            return redirect()->route('user')->with('success', 'Thêm mới thành công ' . $dsnguoidung_obj->ma_nguoi_dung . ' - ' . $dsnguoidung_obj->ten_nguoi_dung);
+        } else {
+            // cap nhat
+            $dsnguoidung_obj = DanhSachNguoiDung::find($request->id_nguoi_dung);
+            $dsnguoidung_obj->ma_nguoi_dung = $request->ma_nguoi_dung;
+            $dsnguoidung_obj->ten_nguoi_dung = $request->ten_nguoi_dung;
+            $dsnguoidung_obj->save();
+            return redirect()->route('user')->with('success', 'Cập nhật thành công ' . $dsnguoidung_obj->ma_nguoi_dung . ' - ' . $dsnguoidung_obj->ten_nguoi_dung);
+        }
     }
 }

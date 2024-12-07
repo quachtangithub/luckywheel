@@ -19,6 +19,8 @@ Route::post('/login', 'App\\Http\\Controllers\\AdminController@loginAdmin')->nam
 
 
 Route::get('/admin', 'App\\Http\\Controllers\\AdminController@index')->name('admin');
+Route::get('/user', 'App\\Http\\Controllers\\AdminController@user')->name('user');
+Route::post('/user', 'App\\Http\\Controllers\\AdminController@updateUser')->name('user');
 Route::post('/updateprize', 'App\\Http\\Controllers\\AdminController@updatePrize')->name('updateprize');
 Route::post('/updatewinner', 'App\\Http\\Controllers\\AdminController@updateWinner')->name('updatewinner');
 Route::get('/getconfigwinner', 'App\\Http\\Controllers\\AdminController@getConfigWinner')->name('getconfigwinner');
