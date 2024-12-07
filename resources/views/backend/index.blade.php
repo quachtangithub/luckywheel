@@ -12,9 +12,9 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </head>
     <body>
-        <div class="background-image">
+        <!-- <div class="background-image">
             <img src='{{asset("public/images/backend_background.png")}}' />
-        </div>
+        </div> -->
         <div class="backend_container">
             <div class="header">
                 <div class="row">                    
