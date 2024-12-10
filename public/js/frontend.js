@@ -1,6 +1,6 @@
 //Some parameters
 var audio = document.getElementById("bg-sound");
-var audio_url = $('#audio_url').val();
+var audio_url = $('#audio_url1').val();
 var audio = new Audio(audio_url);
 var results = "";
 
@@ -49,7 +49,6 @@ $(document).ready(function() {
         }
     }
 });
-
 function getConfigWinner () {
     var magiaithuong = $('#magiaithuong').val();
     $.ajaxSetup({
@@ -72,11 +71,11 @@ function getConfigWinner () {
                 var started = new Date().getTime();
                 var winner = result.ma_so_nhan_giai;
                 var winner_arr = winner.split('');
-                startRandom(1, started, duration_setting - duration_device * 4, winner_arr);
-                startRandom(2, started, duration_setting - duration_device * 3, winner_arr);
+                startRandom(5, started, duration_setting - duration_device * 4, winner_arr);
+                startRandom(4, started, duration_setting - duration_device * 3, winner_arr);
                 startRandom(3, started, duration_setting - duration_device * 2, winner_arr);
-                startRandom(4, started, duration_setting - duration_device, winner_arr);
-                startRandom(5, started, duration_setting, winner_arr);
+                startRandom(2, started, duration_setting - duration_device, winner_arr);
+                startRandom(1, started, duration_setting, winner_arr);
             } else {
                 alert('Phần thưởng này sẽ giành cho IT vì không còn ai nhận giải');
             }               
@@ -98,7 +97,7 @@ function startRandom(number, started, duration_setting, winner_arr = []) {
             output.text(current_number);
             document.getElementById('number_' + number).classList.add("active");
             clearInterval(animationTimer); 
-            if (number >= 5) {
+            if (number <= 1) {
                 setTimeout(function() {
                     var winner = '';
                     for (let i = 1; i <= 5; i++) {

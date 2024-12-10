@@ -29,7 +29,7 @@
                 {{$giaithuong_obj->ma_so_nhan_giai_thuc_te ?? ''}}
             </p>
             <p id="winner_name">{{$giaithuong_obj->ten_nguoi_nhan_giai_thuc_te ?? ''}}</p>
-            <a href="{{route('/')}}" class="btn submit-btn btn-danger custom_button" type="submit">TIẾP TỤC</a>
+            <a class="btn submit-btn btn-danger custom_button" id="close_prize_customer" type="submit">TIẾP TỤC</a>
         </div>
     </div>  
 </div>
@@ -38,6 +38,11 @@
         setTimeout(function() {
             $('#prize_customer').show();
         }, 5000);
+        $('#close_prize_customer').on('click', function(e) {
+            e.preventDefault();
+            $('#resultModel').modal('hide'); 
+            frameContainer();
+        });
     });
 </script>
 <script src="{{asset('public/js/fireworks.js')}}"></script>

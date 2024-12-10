@@ -17,6 +17,7 @@ Route::get('/', 'App\\Http\\Controllers\\IndexController@index')->name('/');
 Route::get('/login', 'App\\Http\\Controllers\\AdminController@login')->name('login');
 Route::post('/login', 'App\\Http\\Controllers\\AdminController@loginAdmin')->name('login');
 
+Route::get('/framecontainer', 'App\\Http\\Controllers\\IndexController@frameContainer')->name('framecontainer');
 
 Route::get('/admin', 'App\\Http\\Controllers\\AdminController@index')->name('admin');
 Route::get('/user', 'App\\Http\\Controllers\\AdminController@user')->name('user');
