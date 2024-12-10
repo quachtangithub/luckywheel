@@ -54,23 +54,30 @@ class AdminController extends Controller
     }
 
     public function index () {
-        $giaithuong_obj = DanhSachGiaiThuong::orderBy('so_thu_tu', 'asc')->get();
+        $giaithuong_obj = DanhSachGiaiThuong::orderBy('so_thu_tu', 'asc')->paginate(5);
         return view('backend.index')->with('giaithuong_obj', $giaithuong_obj);
     }
 
     public function updatePrize (Request $request) {
         $request->validate([
             'noi_dung'=>'required',
-            'so_thu_tu' => 'numeric|min:0'
+            'so_thu_tu' => 'numeric|min:0',
+            'ma_so_nhan_giai' => 'digits_between:0,9'
         ], [
             'noi_dung.required' => 'Bắt buộc nhập tên giải',
             'so_thu_tu.numeric' => 'Số thứ tự phải là số',
-            'so_thu_tu.min' => 'Số thứ tự phải lớn hơn 0'
+            'so_thu_tu.min' => 'Số thứ tự phải lớn hơn 0',
+            'ma_so_nhan_giai.digits_between' => 'Mã số nhận giải phải từ 0 đến 9'
         ]);
 
         if (($request->phan_loai_khach == 1 || $request->phan_loai_khach == 2 || $request->phan_loai_khach == 3) &&
             $request->ma_so_nhan_giai != '') {
             return redirect()->route('admin')->with('error', 'Nếu đã chọn phân loại khách thì không thể chỉ định cụ thể khách cho giải' . $request->noi_dung)
+                ->with('ten_giai_thuong', $request->noi_dung);
+        }
+
+        if ($request->phan_loai_khach == '' && $request->ma_so_nhan_giai == '') {
+            return redirect()->route('admin')->with('error', 'Vui lòng nhập thông tin cụ thể khách sẽ nhận giải ' . $request->noi_dung)
                 ->with('ten_giai_thuong', $request->noi_dung);
         }
 
@@ -87,6 +94,7 @@ class AdminController extends Controller
             $giaithuong_obj->so_thu_tu = $request->so_thu_tu;
             $giaithuong_obj->ma_so_nhan_giai = $request->ma_so_nhan_giai;
             $giaithuong_obj->ten_nguoi_nhan_giai = $request->ten_nguoi_nhan_giai;
+            $giaithuong_obj->phan_loai_khach = $request->phan_loai_khach;
             $giaithuong_obj->ma_so_nhan_giai_thuc_te = $request->ma_so_nhan_giai_thuc_te;
             $giaithuong_obj->ten_nguoi_nhan_giai_thuc_te = $request->ten_nguoi_nhan_giai_thuc_te;
             $giaithuong_obj->da_nhan_giai = $request->da_nhan_giai;
@@ -101,6 +109,7 @@ class AdminController extends Controller
         $giaithuong_obj = DanhSachGiaiThuong::find($request->mgt);
         if ($giaithuong_obj != null) {
             if ($giaithuong_obj->ma_so_nhan_giai != '') {
+                // nếu có cấu hình người nhận giải cụ thể
                 return response()->json(['success'=> 'Lấy dữ liệu thành công', 'ma_so_nhan_giai' => $giaithuong_obj->ma_so_nhan_giai,
                     'thoi_gian_cho' => $giaithuong_obj->thoi_gian_cho]);
             } else {
@@ -111,9 +120,18 @@ class AdminController extends Controller
                 foreach ($da_nhan_giai as $item) {
                     $da_nhan_giai_arr[] = $item->ma_so_nhan_giai_thuc_te;
                 }
-                $dsnguoidung_obj = DanhSachNguoiDung::whereNotIn('ma_nguoi_dung', $da_nhan_giai_arr)->inRandomOrder()->first();
-                if ($dsnguoidung_obj != null) {
-                    return response()->json(['success'=> 'Lấy dữ liệu thành công', 'ma_so_nhan_giai' => $dsnguoidung_obj->ma_nguoi_dung,
+                // if 
+                $dsnguoidung_obj = DanhSachNguoiDung::whereNotIn('ma_nguoi_dung', $da_nhan_giai_arr);
+                if ($giaithuong_obj->phan_loai_khach == 2) {
+                    // nội bộ
+                    $dsnguoidung_obj = $dsnguoidung_obj->where('loai_nguoi_dung', 1);
+                } elseif ($giaithuong_obj->phan_loai_khach == 3) {
+                    // khach moi ben ngoai
+                    $dsnguoidung_obj = $dsnguoidung_obj->whereRaw('loai_nguoi_dung is null');
+                }
+                $dsnguoidung_data = $dsnguoidung_obj->inRandomOrder()->first();
+                if ($dsnguoidung_data != null) {
+                    return response()->json(['success'=> 'Lấy dữ liệu thành công', 'ma_so_nhan_giai' => $dsnguoidung_data->ma_nguoi_dung,
                         'thoi_gian_cho' => $giaithuong_obj->thoi_gian_cho]);
                 } else {
                     return response()->json(['error'=> 'Lấy dữ liệu không thành công']);
@@ -148,6 +166,7 @@ class AdminController extends Controller
             $dsnguoidung_obj = DanhSachNguoiDung::find($request->id_nguoi_dung);
             $dsnguoidung_obj->ma_nguoi_dung = $request->ma_nguoi_dung;
             $dsnguoidung_obj->ten_nguoi_dung = $request->ten_nguoi_dung;
+            $dsnguoidung_obj->loai_nguoi_dung = $request->loai_nguoi_dung;
             $dsnguoidung_obj->save();
             return redirect()->route('user')->with('success', 'Cập nhật thành công ' . $dsnguoidung_obj->ma_nguoi_dung . ' - ' . $dsnguoidung_obj->ten_nguoi_dung);
         }

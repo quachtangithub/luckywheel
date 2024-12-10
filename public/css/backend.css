@@ -52,7 +52,7 @@ a{
 .backend_container .header .item .inside_item {
     border: 0.01rem solid #fff;
     border-radius: 0.5rem;
-    padding: 1rem;
+    padding: 0.1rem;
     cursor: pointer;
     text-decoration: none;
     color: #ffffff;
@@ -63,9 +63,9 @@ a{
 .backend_container .header .item .inside_item.active {
     border: 0.01rem solid #fff;
     border-radius: 0.5rem;
-    padding: 1rem;
+    padding: 0.1rem;
     background-color: #fff;
-    color:#961f3b;
+    color: #961f3b;
 }
 
 .background-image {
@@ -95,6 +95,8 @@ a{
 
 .content .item input {
     margin-bottom: 0.3rem;
+    padding: 0.1rem 0.5rem;
+    font-size: 0.9rem;
 }
 
 .content .item button {
@@ -141,3 +143,50 @@ a{
     position: absolute;
     margin-top: -1.2rem;
 }
+
+/* phân trang */
+nav[role="navigation"] {
+    text-align: center;
+}
+  
+/* nav[role="navigation"] .pagination {
+    width: fit-content;
+    margin: auto;
+}
+  
+nav[role="navigation"] .page-item .page-link {
+    color: #7e0000;
+}
+  
+nav[role="navigation"] .page-item.active .page-link {
+    background-color: #7e0000;
+    border-color: #7e0000;
+    color: #fff;
+} */
+
+nav[role="navigation"] a {
+    text-decoration: none;
+    color: #ffbc21;
+}
+
+span[aria-current="page"] .cursor-default {
+    background-color: #ffbc21 !important;
+    color: #fff;
+}
+
+nav[role="navigation"] img, svg {
+    vertical-align: middle;
+    width: 3rem;
+}
+
+nav[role='navigation'] > div > div span[aria-disabled="true"]{
+    display: none;
+}
+
+nav[role='navigation'] .flex-1 {
+    display: none;
+}
+
+/* .backend_container nav[role="navigation"] {
+    text-align: center;
+} */

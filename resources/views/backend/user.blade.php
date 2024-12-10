@@ -51,17 +51,18 @@
                                 {{ csrf_field() }}
                                 <input type="hidden" name="id_nguoi_dung" />
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <input class="form-control" name="ma_nguoi_dung" placeholder="Mã ..." />
-                                        @if ($errors->has('ma_nguoi_dung'))
-                                            <span class="text-danger">{{ $errors->first('ma_nguoi_dung') }}</span>
-                                        @endif
                                     </div>
-                                    <div class="col-md-7">
-                                        <input class="form-control" name="ten_nguoi_dung" placeholder="Tên người dùng ..." />                                        
-                                        @if ($errors->has('ten_nguoi_dung'))
-                                            <span class="text-danger">{{ $errors->first('ten_nguoi_dung') }}</span>
-                                        @endif
+                                    <div class="col-md-8">
+                                        <input class="form-control" name="ten_nguoi_dung" placeholder="Tên người dùng ..." />  
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="form-group" style="display: flex;">
+                                            <input type="checkbox" class="form-control form-check-input" 
+                                                id="loai_nguoi_dung" name="loai_nguoi_dung" value="1" />
+                                            &nbsp;&nbsp;<label for="loai_nguoi_dung" class="form-check-label">Là nhân viên bệnh viên</label>
+                                        </div>
                                     </div>
                                     <div class="col-md-2">
                                         <button type="submit" class="btn btn-warning btn-sm">Lưu</button>
@@ -80,19 +81,27 @@
                                 {{ csrf_field() }}
                                 <input type="hidden" name="id_nguoi_dung" value="{{$dsnguoidung_item->id_nguoi_dung ?? ''}}" />
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <input class="form-control" name="ma_nguoi_dung" 
                                             value="{{$dsnguoidung_item->ma_nguoi_dung ?? ''}}" placeholder="Mã ..." />
                                         @if ($errors->has('ma_nguoi_dung'))
                                             <span class="text-danger">{{ $errors->first('ma_nguoi_dung') }}</span>
                                         @endif
                                     </div>
-                                    <div class="col-md-7">
+                                    <div class="col-md-8">
                                         <input class="form-control" name="ten_nguoi_dung" 
                                             value="{{$dsnguoidung_item->ten_nguoi_dung ?? ''}}" placeholder="Tên người dùng ..." />                                      
                                         @if ($errors->has('ten_nguoi_dung'))
                                             <span class="text-danger">{{ $errors->first('ten_nguoi_dung') }}</span>
                                         @endif
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="form-group" style="display: flex;">
+                                            <input type="checkbox" class="form-control form-check-input" 
+                                                id="loai_nguoi_dung_{{$dsnguoidung_item->id_nguoi_dung}}" name="loai_nguoi_dung" value="1" 
+                                                {{isset($dsnguoidung_item->loai_nguoi_dung) && $dsnguoidung_item->loai_nguoi_dung == 1 ? 'checked' : ''}}>
+                                            &nbsp;&nbsp;<label for="loai_nguoi_dung_{{$dsnguoidung_item->id_nguoi_dung}}" class="form-check-label">Là nhân viên bệnh viện</label>
+                                        </div>
                                     </div>
                                     <div class="col-md-2">
                                         <button type="submit" class="btn btn-warning btn-sm">Lưu</button>
