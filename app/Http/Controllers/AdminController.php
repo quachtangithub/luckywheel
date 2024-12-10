@@ -45,8 +45,8 @@ class AdminController extends Controller
                     $ten_nguoi_nhan_giai = $dsnguoidung_obj->ten_nguoi_dung;
                 }
             } 
-            $giaithuong_obj->ma_so_nhan_giai = $request->ma_so_nhan_giai;
-            $giaithuong_obj->ten_nguoi_nhan_giai = $ten_nguoi_nhan_giai;
+            $giaithuong_obj->ma_so_nhan_giai_thuc_te = $request->ma_so_nhan_giai;
+            $giaithuong_obj->ten_nguoi_nhan_giai_thuc_te = $ten_nguoi_nhan_giai;
             $giaithuong_obj->da_nhan_giai = 1;
             $giaithuong_obj->update();
             return view('frontend.congratulation')->with('giaithuong_obj', $giaithuong_obj)->render();
@@ -64,15 +64,22 @@ class AdminController extends Controller
             'so_thu_tu' => 'numeric|min:0'
         ], [
             'noi_dung.required' => 'Bắt buộc nhập tên giải',
-            'so_thu_tu.numberic' => 'Số thứ tự phải là số',
+            'so_thu_tu.numeric' => 'Số thứ tự phải là số',
             'so_thu_tu.min' => 'Số thứ tự phải lớn hơn 0'
         ]);
+
+        if (($request->phan_loai_khach == 1 || $request->phan_loai_khach == 2 || $request->phan_loai_khach == 3) &&
+            $request->ma_so_nhan_giai != '') {
+            return redirect()->route('admin')->with('error', 'Nếu đã chọn phân loại khách thì không thể chỉ định cụ thể khách cho giải' . $request->noi_dung)
+                ->with('ten_giai_thuong', $request->noi_dung);
+        }
 
         if ($request->ma_giai_thuong == '') {
             // them moi
             $request_data = $request->except('ma_giai_thuong');
             $giaithuong_obj = DanhSachGiaiThuong::create($request_data);
-            return redirect()->route('admin')->with('success', 'Thêm mới thành công ' . $giaithuong_obj->noi_dung);
+            return redirect()->route('admin')->with('success', 'Thêm mới thành công ' . $giaithuong_obj->noi_dung)
+                ->with('ten_giai_thuong', $request->noi_dung);
         } else {
             // cap nhat
             $giaithuong_obj = DanhSachGiaiThuong::find($request->ma_giai_thuong);
@@ -80,10 +87,13 @@ class AdminController extends Controller
             $giaithuong_obj->so_thu_tu = $request->so_thu_tu;
             $giaithuong_obj->ma_so_nhan_giai = $request->ma_so_nhan_giai;
             $giaithuong_obj->ten_nguoi_nhan_giai = $request->ten_nguoi_nhan_giai;
+            $giaithuong_obj->ma_so_nhan_giai_thuc_te = $request->ma_so_nhan_giai_thuc_te;
+            $giaithuong_obj->ten_nguoi_nhan_giai_thuc_te = $request->ten_nguoi_nhan_giai_thuc_te;
             $giaithuong_obj->da_nhan_giai = $request->da_nhan_giai;
             $giaithuong_obj->thoi_gian_cho = $request->thoi_gian_cho;
             $giaithuong_obj->save();
-            return redirect()->route('admin')->with('success', 'Cập nhật thành công ' . $giaithuong_obj->noi_dung);
+            return redirect()->route('admin')->with('success', 'Cập nhật thành công ' . $giaithuong_obj->noi_dung)
+                ->with('ten_giai_thuong', $request->noi_dung);
         }
     }
 
@@ -95,10 +105,18 @@ class AdminController extends Controller
                     'thoi_gian_cho' => $giaithuong_obj->thoi_gian_cho]);
             } else {
                 // nếu chưa cấu hình thì lấy ngẫu nhiên
-                $dsnguoidung_obj = DanhSachNguoiDung::inRandomOrder()->first();
+                // lấy danh sách đã nhận giải
+                $da_nhan_giai = DanhSachGiaiThuong::whereRaw('ma_so_nhan_giai_thuc_te is not null')->get();
+                $da_nhan_giai_arr = [];
+                foreach ($da_nhan_giai as $item) {
+                    $da_nhan_giai_arr[] = $item->ma_so_nhan_giai_thuc_te;
+                }
+                $dsnguoidung_obj = DanhSachNguoiDung::whereNotIn('ma_nguoi_dung', $da_nhan_giai_arr)->inRandomOrder()->first();
                 if ($dsnguoidung_obj != null) {
                     return response()->json(['success'=> 'Lấy dữ liệu thành công', 'ma_so_nhan_giai' => $dsnguoidung_obj->ma_nguoi_dung,
                         'thoi_gian_cho' => $giaithuong_obj->thoi_gian_cho]);
+                } else {
+                    return response()->json(['error'=> 'Lấy dữ liệu không thành công']);
                 }
             }
         }

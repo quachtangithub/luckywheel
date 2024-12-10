@@ -64,19 +64,22 @@ function getConfigWinner () {
         type: 'GET',
         contentType: false,
         processData: false,
-        success: function(result){            
-            var duration_setting = result.thoi_gian_cho;
-            var duration_device = duration_setting / 5;
-            duration_device = duration_device.toFixed();  
-            var started = new Date().getTime();
-            var winner = result.ma_so_nhan_giai;
-            var winner_arr = winner.split('');
-            startRandom(1, started, duration_setting - duration_device * 4, winner_arr);
-            startRandom(2, started, duration_setting - duration_device * 3, winner_arr);
-            startRandom(3, started, duration_setting - duration_device * 2, winner_arr);
-            startRandom(4, started, duration_setting - duration_device, winner_arr);
-            startRandom(5, started, duration_setting, winner_arr);
-            // startRandom(6, started, duration_setting);         
+        success: function(result){     
+            if (result.success) {
+                var duration_setting = result.thoi_gian_cho;
+                var duration_device = duration_setting / 5;
+                duration_device = duration_device.toFixed();  
+                var started = new Date().getTime();
+                var winner = result.ma_so_nhan_giai;
+                var winner_arr = winner.split('');
+                startRandom(1, started, duration_setting - duration_device * 4, winner_arr);
+                startRandom(2, started, duration_setting - duration_device * 3, winner_arr);
+                startRandom(3, started, duration_setting - duration_device * 2, winner_arr);
+                startRandom(4, started, duration_setting - duration_device, winner_arr);
+                startRandom(5, started, duration_setting, winner_arr);
+            } else {
+                alert('Phần thưởng này sẽ giành cho IT vì không còn ai nhận giải');
+            }               
         }
     });
 }

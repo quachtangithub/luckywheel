@@ -78,11 +78,12 @@ a{
     padding: 1rem;
     background-color: #fff;
     border-radius: 0.3rem;
-    box-shadow: inset -1px 3px 5px #919191;
+    border: 0.01rem solid #cfcfcf;
     margin: 0.3rem;
+    background-color: #f7f7f7;
 }
 
-.content .item.active {
+/* .content .item.active {
     background-color: #d0d0d0;
 }
 
@@ -90,7 +91,7 @@ a{
     background-color: #c0c0c0;
     text-align: center;
     color: #fff;
-}
+} */
 
 .content .item input {
     margin-bottom: 0.3rem;
@@ -99,8 +100,9 @@ a{
 .content .item button {
     width: 100%;
     color: #961f3b;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 600;
+    padding: 0.3rem;
 }
 
 .content .title {
@@ -119,4 +121,23 @@ a{
 .form-check-input:checked {
     background-color: #961f3b !important;
     border-color: #961f3b !important;
+}
+
+.group_inside_item {
+    padding: 0.3rem;
+    border: 0.01rem solid #d7d7d7;
+    width: 98% !important;
+    margin: auto;
+    border-radius: 0.3rem;
+    margin-top: 1rem !important;
+}
+
+.group_inside_item .group_title {
+    background-color: #f7f7f7;
+    border-radius: 1rem;
+    color: #626262;
+    font-size: 1rem;
+    padding: 0.1rem 0.3rem 0.2rem;
+    position: absolute;
+    margin-top: -1.2rem;
 }

@@ -34,6 +34,13 @@
                     </div>
                 </div>
             </div>
+            @php 
+                $ten_giai_thuong = '';
+                if (Session::get('ten_giai_thuong')) {
+                    $ten_giai_thuong = Session::get('ten_giai_thuong');
+                    Session::forget('ten_giai_thuong');
+                }
+            @endphp
             <div class="content">
                 @if(Session::has('success'))
                     <div class="alert alert-success">
@@ -43,8 +50,27 @@
                         @endphp
                     </div>
                 @endif
+                @if(Session::has('errors'))
+                    <div class="alert alert-danger">
+                        {{ implode(', ', $errors->all(':message')) }}
+                        @php
+                            Session::forget('errors');
+                        @endphp
+                    </div>
+                @endif
+                @if(Session::has('error'))
+                    <div class="alert alert-danger">
+                        {{ Session::get('error') }}
+                        @php
+                            Session::forget('error');
+                        @endphp
+                    </div>
+                @endif
                 <div class="row">
-                    <div class="col-md-4" style="padding: 0.1rem;">
+                    <div class="col-md-12">
+                        <input class="form-control" name="prize_search" id="prize_search" placeholder="Tìm kiếm giải thưởng ..." />
+                    </div>
+                    <div class="col-lg-3 col-md-6 item_prize" style="padding: 0.1rem;">
                         <div class="item">
                             <div class="title">THÊM MỚI GIẢI THƯỞNG</div>
                             <div class="inside_item">
@@ -56,37 +82,50 @@
                                             <div class="col-md-12">
                                                 <input class="form-control" name="noi_dung" value="" 
                                                 placeholder="Tên giải ... " />
-                                                @if ($errors->has('noi_dung'))
-                                                    <span class="text-danger">{{ $errors->first('noi_dung') }}</span>
-                                                @endif
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 <input class="form-control" name="so_thu_tu" value="" 
                                                     placeholder="Số thứ tự ... " />
-                                                @if ($errors->has('so_thu_tu'))
-                                                    <span class="text-danger">{{ $errors->first('so_thu_tu') }}</span>
-                                                @endif
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <input type="checkbox" class="form-control form-check-input" 
                                                         id="da_nhan_giai" name="da_nhan_giai" value="1">
-                                                    <label for="is_admin" class="form-check-label"> Đã nhận giải</label>
+                                                    <label for="da_nhan_giai" class="form-check-label"> Đã nhận giải</label>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <input class="form-control" name="ma_so_nhan_giai" value="" 
-                                                    placeholder="Mã số nhận giải ... " />
-                                            </div>
-                                            <div class="col-md-6">
-                                                <input class="form-control" name="ten_nguoi_nhan_giai" value="" 
-                                                    placeholder="Tên người nhận giải ... " />
-                                            </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 <input class="form-control" name="thoi_gian_cho" value="" 
                                                     placeholder="Thời gian chờ ... " />
                                             </div>
-                                            <div class="col-md-6">
+                                            <p style="margin-top: 1rem; border-bottom: 0.01rem solid #d7d7d7;">Cấu hình cụ thể khách</p>
+                                            <div class="col-md-12">
+                                                <input type="radio" class="form-check-input" id="tat_ca_khach" 
+                                                    name="phan_loai_khach" value="1">
+                                                <label class="form-check-label" for="tat_ca_khach">Lấy ngẫu nhiên tất cả khách</label><br>
+                                                <input type="radio" class="form-check-input" id="khach_noi_bo" 
+                                                    name="phan_loai_khach" value="2">
+                                                <label class="form-check-label" for="khach_noi_bo">Lấy ngẫu nhiên khách nội bộ</label><br>
+                                                <input type="radio" class="form-check-input" id="khach_ben_ngoai" 
+                                                    name="phan_loai_khach" value="3">
+                                                <label class="form-check-label" for="khach_ben_ngoai">
+                                                    Lấy ngẫu nhiên khách bên ngoài
+                                                </label><br>
+                                                <input type="radio" class="form-check-input" id="khach_chi_dinh" 
+                                                    name="phan_loai_khach" value="">
+                                                <label class="form-check-label" for="khach_chi_dinh">
+                                                    Chỉ định cụ thể khách
+                                                </label>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <input class="form-control" name="ma_so_nhan_giai" value="" 
+                                                    placeholder="Mã số nhận giải ... " />
+                                            </div>
+                                            <div class="col-md-12">
+                                                <input class="form-control" name="ten_nguoi_nhan_giai" value="" 
+                                                    placeholder="Tên người nhận giải ... " />
+                                            </div>
+                                            <div class="col-md-12">
                                                 <button type="submit" class="btn btn-warning">Lưu</button>
                                             </div>
                                         </div>                                        
@@ -96,7 +135,8 @@
                         </div>
                     </div>
                     @foreach ($giaithuong_obj as $giaithuong_item)
-                    <div class="col-md-2" style="padding: 0.1rem;">
+                    <div class="col-lg-3 col-md-3 item_prize" style="padding: 0.1rem;"
+                        data-user="{{strtoupper($giaithuong_item->noi_dung) ?? ''}}">
                         <div class="item {{$giaithuong_item->da_nhan_giai == 1 ? 'active' : ''}}">
                             <div class="inside_item">
                                 <form action="{{route('updateprize')}}" method="POST">
@@ -106,44 +146,90 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <label for="noi_dung">Tên giải: </label>
-                                                <input class="form-control" name="noi_dung" id="noi_dung" value="{{$giaithuong_item->noi_dung ?? ''}}" 
-                                                placeholder="Tên giải ... " />
-                                                @if ($errors->has('noi_dung'))
-                                                    <span class="text-danger">{{ $errors->first('noi_dung') }}</span>
-                                                @endif
+                                                <input class="form-control" name="noi_dung" id="noi_dung" 
+                                                    value="{{$giaithuong_item->noi_dung ?? ''}}" />
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 <label for="so_thu_tu">STT: </label>
-                                                <input class="form-control" name="so_thu_tu" id="so_thu_tu" value="{{$giaithuong_item->so_thu_tu ?? ''}}" 
-                                                    placeholder="Số thứ tự ... " />
-                                                @if ($errors->has('so_thu_tu'))
-                                                    <span class="text-danger">{{ $errors->first('so_thu_tu') }}</span>
-                                                @endif
+                                                <input class="form-control" name="so_thu_tu" id="so_thu_tu" 
+                                                    value="{{$giaithuong_item->so_thu_tu ?? ''}}" />
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-5">
                                                 <div class="form-group">
+                                                    <label for="" class="form-check-label">Đã nhận giải</label>
                                                     <input type="checkbox" class="form-control form-check-input" 
                                                         id="da_nhan_giai" name="da_nhan_giai" value="1" 
                                                         {{isset($giaithuong_item->da_nhan_giai) && $giaithuong_item->da_nhan_giai == 1 ? 'checked' : ''}}>
-                                                    <label for="is_admin" class="form-check-label"> Đã nhận giải</label>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12">
-                                                <label for="ma_so_nhan_giai">Mã nhận giải: </label>
-                                                <input class="form-control" name="ma_so_nhan_giai" id="ma_so_nhan_giai" value="{{$giaithuong_item->ma_so_nhan_giai ?? ''}}" 
-                                                placeholder="Mã số nhận giải ... " />
+                                            <div class="col-md-4">
+                                                <label for="thoi_gian_cho">Thời gian: </label>
+                                                <input class="form-control" name="thoi_gian_cho" id="thoi_gian_cho" 
+                                                    value="{{$giaithuong_item->thoi_gian_cho ?? ''}}" />
                                             </div>
-                                            <div class="col-md-12">
-                                                <label for="ten_nguoi_nhan_giai">Tên nhận giải: </label>
-                                                <input class="form-control" name="ten_nguoi_nhan_giai" id="ten_nguoi_nhan_giai" value="{{$giaithuong_item->ten_nguoi_nhan_giai ?? ''}}" 
-                                                placeholder="Tên người nhận giải ... " />
+                                            <div class="group_inside_item">
+                                                <span class="group_title">Thông tin cấu hình</span>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="radio" class="form-check-input" id="tat_ca_khach_{{$giaithuong_item->ma_giai_thuong ?? ''}}" 
+                                                            name="phan_loai_khach" value="1" {{$giaithuong_item->phan_loai_khach == 1 ? 'checked': ''}}>
+                                                        <label class="form-check-label" for="tat_ca_khach_{{$giaithuong_item->ma_giai_thuong ?? ''}}">Lấy ngẫu nhiên tất cả khách</label><br>
+                                                        <input type="radio" class="form-check-input" id="khach_noi_bo_{{$giaithuong_item->ma_giai_thuong ?? ''}}" 
+                                                            name="phan_loai_khach" value="2" {{$giaithuong_item->phan_loai_khach == 2 ? 'checked': ''}}>
+                                                        <label class="form-check-label" for="khach_noi_bo_{{$giaithuong_item->ma_giai_thuong ?? ''}}">Lấy ngẫu nhiên khách nội bộ</label><br>
+                                                        <input type="radio" class="form-check-input" 
+                                                            id="khach_ben_ngoai_{{$giaithuong_item->ma_giai_thuong ?? ''}}" 
+                                                            name="phan_loai_khach" value="3" 
+                                                            {{$giaithuong_item->phan_loai_khach == 3 ? 'checked': ''}}>
+                                                        <label class="form-check-label" 
+                                                            for="khach_ben_ngoai_{{$giaithuong_item->ma_giai_thuong ?? ''}}">
+                                                            Lấy ngẫu nhiên khách bên ngoài
+                                                        </label><br>
+                                                        <input type="radio" class="form-check-input" 
+                                                            id="khach_chi_dinh_{{$giaithuong_item->ma_giai_thuong ?? ''}}" 
+                                                            name="phan_loai_khach" value="" 
+                                                            {{$giaithuong_item->phan_loai_khach == '' ? 'checked': ''}}>
+                                                        <label class="form-check-label" 
+                                                            for="khach_chi_dinh_{{$giaithuong_item->ma_giai_thuong ?? ''}}">
+                                                            Khách chỉ định
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <p style="padding: 1rem 0 0 !important;
+                                                    border-bottom: 0.01rem solid #d7d7d7;">Cấu hình cụ thể khách</p>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label for="ma_so_nhan_giai">Mã nhận giải: </label>
+                                                        <input class="form-control" name="ma_so_nhan_giai" id="ma_so_nhan_giai" 
+                                                            value="{{$giaithuong_item->ma_so_nhan_giai ?? ''}}" />
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <label for="ten_nguoi_nhan_giai">Tên nhận giải: </label>
+                                                        <input class="form-control" name="ten_nguoi_nhan_giai" id="ten_nguoi_nhan_giai" 
+                                                            value="{{$giaithuong_item->ten_nguoi_nhan_giai ?? ''}}" />
+                                                    </div>                                                   
+                                                </div>                                                
                                             </div>
-                                            <div class="col-md-6">
-                                                <label for="thoi_gian_cho">Thời gian chờ: </label>
-                                                <input class="form-control" name="thoi_gian_cho" id="thoi_gian_cho" value="{{$giaithuong_item->thoi_gian_cho ?? ''}}" 
-                                                    placeholder="Thời gian chờ ... " />
+                                            <div class="group_inside_item">
+                                                <span class="group_title">Thông tin thực lãnh</span>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label for="ma_so_nhan_giai_thuc_te">Mã nhận giải: </label>
+                                                        <input class="form-control" name="ma_so_nhan_giai_thuc_te" 
+                                                            id="ma_so_nhan_giai_thuc_te" 
+                                                            value="{{$giaithuong_item->ma_so_nhan_giai_thuc_te ?? ''}}" />
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <label for="ten_nguoi_nhan_giai_thuc_te">Tên nhận giải: </label>
+                                                        <input class="form-control" name="ten_nguoi_nhan_giai_thuc_te" 
+                                                            id="ten_nguoi_nhan_giai_thuc_te" 
+                                                            value="{{$giaithuong_item->ten_nguoi_nhan_giai_thuc_te ?? ''}}" />
+                                                    </div>
+                                                </div>                                                
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-12 text-center" style="padding-top: 1rem;">
                                                 <button type="submit" class="btn btn-warning">Lưu</button>
                                             </div>
                                         </div>                                        
@@ -156,5 +242,8 @@
                 </div>
             </div>
         </div>
+        <script>
+        
+        </script>
     </body>
 </html>

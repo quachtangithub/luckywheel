@@ -15,6 +15,9 @@ class DanhSachGiaiThuong extends Model
         'so_thu_tu',
         'ma_so_nhan_giai',
         'ten_nguoi_nhan_giai',
+        'phan_loai_khach',
+        'ma_so_nhan_giai_thuc_te',
+        'ten_nguoi_nhan_giai_thuc_te',
         'da_nhan_giai',
         'thoi_gian_cho'
     ];

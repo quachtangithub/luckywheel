@@ -77,8 +77,8 @@
                             <i class="fa-solid fa-award"></i>
                         @endif
                         <p class="prize">{{$giaithuong->noi_dung ?? ''}}</p>
-                        @if ($giaithuong->ten_nguoi_nhan_giai != '' && $giaithuong->da_nhan_giai == 1) 
-                            <span class="emphasize">{{$giaithuong->ten_nguoi_nhan_giai ?? ''}}</span>
+                        @if ($giaithuong->ten_nguoi_nhan_giai_thuc_te != '' && $giaithuong->da_nhan_giai == 1) 
+                            <span class="emphasize">{{$giaithuong->ten_nguoi_nhan_giai_thuc_te ?? ''}}</span>
                         @endif
                     </div>
                 </div>

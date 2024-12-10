@@ -2,8 +2,8 @@
     <div class="fw-text-wrapper">
         <h1 class="fw-text-overlay">
             <span class="letters letters-1">{{$giaithuong_obj->noi_dung ?? ''}}</span>
-            <span class="letters letters-2">{{$giaithuong_obj->ma_so_nhan_giai ?? ''}}</span>
-            <span class="letters letters-3">{{$giaithuong_obj->ten_nguoi_nhan_giai ?? ''}}</span>
+            <span class="letters letters-2">{{$giaithuong_obj->ma_so_nhan_giai_thuc_te ?? ''}}</span>
+            <span class="letters letters-3">{{$giaithuong_obj->ten_nguoi_nhan_giai_thuc_te ?? ''}}</span>
         </h1>
     </div>
     <div id="canvas-container"></div>
@@ -26,9 +26,9 @@
             <h1>XIN CHÚC MỪNG!</h1>
             <h1>{{$giaithuong_obj->noi_dung ?? ''}}</h1>
             <p id="winner">
-                {{$giaithuong_obj->ma_so_nhan_giai ?? ''}}
+                {{$giaithuong_obj->ma_so_nhan_giai_thuc_te ?? ''}}
             </p>
-            <p id="winner_name">{{$giaithuong_obj->ten_nguoi_nhan_giai ?? ''}}</p>
+            <p id="winner_name">{{$giaithuong_obj->ten_nguoi_nhan_giai_thuc_te ?? ''}}</p>
             <a href="{{route('/')}}" class="btn submit-btn btn-danger custom_button" type="submit">TIẾP TỤC</a>
         </div>
     </div>  

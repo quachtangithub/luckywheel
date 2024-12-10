@@ -3,7 +3,14 @@ $(document).ready(function() {
         var value = $(this).val();
         searchItem(value, ".item_user");
     });
+
+    $("#prize_search").on("keyup", function () {
+        var value = $(this).val();
+        searchItem(value, ".item_prize");
+    });
 });
+
+
 
 function searchItem(value, classname) {
     var $listItemAlls = $(classname);
