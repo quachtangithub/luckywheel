@@ -136,6 +136,9 @@
   background-color: #da0005;
   border: 0.1rem solid #ffb555;
   box-shadow: inset -2px -3px 16px 1px #ffffff;
+  background: url(../images/text_background.png);
+  color: transparent;
+  animation: moveBg 50s linear infinite;
 }
 
 .list-group .list-group-item.active .prize{
@@ -154,7 +157,7 @@
 }
 
 .list-group .list-group-item .emphasize {
-  color: #ffffff;
+  color: #ab6900;
   font-size: 1.2rem;
   width: 100%;
   display: block;
@@ -163,6 +166,7 @@
   /* background-color: #ff0000; */
   padding: 0.5rem;
   text-transform: uppercase;
+  background-color: #ffffff;
 }
 
 .full_modal_dialog {
