@@ -21,6 +21,7 @@ Route::get('/framecontainer', 'App\\Http\\Controllers\\IndexController@frameCont
 
 Route::get('/admin', 'App\\Http\\Controllers\\AdminController@index')->name('admin');
 Route::get('/user', 'App\\Http\\Controllers\\AdminController@user')->name('user');
+Route::get('/user/delete/{id}', 'App\\Http\\Controllers\\AdminController@deleteUser')->name('user/delete');
 Route::post('/user', 'App\\Http\\Controllers\\AdminController@updateUser')->name('user');
 Route::post('/updateprize', 'App\\Http\\Controllers\\AdminController@updatePrize')->name('updateprize');
 Route::post('/updatewinner', 'App\\Http\\Controllers\\AdminController@updateWinner')->name('updatewinner');

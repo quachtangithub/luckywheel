@@ -130,7 +130,7 @@ class AdminController extends Controller
                     $dsnguoidung_obj = $dsnguoidung_obj->where('loai_nguoi_dung', 1);
                 } elseif ($giaithuong_obj->phan_loai_khach == 3) {
                     // khach moi ben ngoai
-                    $dsnguoidung_obj = $dsnguoidung_obj->whereRaw('loai_nguoi_dung is null');
+                    $dsnguoidung_obj = $dsnguoidung_obj->where('loai_nguoi_dung', 0);
                 }
                 $dsnguoidung_data = $dsnguoidung_obj->inRandomOrder()->first();
                 if ($dsnguoidung_data != null) {
@@ -142,6 +142,11 @@ class AdminController extends Controller
             }
         }
         return response()->json(['success'=> 'Lấy dữ liệu thành công', 'ma_so_nhan_giai' => '00000', 'thoi_gian_cho' => 5]);
+    }
+
+    public function deleteUser ($id_nguoi_dung) {
+        DanhSachNguoiDung::find($id_nguoi_dung)->delete();
+        return response()->json(['success'=> 'Xóa người dùng thành công']);
     }
 
     public function user () {        
@@ -169,7 +174,7 @@ class AdminController extends Controller
             $dsnguoidung_obj = DanhSachNguoiDung::find($request->id_nguoi_dung);
             $dsnguoidung_obj->ma_nguoi_dung = $request->ma_nguoi_dung;
             $dsnguoidung_obj->ten_nguoi_dung = $request->ten_nguoi_dung;
-            $dsnguoidung_obj->loai_nguoi_dung = $request->loai_nguoi_dung;
+            $dsnguoidung_obj->loai_nguoi_dung = $request->loai_nguoi_dung == 1 ? 1 : 0;
             $dsnguoidung_obj->save();
             return redirect()->route('user')->with('success', 'Cập nhật thành công ' . $dsnguoidung_obj->ma_nguoi_dung . ' - ' . $dsnguoidung_obj->ten_nguoi_dung);
         }
@@ -198,6 +203,10 @@ class AdminController extends Controller
     public function getPrize ($id) {
         $ds_giaithuong_obj = DanhSachGiaiThuong::orderBy('so_thu_tu', 'asc')->get();
         $current_giaithuong_obj = DanhSachGiaiThuong::find($id);
+        if ($current_giaithuong_obj == null) {
+            $current_giaithuong_obj = DanhSachGiaiThuong::inRandomOrder()->first();
+            $id = $current_giaithuong_obj->ma_giai_thuong;
+        }
         return view('frontend.prize')->with('ds_giaithuong_obj', $ds_giaithuong_obj)->with('ma_giai_thuong', $id)
             ->with('current_giaithuong_obj', $current_giaithuong_obj);
     }

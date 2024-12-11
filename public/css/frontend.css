@@ -762,7 +762,7 @@ body, ::backdrop {
 .frame_container {
   margin: 3rem;
   padding: 1rem;
-  position: absolute;
+  /* position: absolute; */
   border: 0.01rem double #ff9000;
   box-shadow: inset 1px 1px 13px 3px #242424;
   border-radius: 1rem;

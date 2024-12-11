@@ -105,6 +105,9 @@
                                     </div>
                                     <div class="col-md-2">
                                         <button type="submit" class="btn btn-warning btn-sm">Lưu</button>
+                                        <button class="btn btn-danger btn-sm delete" onclick="delete_user({{$dsnguoidung_item->id_nguoi_dung ?? 0}})">
+                                            <i class='fa fa-trash'></i>
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -114,5 +117,31 @@
                 </div>
             </div>
         </div>
+        <script>
+            function delete_user(id) {
+                if (confirm('Bạn có chắc muốn xóa người dùng này?')) {
+                    if (id == '') {
+                        alert('Dữ liệu không hợp lệ');
+                    } else {
+                        let url = "{{route('user/delete',':id')}}";
+                        url = url.replace(':id', id);
+                        $.ajax({
+                            url: url,
+                            method: 'GET',
+                            contentType: false,
+                            processData: false,
+                            success: function(result){
+                                if (result.success) {
+                                    alert(result.success);
+                                    window.location.reload();
+                                } else if (result.errors) {
+                                    alert(result.errors);
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        </script>
     </body>
 </html>
