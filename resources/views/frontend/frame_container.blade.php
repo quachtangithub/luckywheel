@@ -51,7 +51,7 @@
             <div class="col-md-2 col-sm-3"></div>
         @endif
         <div class="col-md-2 col-sm-3" style="padding: 0.2rem; min-height: 6rem;">
-            <div class="list-group-item {{$giaithuong->da_nhan_giai == 1 ? 'active' : ''}}" 
+            <div class="list-group-item prize_all {{$giaithuong->da_nhan_giai == 1 ? 'active' : ''}}" 
                 data-magiaithuong="{{$giaithuong->ma_giai_thuong ?? ''}}" 
                 data-tengiaithuong="{{$giaithuong->noi_dung ?? ''}}"
                 id="prize_{{$giaithuong->ma_giai_thuong ?? ''}}">

@@ -71,7 +71,10 @@
                     $('#tengiaithuong').html(tengiaithuong);
                     $('#magiaithuong').val(magiaithuong);
                     $('#resultModel').modal('hide'); 
-                    $('.lucky_numbers').show();
+                    $('.lucky_numbers').show();                    
+                    Array.from(document.querySelectorAll('.prize_all')).forEach(function(el) { 
+                        el.classList.remove('item_active');
+                    });
                     document.getElementById('prize_' + magiaithuong).classList.add('item_active');
                     $('#start').show();
                 } else if (data.type == 'end') {
