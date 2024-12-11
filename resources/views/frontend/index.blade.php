@@ -13,6 +13,7 @@
         <script src="{{asset('public/libs/animejs/3.2.0/anime.min.js')}}"></script>
         <script src="{{asset('public/js/smoke_animation.js')}}"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
     </head>
     <body> 
         <input type="hidden" id="frame_container_url" value="{{route('framecontainer')}}" />
@@ -52,6 +53,34 @@
                     }
                 });
             }
+        </script>
+        <script type="text/javascript">
+            var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
+                encrypted: true,
+                cluster: "ap1"
+            });
+            var channel = pusher.subscribe('NotificationEvent');
+            channel.bind('send-message', function(data) {
+                if (data.type == 'begin') {
+                    $('.lucky_numbers .item').html('');
+                    for (let i = 1; i <= 5; i++) {
+                        document.getElementById('number_' + i).classList.remove('active');
+                    }
+                    var magiaithuong = data.ma_giai_thuong;
+                    var tengiaithuong = data.ten_giai_thuong;
+                    $('#tengiaithuong').html(tengiaithuong);
+                    $('#magiaithuong').val(magiaithuong);
+                    $('#resultModel').modal('hide'); 
+                    $('.lucky_numbers').show();
+                    document.getElementById('prize_' + magiaithuong).classList.add('item_active');
+                    $('#start').show();
+                } else if (data.type == 'end') {
+                    document.body.classList.add("backgroundAnimated");     
+                    audio.play();  
+                    $('#start').hide();
+                    getConfigWinner();
+                }   
+            });
         </script>
     </body>
 </html>

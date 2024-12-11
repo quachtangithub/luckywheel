@@ -25,3 +25,9 @@ Route::post('/user', 'App\\Http\\Controllers\\AdminController@updateUser')->name
 Route::post('/updateprize', 'App\\Http\\Controllers\\AdminController@updatePrize')->name('updateprize');
 Route::post('/updatewinner', 'App\\Http\\Controllers\\AdminController@updateWinner')->name('updatewinner');
 Route::get('/getconfigwinner', 'App\\Http\\Controllers\\AdminController@getConfigWinner')->name('getconfigwinner');
+
+Route::get('/prize/{id}', 'App\\Http\\Controllers\\AdminController@getPrize')->name('prize');
+
+Route::get('/testnotification/{id}', 'App\\Http\\Controllers\\AdminController@testnotification')->name('testnotification');
+Route::get('/play/{id}', 'App\\Http\\Controllers\\AdminController@playPrizeInControl')->name('play');
+Route::post('/updateprizeincontrol', 'App\\Http\\Controllers\\AdminController@updatePrizeInControl')->name('updateprizeincontrol');

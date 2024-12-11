@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use Pusher\Pusher;
 
+use App\Models\User;
 use App\Models\DanhSachGiaiThuong;
 use App\Models\DanhSachNguoiDung;
+use App\Notifications\LuckyWheelNotification;
 
 class AdminController extends Controller
 {
@@ -170,5 +173,102 @@ class AdminController extends Controller
             $dsnguoidung_obj->save();
             return redirect()->route('user')->with('success', 'Cập nhật thành công ' . $dsnguoidung_obj->ma_nguoi_dung . ' - ' . $dsnguoidung_obj->ten_nguoi_dung);
         }
+    }
+
+    public function testnotification ($id) {
+        // $user = User::find(1);
+        $data = Array(
+            'ma_giai_thuong' => $id
+        );
+        $options = array(
+            'cluster' => 'ap1',
+            'encrypted' => true
+        );
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+
+        $pusher->trigger('NotificationEvent', 'send-message', $data);
+    }
+
+    public function getPrize ($id) {
+        $ds_giaithuong_obj = DanhSachGiaiThuong::orderBy('so_thu_tu', 'asc')->get();
+        $current_giaithuong_obj = DanhSachGiaiThuong::find($id);
+        return view('frontend.prize')->with('ds_giaithuong_obj', $ds_giaithuong_obj)->with('ma_giai_thuong', $id)
+            ->with('current_giaithuong_obj', $current_giaithuong_obj);
+    }
+
+    public function updatePrizeInControl (Request $request) {
+        $request->validate([
+            'ma_giai_thuong'=>'required',
+            'ma_so_nhan_giai' => 'digits_between:0,9'
+        ], [
+            'ma_giai_thuong.required' => 'Bắt buộc nhập mã giải thưởng',
+            'ma_so_nhan_giai.digits_between' => 'Mã số nhận giải phải từ 0 đến 9'
+        ]);
+
+        if (($request->phan_loai_khach == 1 || $request->phan_loai_khach == 2 || $request->phan_loai_khach == 3) &&
+            $request->ma_so_nhan_giai != '') {
+            return response()->json(['error'=> 'Nếu đã chọn phân loại khách thì không thể chỉ định cụ thể khách cho giải', 'ma_giai_thuong' => $request->ma_giai_thuong]);
+        }
+
+        if ($request->phan_loai_khach == '' && $request->ma_so_nhan_giai == '') {
+            return response()->json(['error'=> 'Vui lòng nhập thông tin cụ thể khách sẽ nhận giải', 'ma_giai_thuong' => $request->ma_giai_thuong]);
+        }
+
+        $giaithuong_obj = DanhSachGiaiThuong::find($request->ma_giai_thuong);
+        $giaithuong_obj->ma_so_nhan_giai = $request->ma_so_nhan_giai;
+        $giaithuong_obj->ten_nguoi_nhan_giai = $request->ten_nguoi_nhan_giai;
+        $giaithuong_obj->phan_loai_khach = $request->phan_loai_khach;
+        $giaithuong_obj->thoi_gian_cho = $request->thoi_gian_cho;
+        $giaithuong_obj->save();
+
+        $data = Array(
+            'ma_giai_thuong' => $giaithuong_obj->ma_giai_thuong,
+            'ten_giai_thuong' => $giaithuong_obj->noi_dung,
+            'type' => 'begin'
+        );
+        $options = array(
+            'cluster' => 'ap1',
+            'encrypted' => true
+        );
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+
+        $pusher->trigger('NotificationEvent', 'send-message', $data);
+        return response()->json(['success'=> 'Tất cả sẵn sàng', 'ma_giai_thuong' => $request->ma_giai_thuong]);
+    }
+
+    public function playPrizeInControl ($id) {
+        if ($id != '') {
+            $data = Array(
+                'ma_giai_thuong' => $id,
+                'type' => 'end'
+            );
+            $options = array(
+                'cluster' => 'ap1',
+                'encrypted' => true
+            );
+    
+            $pusher = new Pusher(
+                env('PUSHER_APP_KEY'),
+                env('PUSHER_APP_SECRET'),
+                env('PUSHER_APP_ID'),
+                $options
+            );
+    
+            $pusher->trigger('NotificationEvent', 'send-message', $data);
+            return response()->json(['success'=> 'Bắt đầu thành công']);
+        }
+        return response()->json(['error'=> 'Khởi động không thành công']);
     }
 }
