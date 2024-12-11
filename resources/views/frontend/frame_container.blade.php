@@ -11,39 +11,33 @@
     <img src='{{asset("public/images/left_background.png")}}' />
 </div>
 <div class="lucky_numbers">
-    <div class="main_title" id="tengiaithuong">VÒNG QUAY MAY MẮN</div>
+    <div class="sub_title" id="tengiaithuong">VÒNG QUAY MAY MẮN</div>
+    <div class="start_btn_group">
+        <a id="start" autofocus class="custom_animation_btn">BẮT ĐẦU</a>
+    </div>
+    
     <div class="row">
         <div class="col-md-12">
             <div id="myBar">                        
             </div>
-            <img class="lion_img" src='{{asset("public/images/lion_background.png")}}' />
+            <!-- <img class="lion_img" src='{{asset("public/images/lion_background.png")}}' /> -->
             <div class="row item_container">
-                <div class="col-md-2 col-sm-2 item_div">
+                <div class="col-xs-2-10 item_div">
                     <div class="item" id="number_1"></div>
                 </div>
-                <div class="col-md-2 col-sm-2 item_div">
+                <div class="col-xs-2-10 item_div">
                     <div class="item" id="number_2"></div>
                 </div>
-                <div class="col-md-2 col-sm-2 item_div">
+                <div class="col-xs-2-10 item_div">
                     <div class="item" id="number_3"></div>
                 </div>
-                <div class="col-md-2 col-sm-2 item_div">
+                <div class="col-xs-2-10 item_div">
                     <div class="item" id="number_4"></div>
                 </div>
-                <div class="col-md-2 col-sm-2 item_div">
+                <div class="col-xs-2-10 item_div">
                     <div class="item" id="number_5"></div>
                 </div>
-                <div class="col-md-2 col-sm-2 item_div">
-                    <button class="custom_button" id="start" autofocus>
-                        <img class="icon" src='{{asset("public/images/play_icon.png")}}' />
-                    </button>
-                </div>
             </div>
-            <!-- <div class="col-md-12">
-                <figure class="swing">
-                    <img src='{{asset("public/images/pham_long_khanh.png")}}' width="200" >
-                </figure>  
-            </div> -->
         </div>
     </div>            
 </div>
@@ -57,8 +51,10 @@
             <div class="col-md-2 col-sm-3"></div>
         @endif
         <div class="col-md-2 col-sm-3" style="padding: 0.2rem; min-height: 6rem;">
-            <div class="list-group-item {{$giaithuong->da_nhan_giai == 1 ? 'active' : ''}}" data-magiaithuong="{{$giaithuong->ma_giai_thuong ?? ''}}" 
-                data-tengiaithuong="{{$giaithuong->noi_dung ?? ''}}">
+            <div class="list-group-item {{$giaithuong->da_nhan_giai == 1 ? 'active' : ''}}" 
+                data-magiaithuong="{{$giaithuong->ma_giai_thuong ?? ''}}" 
+                data-tengiaithuong="{{$giaithuong->noi_dung ?? ''}}"
+                id="prize_{{$giaithuong->ma_giai_thuong ?? ''}}">
                 @if ($giaithuong->da_nhan_giai == 0)
                     <i class="fa-solid fa-award"></i>
                 @endif
@@ -70,11 +66,5 @@
         </div>
         @php $stt++; @endphp
         @endforeach
-    </div>
-</div>
-<div class="modal fade" id="resultModel" tabindex="-1" role="dialog" 
-    aria-labelledby="resultModelLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered full_modal_dialog" role="document">
-        <div id="congratulation"></div>
     </div>
 </div>

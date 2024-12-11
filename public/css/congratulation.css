@@ -2,24 +2,59 @@
     position: fixed;
     width: 100%;
     height: 100%;
+    /* background: #000; */
+    box-shadow: inset 1px 1px 20px 0px #0000007a;
   }
+
+  .popup_background_frame {
+    width: 80%;
+    height: 100%;
+    /* box-shadow: inset 1px 1px 20px #000; */
+    margin: auto;
+    border-radius: 30rem;
+  }
+
+.popup_background_frame img {
+  opacity: 0.5;
+  margin: auto;
+  /* width: 100%; */
+  height: 100%;
+  align-items: center;
+  display: block;
+  animation: animName 20s linear infinite;
+  filter: drop-shadow(2px 4px 50px #fff);
+}
+
+@keyframes animName {
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
   
   .popup_background .left_popup_background {
     float: left;
     padding: 5rem;
+    height: 100%;
   }
   
   .popup_background .left_popup_background img {
-    width: 15rem;
+    width: 20rem;
   }
   
   .popup_background .right_popup_background {
     float: right;
     padding: 5rem;
+    height: 100%;
   }
   
   .popup_background .right_popup_background img {
-    width: 15rem;
+    width: 20rem;
+    bottom: 0;
+    position: absolute;
+    padding: 3rem;
   }
   
   .popup_background .center_popup_background {
@@ -37,7 +72,7 @@
   .fireworks {
     width: 100%;
     position: absolute;
-    background-color: #fff;
+    background-color: #930000;
   }
   #canvas-container {
     height: 100%;
@@ -84,9 +119,93 @@
     opacity: 0;
     font-size: 5rem;
     font-weight: 800;
-    color: #ff9626;
+    color: #ffd500;
+    /* z-index: 1; */
   }
 
   #prize_customer {
     display: none;
   }
+
+  #prize_customer h1 {
+    color: #ffd500;
+    text-shadow: 1px 1px 1px #000;
+    font-weight: 800;
+    font-family: system-ui;
+  }
+
+  .sub_title_popup {
+    font-size: 5rem !important;
+    font-weight: 800 !important;
+    text-align: center;
+    background: url("../images/text_background2.png");
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+    color: transparent !important;
+    animation: moveBgPopup 150s linear infinite;
+  }
+  
+  @keyframes moveBgPopup {
+    0% {
+      background-position: 0% 30%;
+    }
+    100% {
+      background-position: 1000% 500%;
+    }
+  }
+
+  #winner {
+    text-shadow: 1px 1px 4px #000000;
+  }
+
+  #close_prize_customer {
+    background-color: #930000;
+    border: none;
+    padding: -2.5rem 0 2rem;
+    font-size: 1.2rem;
+    color: #ffd500;
+    font-weight: 500;
+    border: 0.3rem solid #ffd500;
+    box-shadow: inset 1px 1px 7px #000;
+    border-radius: 3rem;
+  }
+
+  .flower_left_background {
+    position: absolute;
+    opacity: 0.5;
+    height: auto;
+    animation: scrolltop 10s linear infinite;
+    background-repeat: repeat;
+    width: 14rem;
+    filter: drop-shadow(0px 7px 7px #000);
+  }
+
+  .flower_right_background {
+    position: absolute;
+    opacity: 0.5;
+    height: auto;
+    animation: scrollbottom 10s linear infinite;
+    background-repeat: repeat;
+    width: 14rem;
+    filter: drop-shadow(0px 7px 7px #000);
+    right: 0;
+  }
+
+  @keyframes scrolltop {
+    from {
+      top: 0%;
+    }
+    to {
+      top: -30%;
+    }
+  }
+
+  @keyframes scrollbottom {
+    from {
+      bottom: 0%;
+    }
+    to {
+      bottom: -30%;
+    }
+  }
+  

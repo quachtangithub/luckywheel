@@ -14,11 +14,16 @@ $(document).ready(function() {
     });
 
     $('.list-group-item').on('click', function () {
+        $('.lucky_numbers .item').html('');
+        for (let i = 1; i <= 5; i++) {
+            document.getElementById('number_' + i).classList.remove('active');
+        }
         var magiaithuong = $(this).data('magiaithuong');
         var tengiaithuong = $(this).data('tengiaithuong');
         $('#tengiaithuong').html(tengiaithuong);
         $('#magiaithuong').val(magiaithuong);
         $('.lucky_numbers').show();
+        document.getElementById('prize_' + magiaithuong).classList.add('item_active');
         $('#start').show();
     });
 
@@ -110,8 +115,6 @@ function startRandom(number, started, duration_setting, winner_arr = []) {
                     console.log(distance_time + '///' + duration);
                     // cap nhat nguoi thang giai
                     update_winner(winner);
-                    
-                    // $('#winner').html(winner);
                     $('#resultModel').modal('show'); 
                 }, 100);
             }

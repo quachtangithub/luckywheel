@@ -16,14 +16,6 @@
     text-shadow: 3px 0px 4px #a3a3a3c7;
     line-height: 2rem;
 }
-
-/* .sub_title {
-  font-size: 3rem;
-  text-align: center;
-  font-family: sans-serif;
-  color: #646464;
-  font-weight: 600;
-} */
 .sub_title {
   font-size: 2.8rem;
   font-weight: 800;
@@ -46,10 +38,14 @@
 .lucky_numbers .item_container {
   padding: 0 0.4rem;
     margin: auto;
-    /* width: 80%; */
     border: 0.01rem solid #cdcdcd;
     border-radius: 1rem;
     box-shadow: 2px 1px 6px 0px #a5a5a5;
+    background: url("../images/text_background.png");
+    /* background-clip: text; */
+    /* -webkit-background-clip: text; */
+    color: transparent;
+    animation: moveBg 150s linear infinite;
 }
 
 .lucky_numbers .item {
@@ -57,10 +53,10 @@
   border-radius: 0.3rem;
   aspect-ratio: 1;
   text-align: center;
-  font-size: 6rem;
+  font-size: 10rem;
   color: #ffb555;
   font-weight: 700;
-  background-color: transparent;
+  background-color: #ffffffd9;
 }
 
 .lucky_numbers .item.active {
@@ -391,6 +387,7 @@
     width: 15rem;
     left: 0;
     top: 0;
+    filter: drop-shadow(5px 5px 15px #fff);
   }
   /* .checkmark-circle .background {
     width: 150px;
@@ -774,4 +771,79 @@ body, ::backdrop {
   z-index: -1;
   position: absolute;
   width: 100%;
+}
+
+/* đè code css */
+.col-xs-2-10,
+.col-sm-2-10 {
+  position: relative;
+  min-height: 1px;
+}
+
+.col-xs-2-10 {
+  width: 20% !important;
+  float: left;
+}
+
+@media (min-width: 768px) {
+  .col-sm-2-10 {
+    width: 20%;
+    float: left;
+  }
+}
+
+@media (min-width: 992px) {
+  .col-md-2-10 {
+    width: 20%;
+    float: left;
+  }
+}
+
+@media (min-width: 1200px) {
+  .col-lg-2-10 {
+    width: 20%;
+    float: left;
+  }
+}
+
+.start_btn_group {
+  text-align: center;
+  margin: 1rem;
+  z-index: 1;
+  position: relative;
+}
+
+.custom_animation_btn {
+  font-size: 1.8rem;
+  text-decoration: none;
+  color: #fdbd46;
+  background-color: #ae0000;
+  padding: 0.3rem 6rem;
+  border-radius: 3rem;
+  border: 0.3rem solid #FFC107;
+  box-shadow: inset 1px 1px 7px #404040;
+  cursor: pointer;
+}
+
+.custom_animation_btn:hover {
+  color: #ae0000;
+  background-color: #fdbd46;
+}
+
+.item_active {
+  background-color: #fdbd49 !important;
+  animation: animFlip 10s linear infinite;
+}
+
+.item_active .prize , .item_active .emphasize {
+  color: #ae0000 !important;
+}
+
+@keyframes animFlip {
+0%{
+  transform: rotateY(0deg);
+}
+100%{
+  transform: rotateY(360deg);
+}
 }

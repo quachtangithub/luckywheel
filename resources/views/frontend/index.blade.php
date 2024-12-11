@@ -23,6 +23,12 @@
         <div class="frame_container" id="frame_container">   
             
         </div>
+        <div class="modal fade" id="resultModel" tabindex="-1" role="dialog" 
+            aria-labelledby="resultModelLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered full_modal_dialog" role="document">
+                <div id="congratulation"></div>
+            </div>
+        </div>
         <script>
             $(document).ready(function() {
                 frameContainer();

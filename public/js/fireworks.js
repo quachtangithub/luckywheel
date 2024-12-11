@@ -52,7 +52,7 @@
             duration: 500,
             delay: 500
         });
-    }, 500);
+    }, 300);
 }(jQuery));
 
 (function($) {
