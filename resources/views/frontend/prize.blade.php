@@ -96,14 +96,11 @@
        </div>
        <script>
         $(document).ready(function() {
-            $("select#ma_giai_thuong").click(function() {
-                var open = $(this).data("isopen");
-                if(open) {
-                    window.location.href = $(this).val()
-                }
-                //set isopen to opposite so next time when use clicked select box
-                //it wont trigger this event
-                $(this).data("isopen", !open);
+            $('select#ma_giai_thuong').on('change', function (e) {
+                var optionSelected = this.value;
+                var route = "{{route('prize', ':id')}}";
+                route = route.replace(':id', optionSelected);
+                window.location.href = route;
             });
 
             $("#prestart").on('click', function(e) {
