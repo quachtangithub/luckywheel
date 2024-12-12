@@ -31,4 +31,5 @@ Route::get('/prize/{id}', 'App\\Http\\Controllers\\AdminController@getPrize')->n
 
 Route::get('/testnotification/{id}', 'App\\Http\\Controllers\\AdminController@testnotification')->name('testnotification');
 Route::get('/play/{id}', 'App\\Http\\Controllers\\AdminController@playPrizeInControl')->name('play');
+Route::get('/returnprize', 'App\\Http\\Controllers\\AdminController@returnPrize')->name('returnprize');
 Route::post('/updateprizeincontrol', 'App\\Http\\Controllers\\AdminController@updatePrizeInControl')->name('updateprizeincontrol');

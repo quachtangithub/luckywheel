@@ -1,15 +1,4 @@
 <script src="{{asset('public/js/frontend.js')}}"></script>
-<input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-<div class="background">
-    <img class="top_background" src='{{asset("public/images/top_background.png")}}' />       
-    <img class="left_background_header" src='{{asset("public/images/spring_cake.png")}}' />
-</div>
-<div class="header">
-    <img class="logo" src='{{asset("public/images/logo.png")}}' />
-</div>
-<div class="left_background">
-    <img src='{{asset("public/images/left_background.png")}}' />
-</div>
 <div class="lucky_numbers">
     <div class="sub_title" id="tengiaithuong">VÒNG QUAY MAY MẮN</div>
     <div class="start_btn_group">
@@ -38,7 +27,8 @@
                     <div class="item" id="number_5"></div>
                 </div>
             </div>
-        </div>
+        </div><br>
+        <div class="back_to_prize" onclick="frameContainer()">Trở về danh sách giải</div>
     </div>            
 </div>
 
@@ -47,10 +37,10 @@
     <div class="row">
         @php $stt = 1; @endphp
         @foreach ($danhsachgiaithuong as $giaithuong)
-        @if ($stt == 1 || $stt == 5)
-            <div class="col-md-2 col-sm-3"></div>
+        @if ($stt == 1 || $stt == 3)
+            <div class="col-md-3 col-sm-4"></div>
         @endif
-        <div class="col-md-2 col-sm-3" style="padding: 0.2rem; min-height: 6rem;">
+        <div class="col-md-3 col-sm-4" style="padding: 0.2rem; min-height: 6rem;">
             <div class="list-group-item prize_all {{$giaithuong->da_nhan_giai == 1 ? 'active' : ''}}" 
                 data-magiaithuong="{{$giaithuong->ma_giai_thuong ?? ''}}" 
                 data-tengiaithuong="{{$giaithuong->noi_dung ?? ''}}"

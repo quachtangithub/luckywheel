@@ -5,6 +5,7 @@
     z-index: 1;
     position: relative;
     display: none;
+    height: 72vh;
 }
 
 .lucky_numbers .main_title {
@@ -24,15 +25,27 @@
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
-  animation: moveBg 150s linear infinite;
+  animation: moveBg 30s linear infinite;
 }
 
 @keyframes moveBg {
   0% {
-    background-position: 0% 30%;
+    background-position: 0% 20%;
+  }
+  20% {
+    background-position: 20% 40%;
+  }
+  40% {
+    background-position: 40% 60%;
+  }
+  60% {
+    background-position: 60% 80%;
+  }
+  60% {
+    background-position: 80% 100%;
   }
   100% {
-    background-position: 1000% 500%;
+    background-position: 100% 120%;
   }
 }
 .lucky_numbers .item_container {
@@ -41,11 +54,47 @@
     border: 0.01rem solid #cdcdcd;
     border-radius: 1rem;
     box-shadow: 2px 1px 6px 0px #a5a5a5;
-    background: url("../images/text_background.png");
+    background: url("../images/text_background_emphasize.png");
     /* background-clip: text; */
     /* -webkit-background-clip: text; */
     color: transparent;
-    animation: moveBg 150s linear infinite;
+    animation: moveBgSpeed 300s linear infinite;
+}
+
+@keyframes moveBgSpeed {
+  0% {
+    background-position: 0% 30%;
+  }
+  10% {
+    background-position: 30% 60%;
+  }
+  20% {
+    background-position: 60% 90%;
+  }
+  30% {
+    background-position: 90% 120%;
+  }
+  40% {
+    background-position: 120% 150%;
+  }
+  50% {
+    background-position: 150% 180%;
+  }
+  60% {
+    background-position: 210% 240%;
+  }
+  70% {
+    background-position: 240% 270%;
+  }
+  80% {
+    background-position: 270% 300%;
+  }
+  90% {
+    background-position: 300% 330%;
+  }
+  100% {
+    background-position: 330% 350%;
+  }
 }
 
 .lucky_numbers .item {
@@ -138,7 +187,7 @@
   box-shadow: inset -2px -3px 16px 1px #ffffff;
   background: url(../images/text_background.png);
   color: transparent;
-  animation: moveBg 50s linear infinite;
+  animation: moveBg 30s linear infinite;
 }
 
 .list-group .list-group-item.active .prize{
@@ -566,7 +615,7 @@
 
   .left_background img {
     width: 55rem;
-    animation: animName 20s linear infinite;
+    animation: animName 300s linear infinite;
   }
 
 @keyframes animFlip {
@@ -587,30 +636,35 @@
   }
 }
 
+@media only screen and (max-width : 1500px) {
+  .lucky_numbers .item {
+    font-size: 8rem;
+  }
+}
 
+@media only screen and (max-width : 1350px) {
+  .lucky_numbers .item {
+    font-size: 7rem;
+  }
+}
 
 @media only screen and (max-width : 1200px) {
-  /* .header {
-    margin-top: -15rem;
-  } */
-
-  /* .top_background {
-    top: -2rem;
-  } */
-
   .list-group {
     margin-top: 0;
-}
+  }
+  .lucky_numbers .item {
+    font-size: 6rem;
+  }
 }
 
 @media only screen and (max-width : 991px) {
-  /* .top_background {
-    top: -2rem;
-  } */
-
   .lucky_numbers {
     width: 100%;
     padding: 0 1rem;
+  }
+
+  .lucky_numbers .item {
+    font-size: 5rem;
   }
 
   .item_container {
@@ -769,6 +823,7 @@ body, ::backdrop {
   height: 90vh;
   overflow: scroll;
   overflow-x: hidden;
+  position: absolute;
 }
 
 .full_background {
@@ -850,4 +905,15 @@ body, ::backdrop {
 100%{
   transform: rotateY(360deg);
 }
+}
+
+.back_to_prize {
+  background-color: #ffc06d;
+  width: fit-content !important;
+  border-radius: 1rem;
+  color: #c35a0b;
+  margin: auto;
+  padding: 0.2rem;
+  font-size: 1.2rem;
+  box-shadow: 1px 1px 3px #4e4e4e;
 }

@@ -21,8 +21,19 @@
         <input type="hidden" id="magiaithuong" value="" />
         <input type="hidden" id="update_winner_url" value="{{route('updatewinner')}}" />
         <input type="hidden" id="config_winner_url" value="{{route('getconfigwinner')}}" />
-        <div class="frame_container" id="frame_container">   
-            
+        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+        <div class="frame_container" id="frame_container">
+            <div class="background">
+                <img class="top_background" src='{{asset("public/images/top_background.png")}}' />       
+                <img class="left_background_header" src='{{asset("public/images/spring_cake.png")}}' />
+            </div>
+            <div class="header">
+                <img class="logo" src='{{asset("public/images/logo.png")}}' />
+            </div>
+            <div class="left_background">
+                <img src='{{asset("public/images/left_background.png")}}' />
+            </div>
+            <div id="frame_data"></div>
         </div>
         <div class="modal fade" id="resultModel" tabindex="-1" role="dialog" 
             aria-labelledby="resultModelLabel" aria-hidden="true">
@@ -42,14 +53,14 @@
                     }
                 });
                 var url = $('#frame_container_url').val();
-                $('#frame_container').html();
+                $('#frame_data').html();
                 $.ajax({
                     url: url,
                     type: 'GET',
                     contentType: false,
                     processData: false,
                     success: function(result){     
-                        $('#frame_container').html(result);    
+                        $('#frame_data').html(result);    
                     }
                 });
             }
@@ -82,7 +93,10 @@
                     audio.play();  
                     $('#start').hide();
                     getConfigWinner();
-                }   
+                }   else if (data.type == 'returnprize') {
+                    $('#resultModel').modal('hide'); 
+                    frameContainer();
+                } 
             });
         </script>
     </body>

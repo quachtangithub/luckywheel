@@ -1,6 +1,6 @@
 //Some parameters
 var audio = document.getElementById("bg-sound");
-var audio_url = $('#audio_url1').val();
+var audio_url = $('#audio_url').val();
 var audio = new Audio(audio_url);
 var results = "";
 

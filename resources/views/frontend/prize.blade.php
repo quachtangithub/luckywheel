@@ -80,11 +80,14 @@
                             value="{{$current_giaithuong_obj->thoi_gian_cho ?? ''}}" />
                     </div><br>
                     <div class="row">
-                        <div class="col-md-6 text-center">
+                        <div class="col-md-4 text-center">
                             <button type="button" class="btn btn-warning" id="prestart">Khởi động</button>
                         </div>
-                        <div class="col-md-6 text-center">
+                        <div class="col-md-4 text-center">
                             <button type="button" class="btn btn-danger" id="finish" data-id="{{$ds_giaithuong_item->ma_giai_thuong ?? ''}}">Bắt đầu</button>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <button type="button" class="btn btn-warning" id="returnprize">Danh sách giải</button>
                         </div>
                     </div> 
                 </form>               
@@ -144,11 +147,29 @@
                         processData: false,
                         success: function(result){
                             if (result.success) {
-                                hide_loading();
                                 alert(result.success);
                                 location.reload();
                             } else if (result.errors) {
-                                hide_loading();
+                                alert(result.error);
+                            }
+                        }
+                    });
+                }
+            });
+
+            $('#returnprize').on('click', function () {
+                if (confirm("Bạn có chắc muốn quay lại danh sách giải thưởng")) {
+                    let url = "{{route('returnprize')}}";
+                    $.ajax({
+                        url: url,
+                        method: 'GET',
+                        contentType: false,
+                        processData: false,
+                        success: function(result){
+                            if (result.success) {
+                                alert(result.success);
+                                location.reload();
+                            } else if (result.errors) {
                                 alert(result.error);
                             }
                         }
