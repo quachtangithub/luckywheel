@@ -636,6 +636,25 @@
   }
 }
 
+.frame_container {
+  margin: 3rem;
+  padding: 1rem;
+  /* position: absolute; */
+  border: 0.01rem double #ff9000;
+  box-shadow: inset 1px 1px 13px 3px #242424;
+  border-radius: 1rem;
+  height: 90vh;
+  overflow: scroll;
+  overflow-x: hidden;
+  position: absolute;
+}
+
+.full_background {
+  z-index: -1;
+  position: absolute;
+  width: 100%;
+}
+
 @media only screen and (max-width : 1500px) {
   .lucky_numbers .item {
     font-size: 8rem;
@@ -698,11 +717,16 @@
     font-size: 1rem;
   }
   .left_background_header {
-    width: 10rem;
+    width: 6rem;
     margin: 0;
   }
   .sub_title  {
-    font-size: 1.5rem;
+    font-size: 3rem;
+  }
+
+  .popup_background_frame img {
+    width: 100%;
+    height: auto;
   }
 }
 
@@ -712,10 +736,6 @@
     height: 3rem;
   }
 
-  /* .top_background {
-    top: -1rem;
-  } */
-
   .header {
     text-align: center;
     /* margin-top: -9rem; */
@@ -724,11 +744,30 @@
   }
 
   .header .logo {
-    width: 6rem;
+    width: 9rem;
   }
   .top_background {
-    width: 15rem;
-    top: -5rem;
+    width: 9rem;
+    top: -1rem;
+  }
+  #start {
+    font-size: 1rem;
+    padding: 0.1rem 1rem;
+  }
+
+  .frame_container {
+    margin: 3rem 0.5rem;
+  }
+
+  .lucky_numbers .item {    
+    font-size: 3rem;
+  }
+  .sub_title {
+    font-size: 2.5rem;
+    line-height: 2.3rem;
+  }
+  .left_background {
+    display: none;
   }
 }
 
@@ -755,7 +794,6 @@
   }
 
   .lucky_numbers .item {
-    width: 3rem;
     font-size: 2rem;
   }
 
@@ -811,25 +849,6 @@ body, ::backdrop {
 }
 [fullscreen] #fullscreen-button svg:nth-child(2) {
   display: inline-block;
-}
-
-.frame_container {
-  margin: 3rem;
-  padding: 1rem;
-  /* position: absolute; */
-  border: 0.01rem double #ff9000;
-  box-shadow: inset 1px 1px 13px 3px #242424;
-  border-radius: 1rem;
-  height: 90vh;
-  overflow: scroll;
-  overflow-x: hidden;
-  position: absolute;
-}
-
-.full_background {
-  z-index: -1;
-  position: absolute;
-  width: 100%;
 }
 
 /* đè code css */
