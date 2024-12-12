@@ -15,27 +15,36 @@
         <!-- <div class="background-image">
             <img src='{{asset("public/images/backend_background.png")}}' />
         </div> -->
+        
         <div class="backend_container">
+            @include('backend.logout')
             <div class="header">
                 <div class="row">                    
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="item">
                             <a href="{{route('admin')}}" class="inside_item active">
                                 GIẢI THƯỞNG
                             </a>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="item">
                             <a href="{{route('user')}}" class="inside_item">
                                 DANH SÁCH KHÁCH MỜI
                             </a>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="item">
                             <a href="{{route('prize', 0)}}" class="inside_item">
                                 ĐIỀU KHIỂN TRỰC TIẾP
+                            </a>
+                        </div>
+                    </div>     
+                    <div class="col-md-3">
+                        <div class="item">
+                            <a href="{{route('/')}}" class="inside_item">
+                                QUAY SỐ
                             </a>
                         </div>
                     </div>                  

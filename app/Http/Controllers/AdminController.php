@@ -11,6 +11,7 @@ use App\Models\DanhSachGiaiThuong;
 use App\Models\DanhSachNguoiDung;
 use App\Notifications\LuckyWheelNotification;
 use Session;
+use Redirect;
 
 class AdminController extends Controller
 {
@@ -36,6 +37,11 @@ class AdminController extends Controller
         } else {
             return redirect()->back()->with('status', 'Email hoặc Password không chính xác');
         }
+    }
+
+    public function logout () {
+        Auth::logout();
+        return Redirect::to('/login');
     }
 
     public function updateWinner (Request $request) {
@@ -88,6 +94,7 @@ class AdminController extends Controller
         if ($request->ma_giai_thuong == '') {
             // them moi
             $request_data = $request->except('ma_giai_thuong');
+            $request_data['user_id'] = Auth::user()->id;
             $giaithuong_obj = DanhSachGiaiThuong::create($request_data);
             return redirect()->back()->with('success', 'Thêm mới thành công ' . $giaithuong_obj->noi_dung)
                 ->with('ten_giai_thuong', $request->noi_dung)->with('ma_giai_thuong', $request->ma_giai_thuong);
@@ -103,6 +110,7 @@ class AdminController extends Controller
             $giaithuong_obj->ten_nguoi_nhan_giai_thuc_te = $request->ten_nguoi_nhan_giai_thuc_te;
             $giaithuong_obj->da_nhan_giai = $request->da_nhan_giai;
             $giaithuong_obj->thoi_gian_cho = $request->thoi_gian_cho;
+            $giaithuong_obj->user_id = Auth::user()->id;
             $giaithuong_obj->save();
             return redirect()->back()->with('success', 'Cập nhật thành công ' . $giaithuong_obj->noi_dung)
                 ->with('ten_giai_thuong', $request->noi_dung)->with('ma_giai_thuong', $request->ma_giai_thuong);

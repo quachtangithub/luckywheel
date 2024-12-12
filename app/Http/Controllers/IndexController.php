@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 use App\Models\DanhSachGiaiThuong;
 use Session;
 
@@ -14,7 +15,8 @@ class IndexController extends Controller
     }
 
     public function frameContainer () {
-        $danhsachgiaithuong = DanhSachGiaiThuong::orderBy('da_nhan_giai', 'asc')->orderBy('so_thu_tu', 'asc')->get();
+        $user_id = Auth::user()->id;
+        $danhsachgiaithuong = DanhSachGiaiThuong::where('user_id', $user_id)->orderBy('da_nhan_giai', 'asc')->orderBy('so_thu_tu', 'asc')->get();
         return view('frontend.frame_container')->with('danhsachgiaithuong', $danhsachgiaithuong)->render();
     }
 }
