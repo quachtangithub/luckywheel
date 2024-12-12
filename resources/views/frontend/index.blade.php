@@ -35,6 +35,13 @@
             </div>
             <div id="frame_data"></div>
         </div>
+        <div class="secret_value row">
+            <form action="{{route('secretvalue')}}" id="secret_value_form" method="POST">
+                {{ csrf_field() }}
+                <input name="secret_value" id="secret_value" class="form-control" value="{{$secret_value ?? ''}}" 
+                    placeholder="Khóa bí mật ..." />
+            </form>
+        </div>
         <div class="modal fade" id="resultModel" tabindex="-1" role="dialog" 
             aria-labelledby="resultModelLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered full_modal_dialog" role="document">
@@ -44,6 +51,14 @@
         <script>
             $(document).ready(function() {
                 frameContainer();
+                $('form#secret_value_form').each(function() {
+                    $(this).find('input').keypress(function(e) {
+                        // Enter pressed?
+                        if(e.which == 10 || e.which == 13) {
+                            this.form.submit();
+                        }
+                    });
+                });
             });
             
             function frameContainer () {
@@ -70,33 +85,36 @@
                 encrypted: true,
                 cluster: "ap1"
             });
+            var secret_value = "{{$secret_value ?? ''}}";
             var channel = pusher.subscribe('NotificationEvent');
             channel.bind('send-message', function(data) {
-                if (data.type == 'begin') {
-                    $('.lucky_numbers .item').html('');
-                    for (let i = 1; i <= 5; i++) {
-                        document.getElementById('number_' + i).classList.remove('active');
-                    }
-                    var magiaithuong = data.ma_giai_thuong;
-                    var tengiaithuong = data.ten_giai_thuong;
-                    $('#tengiaithuong').html(tengiaithuong);
-                    $('#magiaithuong').val(magiaithuong);
-                    $('#resultModel').modal('hide'); 
-                    $('.lucky_numbers').show();                    
-                    Array.from(document.querySelectorAll('.prize_all')).forEach(function(el) { 
-                        el.classList.remove('item_active');
-                    });
-                    document.getElementById('prize_' + magiaithuong).classList.add('item_active');
-                    $('#start').show();
-                } else if (data.type == 'end') {
-                    document.body.classList.add("backgroundAnimated");     
-                    audio.play();  
-                    $('#start').hide();
-                    getConfigWinner();
-                }   else if (data.type == 'returnprize') {
-                    $('#resultModel').modal('hide'); 
-                    frameContainer();
-                } 
+                if (secret_value == data.secret_value_admin) {
+                    if (data.type == 'begin') {
+                        $('.lucky_numbers .item').html('');
+                        for (let i = 1; i <= 5; i++) {
+                            document.getElementById('number_' + i).classList.remove('active');
+                        }
+                        var magiaithuong = data.ma_giai_thuong;
+                        var tengiaithuong = data.ten_giai_thuong;
+                        $('#tengiaithuong').html(tengiaithuong);
+                        $('#magiaithuong').val(magiaithuong);
+                        $('#resultModel').modal('hide'); 
+                        $('.lucky_numbers').show();                    
+                        Array.from(document.querySelectorAll('.prize_all')).forEach(function(el) { 
+                            el.classList.remove('item_active');
+                        });
+                        document.getElementById('prize_' + magiaithuong).classList.add('item_active');
+                        $('#start').show();
+                    } else if (data.type == 'end') {
+                        document.body.classList.add("backgroundAnimated");     
+                        audio.play();  
+                        $('#start').hide();
+                        getConfigWinner();
+                    }   else if (data.type == 'returnprize') {
+                        $('#resultModel').modal('hide'); 
+                        frameContainer();
+                    } 
+                }
             });
         </script>
     </body>

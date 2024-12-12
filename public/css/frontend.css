@@ -917,3 +917,19 @@ body, ::backdrop {
   font-size: 1.2rem;
   box-shadow: 1px 1px 3px #4e4e4e;
 }
+
+.secret_value {
+  width: 20rem;
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  margin: auto;
+}
+
+#secret_value {
+  padding: 0.3rem 0.5rem;
+  background-color: #ffffff5e;
+  box-shadow: 1px 1px 9px #000;
+  color: #000; 
+  text-align: center;
+}

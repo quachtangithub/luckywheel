@@ -25,6 +25,11 @@
                 <form id="formData">
                     {{ csrf_field() }}
                     <div class="form-group">
+                        <label for="secret_value_admin">Khóa bí mật</label>
+                        <input class="form-control" id="secret_value_admin" 
+                            name="secret_value_admin" value="{{$secret_value_admin ?? ''}}" />
+                    </div>
+                    <div class="form-group">
                         <label for="ma_giai_thuong">Giải thưởng</label>
                         <select name="ma_giai_thuong" id="ma_giai_thuong" class="form-control">
                             @foreach ($ds_giaithuong_obj as $ds_giaithuong_item)
@@ -87,7 +92,7 @@
                             <button type="button" class="btn btn-danger" id="finish" data-id="{{$ds_giaithuong_item->ma_giai_thuong ?? ''}}">Bắt đầu</button>
                         </div>
                         <div class="col-md-4 text-center">
-                            <button type="button" class="btn btn-warning" id="returnprize">Danh sách giải</button>
+                            <button type="button" class="btn btn-warning" id="returnprize">Danh sách</button>
                         </div>
                     </div> 
                 </form>               
@@ -135,8 +140,10 @@
             $('#finish').on('click', function () {
                 let ma_giai_thuong = $(this).data('id');
                 if (confirm("Bạn có chắc muốn bắt đầu")) {
+                    let secret_value_admin = $('#secret_value_admin').val();
                     let url = "{{route('play',':id')}}";
                     url = url.replace(':id', ma_giai_thuong);
+                    url = url + '?secret_value_admin=' + secret_value_admin;
                     $.ajax({
                         url: url,
                         method: 'GET',
@@ -156,7 +163,8 @@
 
             $('#returnprize').on('click', function () {
                 if (confirm("Bạn có chắc muốn quay lại danh sách giải thưởng")) {
-                    let url = "{{route('returnprize')}}";
+                    let secret_value_admin = $('#secret_value_admin').val();
+                    let url = "{{route('returnprize')}}" + '?secret_value_admin=' + secret_value_admin;
                     $.ajax({
                         url: url,
                         method: 'GET',

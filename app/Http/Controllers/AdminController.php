@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\DanhSachGiaiThuong;
 use App\Models\DanhSachNguoiDung;
 use App\Notifications\LuckyWheelNotification;
+use Session;
 
 class AdminController extends Controller
 {
@@ -207,8 +208,9 @@ class AdminController extends Controller
             $current_giaithuong_obj = DanhSachGiaiThuong::inRandomOrder()->first();
             $id = $current_giaithuong_obj->ma_giai_thuong;
         }
+        $secret_value_admin = Session::get('secret_value_admin');
         return view('frontend.prize')->with('ds_giaithuong_obj', $ds_giaithuong_obj)->with('ma_giai_thuong', $id)
-            ->with('current_giaithuong_obj', $current_giaithuong_obj);
+            ->with('current_giaithuong_obj', $current_giaithuong_obj)->with('secret_value_admin', $secret_value_admin);
     }
 
     public function updatePrizeInControl (Request $request) {
@@ -236,10 +238,13 @@ class AdminController extends Controller
         $giaithuong_obj->thoi_gian_cho = $request->thoi_gian_cho;
         $giaithuong_obj->save();
 
+        $secret_value_admin = $this->createSecretValueAdmin($request->secret_value_admin);
+
         $data = Array(
             'ma_giai_thuong' => $giaithuong_obj->ma_giai_thuong,
             'ten_giai_thuong' => $giaithuong_obj->noi_dung,
-            'type' => 'begin'
+            'type' => 'begin',
+            'secret_value_admin' => $secret_value_admin
         );
         $options = array(
             'cluster' => 'ap1',
@@ -257,11 +262,21 @@ class AdminController extends Controller
         return response()->json(['success'=> 'Tất cả sẵn sàng', 'ma_giai_thuong' => $request->ma_giai_thuong]);
     }
 
-    public function playPrizeInControl ($id) {
-        if ($id != '') {
+    public function createSecretValueAdmin ($secret_value_admin) {
+        if(Session::has('secret_value_admin')) {
+            Session::forget('secret_value_admin');
+        }
+        Session::put('secret_value_admin', $secret_value_admin);
+        return $secret_value_admin;
+    }
+
+    public function playPrizeInControl (Request $request) {
+        if ($request->id != '') {
+            $secret_value_admin = $this->createSecretValueAdmin($request->secret_value_admin);
             $data = Array(
-                'ma_giai_thuong' => $id,
-                'type' => 'end'
+                'ma_giai_thuong' => $request->id,
+                'type' => 'end',
+                'secret_value_admin' => $secret_value_admin
             );
             $options = array(
                 'cluster' => 'ap1',
@@ -281,9 +296,11 @@ class AdminController extends Controller
         return response()->json(['error'=> 'Khởi động không thành công']);
     }
 
-    public function returnPrize () {
+    public function returnPrize (Request $request) {
+        $secret_value_admin = $this->createSecretValueAdmin($request->secret_value_admin);
         $data = Array(
-            'type' => 'returnprize'
+            'type' => 'returnprize',
+            'secret_value_admin' => $secret_value_admin
         );
         $options = array(
             'cluster' => 'ap1',
@@ -299,5 +316,13 @@ class AdminController extends Controller
 
         $pusher->trigger('NotificationEvent', 'send-message', $data);
         return response()->json(['success'=> 'Trở về danh sách giải thưởng thành công']);
+    }
+
+    public function updateSecretValue (Request $request) {
+        if(Session::has('secret_value')) {
+            Session::forget('secret_value');
+        }
+        Session::put('secret_value', $request->secret_value);
+        return back();
     }
 }
