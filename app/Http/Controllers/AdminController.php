@@ -76,21 +76,21 @@ class AdminController extends Controller
 
         if (($request->phan_loai_khach == 1 || $request->phan_loai_khach == 2 || $request->phan_loai_khach == 3) &&
             $request->ma_so_nhan_giai != '') {
-            return redirect()->route('admin')->with('error', 'Nếu đã chọn phân loại khách thì không thể chỉ định cụ thể khách cho giải' . $request->noi_dung)
-                ->with('ten_giai_thuong', $request->noi_dung);
+            return redirect()->back()->with('error', 'Nếu đã chọn phân loại khách thì không thể chỉ định cụ thể khách cho giải ' . $request->noi_dung)
+                ->with('ten_giai_thuong', $request->noi_dung)->with('ma_giai_thuong', $request->ma_giai_thuong);
         }
 
         if ($request->phan_loai_khach == '' && $request->ma_so_nhan_giai == '') {
-            return redirect()->route('admin')->with('error', 'Vui lòng nhập thông tin cụ thể khách sẽ nhận giải ' . $request->noi_dung)
-                ->with('ten_giai_thuong', $request->noi_dung);
+            return redirect()->back()->with('error', 'Vui lòng nhập thông tin cụ thể khách sẽ nhận giải ' . $request->noi_dung)
+                ->with('ten_giai_thuong', $request->noi_dung)->with('ma_giai_thuong', $request->ma_giai_thuong);
         }
 
         if ($request->ma_giai_thuong == '') {
             // them moi
             $request_data = $request->except('ma_giai_thuong');
             $giaithuong_obj = DanhSachGiaiThuong::create($request_data);
-            return redirect()->route('admin')->with('success', 'Thêm mới thành công ' . $giaithuong_obj->noi_dung)
-                ->with('ten_giai_thuong', $request->noi_dung);
+            return redirect()->back()->with('success', 'Thêm mới thành công ' . $giaithuong_obj->noi_dung)
+                ->with('ten_giai_thuong', $request->noi_dung)->with('ma_giai_thuong', $request->ma_giai_thuong);
         } else {
             // cap nhat
             $giaithuong_obj = DanhSachGiaiThuong::find($request->ma_giai_thuong);
@@ -104,8 +104,8 @@ class AdminController extends Controller
             $giaithuong_obj->da_nhan_giai = $request->da_nhan_giai;
             $giaithuong_obj->thoi_gian_cho = $request->thoi_gian_cho;
             $giaithuong_obj->save();
-            return redirect()->route('admin')->with('success', 'Cập nhật thành công ' . $giaithuong_obj->noi_dung)
-                ->with('ten_giai_thuong', $request->noi_dung);
+            return redirect()->back()->with('success', 'Cập nhật thành công ' . $giaithuong_obj->noi_dung)
+                ->with('ten_giai_thuong', $request->noi_dung)->with('ma_giai_thuong', $request->ma_giai_thuong);
         }
     }
 
