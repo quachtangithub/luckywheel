@@ -68,31 +68,38 @@
                             for="khach_chi_dinh">
                             Khách chỉ định
                         </label>
-                    </div></br>
+                    </div>
                     <div class="form-group">
                         <label for="ma_so_nhan_giai">Mã số khách chỉ định: </label>
                         <input class="form-control" name="ma_so_nhan_giai" id="ma_so_nhan_giai" 
                             value="{{$current_giaithuong_obj->ma_so_nhan_giai ?? ''}}" />
-                    </div></br>          
+                    </div>        
                     <div class="form-group">
                         <label for="ten_nguoi_nhan_giai">Tên khách chỉ định: </label>
                         <input class="form-control" name="ten_nguoi_nhan_giai" id="ten_nguoi_nhan_giai" 
                             value="{{$current_giaithuong_obj->ten_nguoi_nhan_giai ?? ''}}" />
-                    </div><br>          
+                    </div>       
                     <div class="form-group">
                         <label for="thoi_gian_cho">Thời gian quay số: </label>
                         <input class="form-control" name="thoi_gian_cho" id="thoi_gian_cho" 
                             value="{{$current_giaithuong_obj->thoi_gian_cho ?? ''}}" />
                     </div><br>
                     <div class="row">
-                        <div class="col-md-4 text-center">
-                            <button type="button" class="btn btn-warning" id="prestart">Khởi động</button>
+                        <div class="col-md-4 col-sm-4 col-xs-4 col-4 text-center">
+                            <button type="button" class="btn btn-warning circle_button" id="prestart">
+                                <div class="circle_button_label">Khởi động</div>
+                            </button>
                         </div>
-                        <div class="col-md-4 text-center">
-                            <button type="button" class="btn btn-danger" id="finish" data-id="{{$ds_giaithuong_item->ma_giai_thuong ?? ''}}">Bắt đầu</button>
+                        <div class="col-md-4 col-sm-4 col-xs-4 col-4 text-center">
+                            <button type="button" class="btn btn-danger circle_button" id="finish" 
+                                data-id="{{$ds_giaithuong_item->ma_giai_thuong ?? ''}}">
+                                <div class="circle_button_label">Bắt đầu</div>
+                            </button>
                         </div>
-                        <div class="col-md-4 text-center">
-                            <button type="button" class="btn btn-warning" id="returnprize">Danh sách</button>
+                        <div class="col-md-4 col-sm-4 col-xs-4 col-4 text-center">
+                            <button type="button" class="btn btn-warning circle_button" id="returnprize">
+                                <div class="circle_button_label">Danh sách</div>
+                            </button>
                         </div>
                     </div> 
                 </form>               

@@ -56,3 +56,16 @@ function createTextSearch (str) {
 function formatString(str) {
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, "d").replace(/Đ/g, "D");
 }
+
+function showHideDiv(ele) {
+    var srcElement = document.getElementById(ele);
+    if (srcElement != null) {
+        if (srcElement.style.display == "block") {
+            srcElement.style.display = 'none';
+        }
+        else {
+            srcElement.style.display = 'block';
+        }
+        return false;
+    }
+}

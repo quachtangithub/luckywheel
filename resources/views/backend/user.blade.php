@@ -49,12 +49,31 @@
                     </div>     
                 </div>
             </div>
-            <div class="content">
+            <div class="content">                
+                @php
+                    $error = false;
+                    $success = false;
+                    $ma_nguoi_dung = '';
+                    if (Session::get('ma_nguoi_dung')) {
+                        $ma_nguoi_dung = Session::get('ma_nguoi_dung');
+                        Session::forget('ma_nguoi_dung');
+                    }
+                @endphp
                 @if(Session::has('success'))
                     <div class="alert alert-success">
                         {{ Session::get('success') }}
                         @php
+                            $success = true;
                             Session::forget('success');
+                        @endphp
+                    </div>
+                @endif
+                @if(Session::has('errors'))
+                    <div class="alert alert-danger">
+                        {{ implode(', ', $errors->all(':message')) }}
+                        @php
+                            $error = true;
+                            Session::forget('errors');
                         @endphp
                     </div>
                 @endif
@@ -90,7 +109,9 @@
                     </div>
                     @foreach ($dsnguoidung_obj as $dsnguoidung_item)
                     <div class="col-md-3 item_user" data-user="{{strtoupper($dsnguoidung_item->ma_nguoi_dung . ' ' . $dsnguoidung_item->ten_nguoi_dung) ?? ''}}">
-                        <div class="item">
+                        <div class="item
+                            {{$error && $ma_nguoi_dung == $dsnguoidung_item->ma_nguoi_dung ? 'error_active' : ''}}
+                            {{$success && $ma_nguoi_dung == $dsnguoidung_item->ma_nguoi_dung ? 'success_active' : ''}}">
                             <form action="{{route('user')}}" method="POST">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="id_nguoi_dung" value="{{$dsnguoidung_item->id_nguoi_dung ?? ''}}" />
@@ -98,16 +119,10 @@
                                     <div class="col-md-4">
                                         <input class="form-control" name="ma_nguoi_dung" 
                                             value="{{$dsnguoidung_item->ma_nguoi_dung ?? ''}}" placeholder="Mã ..." />
-                                        @if ($errors->has('ma_nguoi_dung'))
-                                            <span class="text-danger">{{ $errors->first('ma_nguoi_dung') }}</span>
-                                        @endif
                                     </div>
                                     <div class="col-md-8">
                                         <input class="form-control" name="ten_nguoi_dung" 
-                                            value="{{$dsnguoidung_item->ten_nguoi_dung ?? ''}}" placeholder="Tên người dùng ..." />                                      
-                                        @if ($errors->has('ten_nguoi_dung'))
-                                            <span class="text-danger">{{ $errors->first('ten_nguoi_dung') }}</span>
-                                        @endif
+                                            value="{{$dsnguoidung_item->ten_nguoi_dung ?? ''}}" placeholder="Tên người dùng ..." /> 
                                     </div>
                                     <div class="col-md-10">
                                         <div class="form-group" style="display: flex;">
@@ -117,7 +132,7 @@
                                             &nbsp;&nbsp;<label for="loai_nguoi_dung_{{$dsnguoidung_item->id_nguoi_dung}}" class="form-check-label">Là nhân viên bệnh viện</label>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-12">
                                         <button type="submit" class="btn btn-warning btn-sm">Lưu</button>
                                         <button class="btn btn-danger btn-sm delete" onclick="delete_user({{$dsnguoidung_item->id_nguoi_dung ?? 0}})">
                                             <i class='fa fa-trash'></i>
@@ -127,7 +142,10 @@
                             </form>
                         </div>
                     </div>
-                    @endforeach
+                    @endforeach                   
+                    <div class="col-md-12">
+                        {!! $dsnguoidung_obj->links() !!}
+                    </div>
                 </div>
             </div>
         </div>

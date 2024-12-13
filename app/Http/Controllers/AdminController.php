@@ -159,7 +159,7 @@ class AdminController extends Controller
     }
 
     public function user () {        
-        $dsnguoidung_obj = DanhSachNguoiDung::orderBy('ma_nguoi_dung', 'asc')->get();
+        $dsnguoidung_obj = DanhSachNguoiDung::orderBy('ma_nguoi_dung', 'asc')->paginate(20);
         return view('backend.user')->with('dsnguoidung_obj', $dsnguoidung_obj);
     }
 
@@ -177,7 +177,8 @@ class AdminController extends Controller
             // them moi
             $request_data = $request->except('id_nguoi_dung');
             $dsnguoidung_obj = DanhSachNguoiDung::create($request_data);
-            return redirect()->route('user')->with('success', 'Thêm mới thành công ' . $dsnguoidung_obj->ma_nguoi_dung . ' - ' . $dsnguoidung_obj->ten_nguoi_dung);
+            return redirect()->back()->with('success', 'Thêm mới thành công ' . $dsnguoidung_obj->ma_nguoi_dung . ' - ' . $dsnguoidung_obj->ten_nguoi_dung)
+                ->with('ma_nguoi_dung', $dsnguoidung_obj->ma_nguoi_dung);
         } else {
             // cap nhat
             $dsnguoidung_obj = DanhSachNguoiDung::find($request->id_nguoi_dung);
@@ -185,7 +186,8 @@ class AdminController extends Controller
             $dsnguoidung_obj->ten_nguoi_dung = $request->ten_nguoi_dung;
             $dsnguoidung_obj->loai_nguoi_dung = $request->loai_nguoi_dung == 1 ? 1 : 0;
             $dsnguoidung_obj->save();
-            return redirect()->route('user')->with('success', 'Cập nhật thành công ' . $dsnguoidung_obj->ma_nguoi_dung . ' - ' . $dsnguoidung_obj->ten_nguoi_dung);
+            return redirect()->back()->with('success', 'Cập nhật thành công ' . $dsnguoidung_obj->ma_nguoi_dung . ' - ' . $dsnguoidung_obj->ten_nguoi_dung)
+                ->with('ma_nguoi_dung', $dsnguoidung_obj->ma_nguoi_dung);
         }
     }
 
@@ -217,7 +219,7 @@ class AdminController extends Controller
             $id = $current_giaithuong_obj->ma_giai_thuong;
         }
         $secret_value_admin = Session::get('secret_value_admin');
-        return view('frontend.prize')->with('ds_giaithuong_obj', $ds_giaithuong_obj)->with('ma_giai_thuong', $id)
+        return view('backend.prize')->with('ds_giaithuong_obj', $ds_giaithuong_obj)->with('ma_giai_thuong', $id)
             ->with('current_giaithuong_obj', $current_giaithuong_obj)->with('secret_value_admin', $secret_value_admin);
     }
 

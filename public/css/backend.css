@@ -34,6 +34,11 @@ a{
     z-index: 1;
     position: relative;
     overflow-x: hidden;
+    padding: 1rem;
+    border: 0.01rem solid #ffbc21;
+    margin: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: inset 1px 1px 8px #818181;
 }
 
 .backend_container .header {
@@ -44,12 +49,12 @@ a{
 }
 
 .backend_container .header .item {
-    background-color: #961f3b;
-    color: #fff;
-    padding: 0.5rem;
+    background-color: #ffffff;
+    color: #cfcfcf;
+    padding: 0.3rem;
     border-radius: 0.5rem;
     box-shadow: 1px 1px 8px #000000;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
 .backend_container .header .item .inside_item {
@@ -58,17 +63,19 @@ a{
     padding: 0.1rem;
     cursor: pointer;
     text-decoration: none;
-    color: #ffffff;
+    color: #727272;
     width: 100%;
     display: block;
+    font-weight: 600;
+    font-family: system-ui;
 }
 
 .backend_container .header .item .inside_item.active {
     border: 0.01rem solid #fff;
     border-radius: 0.5rem;
     padding: 0.1rem;
-    background-color: #fff;
-    color: #961f3b;
+    background-color: #ffbc21;
+    color: #ffffff;
 }
 
 .background-image {
@@ -103,20 +110,25 @@ a{
 }
 
 .content .item button {
-    width: 100%;
-    color: #961f3b;
+    width: fit-content;
+    color: #4a4a4a;
     font-size: 1rem;
     font-weight: 600;
-    padding: 0.3rem;
+    padding: 0.15rem 3rem;
+    background-color: #cbcbcb;
+    border-color: #cdcdcd;
+    margin-top: 1rem;
+    box-shadow: 1px 1px 2px #707070;
 }
 
 .content .title {
     font-size: 1.2rem;
-    background-color: #961f3b;
+    background-color: #f5f5f5;
     padding: 0.3rem 1rem;
-    color: #fff;
+    color: #464646;
     border-radius: 0.5rem;
     margin-bottom: 0.5rem;
+    box-shadow: inset 1px 1px 3px #838383;
 }
 
 .form-check-input {
@@ -124,8 +136,8 @@ a{
 }
 
 .form-check-input:checked {
-    background-color: #961f3b !important;
-    border-color: #961f3b !important;
+    background-color: #afafaf !important;
+    border-color: #858585 !important;
 }
 
 .group_inside_item {
@@ -196,4 +208,14 @@ nav[role='navigation'] .flex-1 {
 
 .success_active {
     background-color: #d1e7dd !important;
+}
+
+.prize_hide_btn {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.prize_hide_btn:hover {
+    background-color: #ffcd39;
+    color: #fff;
 }

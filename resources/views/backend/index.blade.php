@@ -8,7 +8,8 @@
         <link rel="stylesheet" href="{{asset('public/css/backend.css')}}">
         <link href="{{asset('public/libs/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
         <script src="{{asset('public/libs/jquery/jquery.min.js')}}"></script>
-        <script src="{{asset('public/libs/bootstrap/js/bootstrap.min.js')}}"></script>
+        <script src="{{asset('public/libs/bootstrap/js/bootstrap.min.js')}}"></script>        
+        <script src="{{asset('public/js/backend.js')}}"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </head>
     <body>
@@ -110,20 +111,13 @@
                                                 <input class="form-control" name="noi_dung" value="" 
                                                 placeholder="Tên giải ... " />
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-6">
                                                 <input class="form-control" name="so_thu_tu" value="" 
-                                                    placeholder="Số thứ tự ... " />
+                                                    placeholder="STT ... " />
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <input type="checkbox" class="form-control form-check-input" 
-                                                        id="da_nhan_giai" name="da_nhan_giai" value="1">
-                                                    <label for="da_nhan_giai" class="form-check-label"> Đã nhận giải</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
                                                 <input class="form-control" name="thoi_gian_cho" value="" 
-                                                    placeholder="Thời gian chờ ... " />
+                                                    placeholder="Thời gian ... " />
                                             </div>
                                             <p style="margin-top: 1rem; border-bottom: 0.01rem solid #d7d7d7;">Cấu hình cụ thể khách</p>
                                             <div class="col-md-12">
@@ -222,10 +216,28 @@
                                                     </div>                                                   
                                                 </div>                                                
                                             </div>
+                                            <div class="col-md-6" style="padding: 0 0.3rem;">
+                                                <label for="so_thu_tu">Số thứ tự: </label>
+                                                <input class="form-control" name="so_thu_tu" id="so_thu_tu" 
+                                                    value="{{$giaithuong_item->so_thu_tu ?? ''}}" />
+                                            </div>
+                                            <div class="col-md-6" style="padding: 0 0.3rem;">
+                                                <label for="thoi_gian_cho">Thời gian: </label>
+                                                <input class="form-control" name="thoi_gian_cho" id="thoi_gian_cho" 
+                                                    value="{{$giaithuong_item->thoi_gian_cho ?? ''}}" />
+                                            </div>
                                             <div class="group_inside_item">
-                                                <span class="group_title">Thông tin thực lãnh</span>
+                                                <a class="prize_hide_btn group_title" onClick="showHideDiv('prize_{{$giaithuong_item->ma_giai_thuong ?? ''}}')">Thông tin thực lãnh</a>
                                                 <br>
-                                                <div class="row">
+                                                <div class="row prize_hide" id="prize_{{$giaithuong_item->ma_giai_thuong ?? ''}}" style="display: none;">
+                                                    <div class="col-md-12" style="padding: 0 0.3rem;">
+                                                        <div class="form-group" style="display: flex;">
+                                                            <input type="checkbox" class="form-control form-check-input" 
+                                                                id="da_nhan_giai" name="da_nhan_giai" value="1" 
+                                                                {{isset($giaithuong_item->da_nhan_giai) && $giaithuong_item->da_nhan_giai == 1 ? 'checked' : ''}}>
+                                                            <label for="" class="form-check-label"> &nbsp; Đã nhận giải </label>
+                                                        </div>
+                                                    </div>                        
                                                     <div class="col-md-4" style="padding: 0 0.3rem;">
                                                         <label for="ma_so_nhan_giai_thuc_te">Mã: </label>
                                                         <input class="form-control" name="ma_so_nhan_giai_thuc_te" 
@@ -239,24 +251,6 @@
                                                             value="{{$giaithuong_item->ten_nguoi_nhan_giai_thuc_te ?? ''}}" />
                                                     </div>
                                                 </div>                                                
-                                            </div>
-                                            <div class="col-md-4" style="padding: 0 0.3rem;">
-                                                <label for="so_thu_tu">Số thứ tự: </label>
-                                                <input class="form-control" name="so_thu_tu" id="so_thu_tu" 
-                                                    value="{{$giaithuong_item->so_thu_tu ?? ''}}" />
-                                            </div>
-                                            <div class="col-md-4" style="padding: 0 0.3rem;">
-                                                <div class="form-group">
-                                                    <label for="" class="form-check-label">Đã nhận: </label>
-                                                    <input type="checkbox" class="form-control form-check-input" 
-                                                        id="da_nhan_giai" name="da_nhan_giai" value="1" 
-                                                        {{isset($giaithuong_item->da_nhan_giai) && $giaithuong_item->da_nhan_giai == 1 ? 'checked' : ''}}>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4" style="padding: 0 0.3rem;">
-                                                <label for="thoi_gian_cho">Thời gian: </label>
-                                                <input class="form-control" name="thoi_gian_cho" id="thoi_gian_cho" 
-                                                    value="{{$giaithuong_item->thoi_gian_cho ?? ''}}" />
                                             </div>
                                             <div class="col-md-12 text-center" style="padding-top: 1rem 0.3rem;">
                                                 <button type="submit" class="btn btn-warning">Lưu</button>

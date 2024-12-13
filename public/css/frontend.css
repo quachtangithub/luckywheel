@@ -952,3 +952,24 @@ body, ::backdrop {
   color: #000; 
   text-align: center;
 }
+
+.circle_button {
+  background-color: #d30000 !important;
+  color: #fff !important;
+  aspect-ratio: 1;
+  width: 100%;
+  border-radius: 50% !important;
+  max-width: 8rem;
+}
+
+.circle_button_label {
+  border: 0.1rem solid #b90000;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  text-align: center;
+  align-items: center;
+  display: grid;
+  box-shadow: 1px 1px 7px #3e3e3e;
+  font-family: monospace;
+  font-size: 1.2rem;
+}
