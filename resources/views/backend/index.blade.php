@@ -18,6 +18,7 @@
         </div> -->
         
         <div class="backend_container">
+            @include('backend.background')
             @include('backend.logout')
             <div class="header">
                 <div class="row">                    
@@ -252,8 +253,12 @@
                                                     </div>
                                                 </div>                                                
                                             </div>
-                                            <div class="col-md-12 text-center" style="padding-top: 1rem 0.3rem;">
+                                            <div class="col-md-6 text-center" style="padding-top: 1rem 0.3rem;">
                                                 <button type="submit" class="btn btn-warning">Lưu</button>
+                                            </div>
+                                            <div class="col-md-6 text-center" style="padding-top: 1rem 0.3rem;">
+                                                <button type="button" class="btn btn-danger" style="background-color: #d10000 !important; color: #fff;"
+                                                    onclick="delete_prize({{$giaithuong_item->ma_giai_thuong ?? ''}})">Xóa</button>
                                             </div>
                                         </div>                                        
                                     </div>
@@ -267,7 +272,32 @@
                     </div>
                 </div>
             </div>
-        </div>
-       
+        </div>       
+        <script>
+            function delete_prize(id) {
+                if (confirm('Bạn có chắc muốn xóa giải thưởng này?')) {
+                    if (id == '') {
+                        alert('Dữ liệu không hợp lệ');
+                    } else {
+                        let url = "{{route('prize/delete',':id')}}";
+                        url = url.replace(':id', id);
+                        $.ajax({
+                            url: url,
+                            method: 'GET',
+                            contentType: false,
+                            processData: false,
+                            success: function(result){
+                                if (result.success) {
+                                    alert(result.success);
+                                    window.location.reload();
+                                } else if (result.errors) {
+                                    alert(result.errors);
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        </script>
     </body>
 </html>

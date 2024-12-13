@@ -159,7 +159,7 @@ class AdminController extends Controller
     }
 
     public function user () {        
-        $dsnguoidung_obj = DanhSachNguoiDung::orderBy('ma_nguoi_dung', 'asc')->paginate(20);
+        $dsnguoidung_obj = DanhSachNguoiDung::orderBy('ma_nguoi_dung', 'asc')->paginate(12);
         return view('backend.user')->with('dsnguoidung_obj', $dsnguoidung_obj);
     }
 
@@ -334,5 +334,10 @@ class AdminController extends Controller
         }
         Session::put('secret_value', $request->secret_value);
         return back();
+    }
+
+    public function deletePrize ($ma_giai_thuong) {
+        DanhSachGiaiThuong::find($ma_giai_thuong)->delete();
+        return response()->json(['success'=> 'Xóa giải thưởng thành công']);
     }
 }
