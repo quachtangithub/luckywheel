@@ -49,4 +49,4 @@
     });
 </script>
 <script src="{{asset('public/js/fireworks.js')}}"></script>
-<link rel="stylesheet" href="{{asset('public/css/congratulation.css')}}">
+<link rel="stylesheet" href="{{asset('public/css/prize.css')}}">
