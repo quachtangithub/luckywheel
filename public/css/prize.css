@@ -21,7 +21,7 @@
   height: 100%;
   align-items: center;
   display: block;
-  animation: animName 20s linear infinite;
+  animation: animName 50s linear infinite;
   filter: drop-shadow(2px 4px 50px #fff);
 }
 
