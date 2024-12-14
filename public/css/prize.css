@@ -251,4 +251,13 @@
       bottom: -30%;
     }
   }
+
+  .checkmark-circle {
+    width: 12rem;
+    height: 12rem;
+  }
+
+  .checkmark-circle img {
+    width: 12rem;
+  }
   
