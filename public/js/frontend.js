@@ -47,10 +47,12 @@ $(document).ready(function() {
     function toggle_fullscreen() {
         if (!document.fullscreenElement) {
             document.getElementById('secret_value').style.display = "none";
+            document.getElementById('group_btn_right').style.display = "none";
             document.body.requestFullscreen();
             document.body.setAttribute("fullscreen",""); 
         } else {
             document.getElementById('secret_value').style.display = "block";
+            document.getElementById('group_btn_right').style.display = "block";
             document.exitFullscreen();
             document.body.removeAttribute("fullscreen"); 
         }

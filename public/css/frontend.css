@@ -946,11 +946,12 @@ body, ::backdrop {
 }
 
 #secret_value {
-  padding: 0.3rem 0.5rem;
-  background-color: #ffffff5e;
+  padding: 0.1rem 0.5rem;
+  background-color: #ffffffde;
   box-shadow: 1px 1px 9px #000;
-  color: #000; 
+  color: #000;
   text-align: center;
+  border-radius: 3rem;
 }
 
 .circle_button {
@@ -972,4 +973,24 @@ body, ::backdrop {
   box-shadow: 1px 1px 7px #3e3e3e;
   font-family: monospace;
   font-size: 1.2rem;
+}
+
+.group_btn_right {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.3rem;
+}
+
+.group_btn_right a {
+  padding: 0.1rem 1rem;
+  border-radius: 1rem;
+  background-color: #ca0000 !important;
+  border: 0.1rem solid #760000 !important;
+  box-shadow: 1px 1px 4px #000;
+}
+
+.group_btn_right a:hover {
+  background-color: #ff9000 !important;
+  color: #ca0000;
 }

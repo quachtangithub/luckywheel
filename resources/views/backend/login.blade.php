@@ -34,6 +34,7 @@
                                     class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3"
                                     width="200px" alt="profile">
                             </div>
+                            <input type="hidden" name="redirect_url" value="{{$redirect_url ?? ''}}" />
                             <div class="mb-3">
                                 <input type="text" class="form-control" id="email" name="email" aria-describedby="emailHelp"
                                     placeholder="Tên đăng nhập ...">

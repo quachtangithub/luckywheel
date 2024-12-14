@@ -15,8 +15,8 @@ use Redirect;
 
 class AdminController extends Controller
 {
-    public function login () {
-        return view('backend.login');
+    public function login (Request $request) {        
+        return view('backend.login')->with('redirect_url', $request->rdr);
     }
 
     public function loginAdmin (Request $request) {
@@ -33,6 +33,9 @@ class AdminController extends Controller
             'password' => $request->password
         ];
         if (Auth::attempt($login)) {
+            if ($request->redirect_url != '') {
+                return redirect($request->redirect_url);
+            }
             return redirect('admin');
         } else {
             return redirect()->back()->with('status', 'Email hoặc Password không chính xác');

@@ -22,7 +22,8 @@ class CheckLogin
         if (Auth::check()) {
             return $next($request);
         } else {
-            return redirect('/login')->with('error','Bạn không có quyền');
+            $redirect_url = $request->url();
+            return redirect('/login?rdr=' . $redirect_url)->with('error','Bạn không có quyền');
         }
     }
 }

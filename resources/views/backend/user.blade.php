@@ -17,6 +17,7 @@
             <img src='{{asset("public/images/backend_background.png")}}' />
         </div> -->
         <div class="backend_container">
+            @include('backend.logout')
             <div class="header">
                 <div class="row">
                     <div class="col-md-3">
