@@ -38,7 +38,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="item">
-                            <a href="{{route('prize', 0)}}" class="inside_item">
+                            <a href="{{route('prize')}}" class="inside_item">
                                 ĐIỀU KHIỂN TRỰC TIẾP
                             </a>
                         </div>
@@ -226,6 +226,17 @@
                                                 <label for="thoi_gian_cho">Thời gian: </label>
                                                 <input class="form-control" name="thoi_gian_cho" id="thoi_gian_cho" 
                                                     value="{{$giaithuong_item->thoi_gian_cho ?? ''}}" />
+                                            </div>
+                                            <div class="col-md-12" style="padding: 0 0.3rem;">
+                                                <label for="trang_thai">Trạng thái</label>
+                                                <select class="form-control" name="trang_thai" id="trang_thai">
+                                                    <option value="1" {{$giaithuong_item->trang_thai == 1 ? 'selected' : ''}}>
+                                                        Đang sử dụng
+                                                    </option>
+                                                    <option value="0" {{$giaithuong_item->trang_thai == 0 ? 'selected' : ''}}>
+                                                        Ngừng sử dụng
+                                                    </option>
+                                                </select>
                                             </div>
                                             <div class="group_inside_item">
                                                 <a class="prize_hide_btn group_title" onClick="showHideDiv('prize_{{$giaithuong_item->ma_giai_thuong ?? ''}}')">Thông tin thực lãnh</a>

@@ -32,6 +32,8 @@
                     <div class="form-group">
                         <label for="ma_giai_thuong">Giải thưởng</label>
                         <select name="ma_giai_thuong" id="ma_giai_thuong" class="form-control">
+                            <option value="0"
+                                {{$ma_giai_thuong == 0 || $ma_giai_thuong == '' ? 'selected' : ''}}>THÊM MỚI GIẢI THƯỞNG</option>
                             @foreach ($ds_giaithuong_obj as $ds_giaithuong_item)
                             <option value="{{$ds_giaithuong_item->ma_giai_thuong ?? ''}}" 
                                 {{$ds_giaithuong_item->ma_giai_thuong == $ma_giai_thuong ? 'selected' : ''}}>
@@ -39,7 +41,20 @@
                             </option>
                             @endforeach
                         </select>
-                    </div><br>
+                    </div>
+                    @if ($ma_giai_thuong == 0 || $ma_giai_thuong == '')
+                        <div class="form-group">
+                            <label for="noi_dung">Tên giải cần thêm mới</label>
+                            <input class="form-control" id="noi_dung" 
+                                name="noi_dung" value="GIẢI THƯỞNG BỔ SUNG{{$name_count > 0 ? ' (' . $name_count. ')' : ''}}" />
+                        </div>
+                        <div class="form-group">
+                            <label for="so_thu_tu">Số thứ tự</label>
+                            <input class="form-control" id="so_thu_tu" 
+                                name="so_thu_tu" value="100" />
+                        </div>
+                    @endif
+                    <br>
                     <div class="form-group">
                         <input type="radio" class="form-check-input" id="tat_ca_khach" 
                             name="phan_loai_khach" value="1" {{$current_giaithuong_obj->phan_loai_khach == 1 ? 'checked': ''}}>
@@ -85,22 +100,30 @@
                             value="{{$current_giaithuong_obj->thoi_gian_cho ?? ''}}" />
                     </div><br>
                     <div class="row">
-                        <div class="col-md-4 col-sm-4 col-xs-4 col-4 text-center">
-                            <button type="button" class="btn btn-warning circle_button" id="prestart">
-                                <div class="circle_button_label">Khởi động</div>
-                            </button>
-                        </div>
-                        <div class="col-md-4 col-sm-4 col-xs-4 col-4 text-center">
-                            <button type="button" class="btn btn-danger circle_button" id="finish" 
-                                data-id="{{$ds_giaithuong_item->ma_giai_thuong ?? ''}}">
-                                <div class="circle_button_label">Bắt đầu</div>
-                            </button>
-                        </div>
-                        <div class="col-md-4 col-sm-4 col-xs-4 col-4 text-center">
-                            <button type="button" class="btn btn-warning circle_button" id="returnprize">
-                                <div class="circle_button_label">Danh sách</div>
-                            </button>
-                        </div>
+                        @if ($ma_giai_thuong == 0 || $ma_giai_thuong == '')
+                            <div class="col-md-5 col-sm-5 col-xs-5 col-5 text-center">
+                                <button type="button" class="btn btn-warning circle_button" id="prestart">
+                                    <div class="circle_button_label">Thêm mới giải</div>
+                                </button>
+                            </div>
+                        @else
+                            <div class="col-md-4 col-sm-4 col-xs-4 col-4 text-center">
+                                <button type="button" class="btn btn-warning circle_button" id="prestart">
+                                    <div class="circle_button_label">Khởi động</div>
+                                </button>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-4 col-4 text-center">
+                                <button type="button" class="btn btn-danger circle_button" id="finish" 
+                                    data-id="{{$ds_giaithuong_item->ma_giai_thuong ?? ''}}">
+                                    <div class="circle_button_label">Bắt đầu</div>
+                                </button>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-4 col-4 text-center">
+                                <button type="button" class="btn btn-warning circle_button" id="returnprize">
+                                    <div class="circle_button_label">Danh sách</div>
+                                </button>
+                            </div>
+                        @endif
                     </div> 
                 </form>               
             </div>
@@ -110,13 +133,12 @@
         $(document).ready(function() {
             $('select#ma_giai_thuong').on('change', function (e) {
                 var optionSelected = this.value;
-                var route = "{{route('prize', ':id')}}";
-                route = route.replace(':id', optionSelected);
+                var route = "{{route('prize')}}?ma_giai_thuong=" + optionSelected;
                 window.location.href = route;
             });
 
             $("#prestart").on('click', function(e) {
-                $('#alert').html('');
+                $('#thong_bao').html('');
                 e.preventDefault();
                 $.ajaxSetup({
                     headers: {
@@ -134,8 +156,7 @@
                     success: function(result) { 
                         if (result.success) {
                             alert(result.success);
-                            let redirect_url = "{{ route('prize', ':id')}}";
-                            redirect_url = redirect_url.replace(':id', result.ma_giai_thuong);
+                            let redirect_url = "{{ route('prize')}}?ma_giai_thuong=" + result.ma_giai_thuong;
                             window.location.href = redirect_url;
                         } else {
                             alert(result.error);
@@ -147,6 +168,7 @@
             $('#finish').on('click', function () {
                 let ma_giai_thuong = $(this).data('id');
                 if (confirm("Bạn có chắc muốn bắt đầu")) {
+                    $('#thong_bao').html('');
                     let secret_value_admin = $('#secret_value_admin').val();
                     let url = "{{route('play',':id')}}";
                     url = url.replace(':id', ma_giai_thuong);

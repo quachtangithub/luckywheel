@@ -36,7 +36,7 @@
                     </div>                    
                     <div class="col-md-3">
                         <div class="item">
-                            <a href="{{route('prize', 0)}}" class="inside_item">
+                            <a href="{{route('prize')}}" class="inside_item">
                                 ĐIỀU KHIỂN TRỰC TIẾP
                             </a>
                         </div>

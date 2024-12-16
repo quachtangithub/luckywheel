@@ -114,6 +114,7 @@ class AdminController extends Controller
             $giaithuong_obj->da_nhan_giai = $request->da_nhan_giai;
             $giaithuong_obj->thoi_gian_cho = $request->thoi_gian_cho;
             $giaithuong_obj->user_id = Auth::user()->id;
+            $giaithuong_obj->trang_thai = $request->trang_thai;
             $giaithuong_obj->save();
             return redirect()->back()->with('success', 'Cập nhật thành công ' . $giaithuong_obj->noi_dung)
                 ->with('ten_giai_thuong', $request->noi_dung)->with('ma_giai_thuong', $request->ma_giai_thuong);
@@ -214,16 +215,25 @@ class AdminController extends Controller
         $pusher->trigger('NotificationEvent', 'send-message', $data);
     }
 
-    public function getPrize ($id) {
+    public function getPrize (Request $request) {
         $ds_giaithuong_obj = DanhSachGiaiThuong::orderBy('so_thu_tu', 'asc')->get();
-        $current_giaithuong_obj = DanhSachGiaiThuong::find($id);
+        $ma_giai_thuong = $request->ma_giai_thuong;
+        $current_giaithuong_obj = DanhSachGiaiThuong::find($ma_giai_thuong);
+        $name_count = 0;
         if ($current_giaithuong_obj == null) {
-            $current_giaithuong_obj = DanhSachGiaiThuong::inRandomOrder()->first();
-            $id = $current_giaithuong_obj->ma_giai_thuong;
+            // $current_giaithuong_obj = DanhSachGiaiThuong::inRandomOrder()->first();
+            $current_giaithuong_obj = new DanhSachGiaiThuong();
+            $current_giaithuong_obj->ma_giai_thuong = 0;
+            $current_giaithuong_obj->noi_dung = 'updating';
+            $current_giaithuong_obj->phan_loai_khach = 1;
+            $current_giaithuong_obj->thoi_gian_cho = 15;
+            $ma_giai_thuong = 0;
+            $name_count = DanhSachGiaiThuong::where('noi_dung', 'LIKE', '%GIẢI THƯỞNG BỔ SUNG%')->count();
         }
         $secret_value_admin = Session::get('secret_value_admin');
-        return view('backend.prize')->with('ds_giaithuong_obj', $ds_giaithuong_obj)->with('ma_giai_thuong', $id)
-            ->with('current_giaithuong_obj', $current_giaithuong_obj)->with('secret_value_admin', $secret_value_admin);
+        return view('backend.prize')->with('ds_giaithuong_obj', $ds_giaithuong_obj)->with('ma_giai_thuong', $ma_giai_thuong)
+            ->with('current_giaithuong_obj', $current_giaithuong_obj)->with('secret_value_admin', $secret_value_admin)
+            ->with('name_count', $name_count);
     }
 
     public function updatePrizeInControl (Request $request) {
@@ -242,6 +252,21 @@ class AdminController extends Controller
 
         if ($request->phan_loai_khach == '' && $request->ma_so_nhan_giai == '') {
             return response()->json(['error'=> 'Vui lòng nhập thông tin cụ thể khách sẽ nhận giải', 'ma_giai_thuong' => $request->ma_giai_thuong]);
+        }
+
+        if ($request->ma_giai_thuong == 0 || $request->ma_giai_thuong == '') {
+            // them moi
+            $request_data = [];
+            $request_data['noi_dung'] = $request->noi_dung;
+            $request_data['so_thu_tu'] = $request->so_thu_tu;
+            $request_data['ma_so_nhan_giai'] = $request->ma_so_nhan_giai;
+            $request_data['ten_nguoi_nhan_giai'] = $request->ten_nguoi_nhan_giai;
+            $request_data['phan_loai_khach'] = $request->phan_loai_khach;
+            $request_data['thoi_gian_cho'] = $request->thoi_gian_cho;
+            $request_data['user_id'] = Auth::user()->id;
+
+            $giaithuong_themmoi_obj = DanhSachGiaiThuong::create($request_data);
+            return response()->json(['success'=> 'Thêm mới giải thành công', 'ma_giai_thuong' => $giaithuong_themmoi_obj->ma_giai_thuong]);
         }
 
         $giaithuong_obj = DanhSachGiaiThuong::find($request->ma_giai_thuong);

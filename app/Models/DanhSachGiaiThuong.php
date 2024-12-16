@@ -20,6 +20,7 @@ class DanhSachGiaiThuong extends Model
         'ten_nguoi_nhan_giai_thuc_te',
         'da_nhan_giai',
         'thoi_gian_cho',
-        'user_id'
+        'user_id',
+        'trang_thai'
     ];
 }

@@ -28,7 +28,8 @@ Route::group(['middleware' => ['CheckLogin']], function () {
     Route::post('/updatewinner', 'App\\Http\\Controllers\\AdminController@updateWinner')->name('updatewinner');
     Route::get('/getconfigwinner', 'App\\Http\\Controllers\\AdminController@getConfigWinner')->name('getconfigwinner');
 
-    Route::get('/prize/{id}', 'App\\Http\\Controllers\\AdminController@getPrize')->name('prize');
+    // Route::get('/prize/{id}', 'App\\Http\\Controllers\\AdminController@getPrize')->name('prize');
+    Route::get('/prize', 'App\\Http\\Controllers\\AdminController@getPrize')->name('prize');
     Route::get('/prize/delete/{id}', 'App\\Http\\Controllers\\AdminController@deletePrize')->name('prize/delete');
 
     Route::get('/testnotification/{id}', 'App\\Http\\Controllers\\AdminController@testnotification')->name('testnotification');

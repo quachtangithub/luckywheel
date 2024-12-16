@@ -90,7 +90,8 @@
             var channel = pusher.subscribe('NotificationEvent');
             channel.bind('send-message', function(data) {
                 if (secret_value == data.secret_value_admin) {
-                    if (data.type == 'begin') {
+                    if (data.type == 'begin') {   
+                        $('#resultModel').modal('hide'); 
                         $('.lucky_numbers .item').html('');
                         for (let i = 1; i <= 5; i++) {
                             document.getElementById('number_' + i).classList.remove('active');
@@ -106,8 +107,9 @@
                         });
                         document.getElementById('prize_' + magiaithuong).classList.add('item_active');
                         $('#start').show();
-                    } else if (data.type == 'end') {
-                        document.body.classList.add("backgroundAnimated");     
+                    } else if (data.type == 'end') {   
+                        $('#resultModel').modal('hide'); 
+                        document.body.classList.add("backgroundAnimated");  
                         audio.play();  
                         $('#start').hide();
                         getConfigWinner();
