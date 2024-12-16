@@ -646,7 +646,7 @@
   height: 90vh;
   overflow: scroll;
   overflow-x: hidden;
-  position: absolute;
+  position: relative;
 }
 
 .full_background {
