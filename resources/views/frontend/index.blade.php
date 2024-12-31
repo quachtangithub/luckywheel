@@ -48,8 +48,28 @@
             <div class="modal-dialog modal-dialog-centered full_modal_dialog" role="document">
                 <div id="congratulation"></div>
             </div>
+        </div>   
+        <div id="loading">
+            <div id="loading-content"></div>
         </div>
         <script>
+            function show_loading() {
+                $('#loading').addClass('loading');
+                $('#loading-content').addClass('loading-content');
+                $('html, body').css({
+                    'overflow': 'hidden',
+                    'height': '100%'
+                })
+            }
+
+            function hide_loading() {
+                $('#loading').removeClass('loading');
+                $('#loading-content').removeClass('loading-content');
+                $('html, body').css({
+                    'overflow': 'auto',
+                    'height': 'auto'
+                })
+            }
             $(document).ready(function() {
                 frameContainer();
                 $('form#secret_value_form').each(function() {
@@ -63,6 +83,7 @@
             });
             
             function frameContainer () {
+                show_loading();
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -77,6 +98,7 @@
                     processData: false,
                     success: function(result){     
                         $('#frame_data').html(result);    
+                        hide_loading();
                     }
                 });
             }
