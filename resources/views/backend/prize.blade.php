@@ -116,13 +116,13 @@
                                 </button>
                             </div>
                             <div class="col-md-3 col-sm-3 col-xs-3 col-3 text-center">
-                                <button type="button" class="btn btn-danger circle_button" id="finish" 
+                                <button type="button" class="btn btn-danger circle_button" id="finish" style="display: none;" 
                                     data-id="{{$ds_giaithuong_item->ma_giai_thuong ?? ''}}">
                                     <div class="circle_button_label">Bắt đầu</div>
                                 </button>
                             </div>
                             <div class="col-md-3 col-sm-3 col-xs-3 col-3 text-center">
-                                <button type="button" class="btn btn-warning circle_button" id="stop_btn"
+                                <button type="button" class="btn btn-warning circle_button" id="stop_btn" style="display: none;"
                                     data-id="{{$ds_giaithuong_item->ma_giai_thuong ?? ''}}">
                                     <div class="circle_button_label">Dừng lại</div>
                                 </button>
@@ -192,9 +192,10 @@
                     processData: false,
                     success: function(result) { 
                         if (result.success) {
-                            // alert(result.success);
-                            let redirect_url = "{{ route('prize')}}?ma_giai_thuong=" + result.ma_giai_thuong;
-                            window.location.href = redirect_url;
+                            // // alert(result.success);
+                            // let redirect_url = "{{ route('prize')}}?ma_giai_thuong=" + result.ma_giai_thuong;
+                            // window.location.href = redirect_url;
+                            document.getElementById('finish').style.display ="block";
                         } else {
                             alert(result.error);
                         }
@@ -218,7 +219,10 @@
                         success: function(result){
                             if (result.success) {
                                 // alert(result.success);
-                                location.reload();
+                                // location.reload();       
+                                document.getElementById('prestart').style.display ="none";                         
+                                document.getElementById('finish').style.display ="none";                         
+                                document.getElementById('stop_btn').style.display ="block";
                             } else if (result.errors) {
                                 alert(result.error);
                             }
