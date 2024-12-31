@@ -2,7 +2,8 @@
 <div class="lucky_numbers">
     <div class="sub_title" id="tengiaithuong">VÒNG QUAY MAY MẮN</div>
     <div class="start_btn_group">
-        <a id="start" autofocus class="custom_animation_btn">BẮT ĐẦU</a>
+        <a id="start" autofocus class="custom_animation_btn">BẮT ĐẦU</a>        
+        <a id="stop" class="custom_animation_btn">Dừng lại</a>
     </div>
     
     <div class="row">

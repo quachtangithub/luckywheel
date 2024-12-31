@@ -34,10 +34,14 @@ Route::group(['middleware' => ['CheckLogin']], function () {
 
     Route::get('/testnotification/{id}', 'App\\Http\\Controllers\\AdminController@testnotification')->name('testnotification');
     Route::get('/play/{id}', 'App\\Http\\Controllers\\AdminController@playPrizeInControl')->name('play');
+    Route::get('/stop/{id}', 'App\\Http\\Controllers\\AdminController@stopPrizeInControl')->name('stop');
     Route::get('/returnprize', 'App\\Http\\Controllers\\AdminController@returnPrize')->name('returnprize');
     Route::post('/updateprizeincontrol', 'App\\Http\\Controllers\\AdminController@updatePrizeInControl')->name('updateprizeincontrol');
+    Route::post('/copyprizeincontrol', 'App\\Http\\Controllers\\AdminController@copyPrizeInControl')->name('copyprizeincontrol');
 
     Route::post('/secretvalue', 'App\\Http\\Controllers\\AdminController@updateSecretValue')->name('secretvalue');
 
     Route::get('/logout', 'App\\Http\\Controllers\\AdminController@logout')->name('logout');
+
+    Route::post('/import_user', 'App\\Http\\Controllers\\AdminController@importUser')->name('import_user');
 });

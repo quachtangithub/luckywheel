@@ -13,9 +13,6 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </head>
     <body>
-        <!-- <div class="background-image">
-            <img src='{{asset("public/images/backend_background.png")}}' />
-        </div> -->
         <div class="backend_container">
             @include('backend.logout')
             <div class="header">
@@ -81,15 +78,19 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="item">
+                            <div class="title">THÊM MỚI NGƯỜI DÙNG</div>
                             <form action="{{route('user')}}" method="POST">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="id_nguoi_dung" />
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <input class="form-control" name="ma_nguoi_dung" placeholder="Mã ..." />
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-6">
                                         <input class="form-control" name="ten_nguoi_dung" placeholder="Tên người dùng ..." />  
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input class="form-control" name="chuc_danh" placeholder="Chức danh ..." />
                                     </div>
                                     <div class="col-md-10">
                                         <div class="form-group" style="display: flex;">
@@ -105,8 +106,35 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <input class="form-control" name="user_search" id="user_search" placeholder="Tìm kiếm người dùng ..." />
+                    <div class="col-md-6">                        
+                        <div class="item">
+                            <div class="title">IMPORT TỪ EXCEL</div>
+                            <form action="{{route('import_user')}}" method="POST" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                <div class="form-group">
+                                    <label for="excel_import">File excel:</label>
+                                    <input type="file" name="import_user_file" class="form-control-file">
+                                </div>
+                                <div class="form-group">
+                                    <input type="radio" id="import_user_0" name="loai_nguoi_dung" value="0">
+                                    <label for="import_user_0">Khách bên ngoài</label> &nbsp; &nbsp; &nbsp;
+                                    <input type="radio" id="import_user_1" name="loai_nguoi_dung" value="1">
+                                    <label for="import_user_1">Nhân viên bệnh viện</label>
+                                </div>
+                                <input type="checkbox" id="delete_old_data" name="delete_old_data" value="1">
+                                <label for="delete_old_data"> Xóa dữ liệu cũ </label><br>
+                                <button class="btn btn-warning btn-sm" type="submit">Import danh sách người dùng</button> 
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <div style="width: 60%;
+                                margin: auto;
+                                margin-top: 2rem;">
+                            <label for="user_search">Tìm kiếm người dùng</label>
+                            <input class="form-control" name="user_search" id="user_search" 
+                                placeholder="Tìm kiếm người dùng ..." />
+                        </div>
                     </div>
                     @foreach ($dsnguoidung_obj as $dsnguoidung_item)
                     <div class="col-md-3 item_user" data-user="{{strtoupper($dsnguoidung_item->ma_nguoi_dung . ' ' . $dsnguoidung_item->ten_nguoi_dung) ?? ''}}">
@@ -117,13 +145,17 @@
                                 {{ csrf_field() }}
                                 <input type="hidden" name="id_nguoi_dung" value="{{$dsnguoidung_item->id_nguoi_dung ?? ''}}" />
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <input class="form-control" name="ma_nguoi_dung" 
                                             value="{{$dsnguoidung_item->ma_nguoi_dung ?? ''}}" placeholder="Mã ..." />
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-6">
                                         <input class="form-control" name="ten_nguoi_dung" 
                                             value="{{$dsnguoidung_item->ten_nguoi_dung ?? ''}}" placeholder="Tên người dùng ..." /> 
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input class="form-control" name="chuc_danh" 
+                                            value="{{$dsnguoidung_item->chuc_danh ?? ''}}" placeholder="Chức danh ..." /> 
                                     </div>
                                     <div class="col-md-10">
                                         <div class="form-group" style="display: flex;">

@@ -10,6 +10,7 @@ class DanhSachGiaiThuong extends Model
     protected $primaryKey = "ma_giai_thuong";
     protected $fillable = [
         'ma_giai_thuong',
+        'ma_giai_thuong_goc',
         'noi_dung',
         'hinh_anh',
         'so_thu_tu',

@@ -42,6 +42,9 @@
                             @endforeach
                         </select>
                     </div>
+                    @if ($ma_giai_thuong != 0 && $ma_giai_thuong != '')
+                        <button type="button" class="btn btn-danger btn-sm" id="copy_prize">Sao chép giải thưởng</button>
+                    @endif
                     @if ($ma_giai_thuong == 0 || $ma_giai_thuong == '')
                         <div class="form-group">
                             <label for="noi_dung">Tên giải cần thêm mới</label>
@@ -107,18 +110,24 @@
                                 </button>
                             </div>
                         @else
-                            <div class="col-md-4 col-sm-4 col-xs-4 col-4 text-center">
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-3 text-center">
                                 <button type="button" class="btn btn-warning circle_button" id="prestart">
                                     <div class="circle_button_label">Khởi động</div>
                                 </button>
                             </div>
-                            <div class="col-md-4 col-sm-4 col-xs-4 col-4 text-center">
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-3 text-center">
                                 <button type="button" class="btn btn-danger circle_button" id="finish" 
                                     data-id="{{$ds_giaithuong_item->ma_giai_thuong ?? ''}}">
                                     <div class="circle_button_label">Bắt đầu</div>
                                 </button>
                             </div>
-                            <div class="col-md-4 col-sm-4 col-xs-4 col-4 text-center">
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-3 text-center">
+                                <button type="button" class="btn btn-warning circle_button" id="stop_btn"
+                                    data-id="{{$ds_giaithuong_item->ma_giai_thuong ?? ''}}">
+                                    <div class="circle_button_label">Dừng lại</div>
+                                </button>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-3 text-center">
                                 <button type="button" class="btn btn-warning circle_button" id="returnprize">
                                     <div class="circle_button_label">Danh sách</div>
                                 </button>
@@ -131,6 +140,34 @@
        </div>
        <script>
         $(document).ready(function() {
+            $('#copy_prize').on('click', function(e) {
+                $('#thong_bao').html('');
+                e.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+                var formData = new FormData(document.getElementById('formData'));
+                var actionUrl = "{{route('copyprizeincontrol')}}";
+                $.ajax({
+                    type: "POST",
+                    url: actionUrl,
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(result) {
+                        if (result.success) {
+                            alert(result.success);
+                            let redirect_url = "{{ route('prize')}}?ma_giai_thuong=" + result.ma_giai_thuong;
+                            window.location.href = redirect_url;
+                        } else {
+                            alert(result.error);
+                        }
+                    }
+                });
+            });
+
             $('select#ma_giai_thuong').on('change', function (e) {
                 var optionSelected = this.value;
                 var route = "{{route('prize')}}?ma_giai_thuong=" + optionSelected;
@@ -155,7 +192,7 @@
                     processData: false,
                     success: function(result) { 
                         if (result.success) {
-                            alert(result.success);
+                            // alert(result.success);
                             let redirect_url = "{{ route('prize')}}?ma_giai_thuong=" + result.ma_giai_thuong;
                             window.location.href = redirect_url;
                         } else {
@@ -180,7 +217,32 @@
                         processData: false,
                         success: function(result){
                             if (result.success) {
-                                alert(result.success);
+                                // alert(result.success);
+                                location.reload();
+                            } else if (result.errors) {
+                                alert(result.error);
+                            }
+                        }
+                    });
+                }
+            });
+
+            $('#stop_btn').on('click', function () {
+                let ma_giai_thuong = $(this).data('id');
+                if (confirm("Bạn có chắc muốn hủy")) {
+                    $('#thong_bao').html('');
+                    let secret_value_admin = $('#secret_value_admin').val();
+                    let url = "{{route('stop',':id')}}";
+                    url = url.replace(':id', ma_giai_thuong);
+                    url = url + '?secret_value_admin=' + secret_value_admin;
+                    $.ajax({
+                        url: url,
+                        method: 'GET',
+                        contentType: false,
+                        processData: false,
+                        success: function(result){
+                            if (result.success) {
+                                // alert(result.success);
                                 location.reload();
                             } else if (result.errors) {
                                 alert(result.error);
@@ -201,7 +263,7 @@
                         processData: false,
                         success: function(result){
                             if (result.success) {
-                                alert(result.success);
+                                // alert(result.success);
                                 location.reload();
                             } else if (result.errors) {
                                 alert(result.error);

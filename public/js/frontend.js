@@ -5,12 +5,21 @@ var audio = new Audio(audio_url);
 var results = "";
 
 var number = 1;
+var allow_continue = false;
 $(document).ready(function() {
     $("#start").click(function() { 
+        allow_continue = true;
         document.body.classList.add("backgroundAnimated");     
-        audio.play();  
+        // audio.play();  
         $('#start').hide();
+        document.getElementById('stop').style.display = 'block';
         getConfigWinner();
+    });
+
+    $('#stop').click(function() {
+        allow_continue = false;
+        $('#resultModel').modal('hide'); 
+        frameContainer();
     });
 
     $('.list-group-item').on('click', function () {
@@ -96,7 +105,10 @@ function startRandom(number, started, duration_setting, winner_arr = []) {
     var output = $('#number_' + number);
     // load();
     var duration = 1000 * duration_setting;
-    let animationTimer = setInterval(function() {
+    var animationTimer = setInterval(function() {
+        if (allow_continue == false) {
+            clearInterval(animationTimer);
+        }
         let distance_time = Number(new Date().getTime() - started);
         if (distance_time >= duration) {
             let current_number = '';

@@ -107,13 +107,18 @@
                         });
                         document.getElementById('prize_' + magiaithuong).classList.add('item_active');
                         $('#start').show();
-                    } else if (data.type == 'end') {   
+                    } else if (data.type == 'end') {                        
+                        allow_continue = true; 
                         $('#resultModel').modal('hide'); 
                         document.body.classList.add("backgroundAnimated");  
-                        audio.play();  
+                        // audio.play();  
                         $('#start').hide();
                         getConfigWinner();
                     }   else if (data.type == 'returnprize') {
+                        $('#resultModel').modal('hide'); 
+                        frameContainer();
+                    } else if (data.type == 'stop') {
+                        allow_continue = false;
                         $('#resultModel').modal('hide'); 
                         frameContainer();
                     } 

@@ -13,10 +13,6 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </head>
     <body>
-        <!-- <div class="background-image">
-            <img src='{{asset("public/images/backend_background.png")}}' />
-        </div> -->
-        
         <div class="backend_container">
             @include('backend.background')
             @include('backend.logout')
@@ -99,7 +95,7 @@
                     </div>
                 @endif
                 <div class="row">
-                    <div class="col-lg-2 col-md- item_prize" style="padding: 0.1rem;">
+                    <div class="col-lg-2 col-md-2 item_prize" style="padding: 0.1rem;">
                         <div class="item">
                             <div class="title">THÊM MỚI GIẢI THƯỞNG</div>
                             <div class="inside_item">

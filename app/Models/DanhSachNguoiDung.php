@@ -12,6 +12,7 @@ class DanhSachNguoiDung extends Model
         'id_nguoi_dung',
         'ma_nguoi_dung',
         'ten_nguoi_dung',
-        'loai_nguoi_dung'
+        'loai_nguoi_dung',
+        'chuc_danh'
     ];
 }

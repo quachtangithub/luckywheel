@@ -12,6 +12,10 @@ use App\Models\DanhSachNguoiDung;
 use App\Notifications\LuckyWheelNotification;
 use Session;
 use Redirect;
+use File;
+use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet;
+use App\Imports\UserImport;
 
 class AdminController extends Controller
 {
@@ -188,11 +192,49 @@ class AdminController extends Controller
             $dsnguoidung_obj = DanhSachNguoiDung::find($request->id_nguoi_dung);
             $dsnguoidung_obj->ma_nguoi_dung = $request->ma_nguoi_dung;
             $dsnguoidung_obj->ten_nguoi_dung = $request->ten_nguoi_dung;
+            $dsnguoidung_obj->chuc_danh = $request->chuc_danh;
             $dsnguoidung_obj->loai_nguoi_dung = $request->loai_nguoi_dung == 1 ? 1 : 0;
             $dsnguoidung_obj->save();
             return redirect()->back()->with('success', 'Cập nhật thành công ' . $dsnguoidung_obj->ma_nguoi_dung . ' - ' . $dsnguoidung_obj->ten_nguoi_dung)
                 ->with('ma_nguoi_dung', $dsnguoidung_obj->ma_nguoi_dung);
         }
+    }
+
+    public function importUser (Request $request) {        
+        $request->validate([
+            'loai_nguoi_dung'=> 'required',
+            'import_user_file' => 'required|mimes:xlsx'
+        ], [
+            'loai_nguoi_dung.required' => 'Vui lòng chọn loại người dùng',
+            'import_user_file.required' => 'Vui lòng chọn tệp tin import',
+            'import_user_file.mimes' => 'Vui lòng chọn đúng loại tệp tin'
+        ]);
+        $file_name = '';
+        $ds_import = [];
+        if($request->import_user_file) {
+            $file_name = 'import_user_file.'.$request->import_user_file->extension();  
+            $request->import_user_file->move(public_path('import_excel'), $file_name);
+        }
+        if(File::exists(public_path('import_excel') . '/' . $file_name)) {
+            $import = new UserImport();
+            $excelData = Excel::toArray($import, public_path('import_excel') . '/' . $file_name);
+            if (isset($excelData[0])) {   
+                if ($request->delete_old_data == 1) {
+                    DanhSachNguoiDung::where('loai_nguoi_dung', $request->loai_nguoi_dung)->delete();
+                }           
+                foreach ($excelData[0] as $excelItem) {
+                    $request_data = Array(
+                        'ma_nguoi_dung' => $excelItem['ma_nv'],
+                        'ten_nguoi_dung' => $excelItem['ho_va_ten'],
+                        'loai_nguoi_dung' => $request->loai_nguoi_dung,
+                        'chuc_danh' => $excelItem['chuc_danh_cong_viec_vtvl']
+                    );
+                    $user_obj = DanhSachNguoiDung::create($request_data);
+                    $ds_import[] = $user_obj->ma_nguoi_dung . ' - ' . $user_obj->ten_nguoi_dung . ' (' . $user_obj->chuc_danh . ')';
+                }
+            }
+        }
+        return redirect()->back()->with('success', 'Import thành công ' . count($ds_import) . ' người dùng');
     }
 
     public function testnotification ($id) {
@@ -300,6 +342,66 @@ class AdminController extends Controller
         return response()->json(['success'=> 'Tất cả sẵn sàng', 'ma_giai_thuong' => $request->ma_giai_thuong]);
     }
 
+    public function copyPrizeInControl (Request $request) {
+        $request->validate([
+            'ma_giai_thuong'=>'required',
+            'ma_so_nhan_giai' => 'digits_between:0,9'
+        ], [
+            'ma_giai_thuong.required' => 'Bắt buộc nhập mã giải thưởng',
+            'ma_so_nhan_giai.digits_between' => 'Mã số nhận giải phải từ 0 đến 9'
+        ]);
+
+        if (($request->phan_loai_khach == 1 || $request->phan_loai_khach == 2 || $request->phan_loai_khach == 3) &&
+            $request->ma_so_nhan_giai != '') {
+            return response()->json(['error'=> 'Nếu đã chọn phân loại khách thì không thể chỉ định cụ thể khách cho giải', 'ma_giai_thuong' => $request->ma_giai_thuong]);
+        }
+
+        if ($request->phan_loai_khach == '' && $request->ma_so_nhan_giai == '') {
+            return response()->json(['error'=> 'Vui lòng nhập thông tin cụ thể khách sẽ nhận giải', 'ma_giai_thuong' => $request->ma_giai_thuong]);
+        }
+        // them moi
+        $secret_value_admin = $this->createSecretValueAdmin($request->secret_value_admin);
+        $giai_thuong = DanhSachGiaiThuong::find($request->ma_giai_thuong);
+        $ma_giai_thuong_goc = $giai_thuong->ma_giai_thuong_goc != '' ? $giai_thuong->ma_giai_thuong_goc : $giai_thuong->ma_giai_thuong;
+        $giai_thuong_goc = DanhSachGiaiThuong::find($ma_giai_thuong_goc);
+        if ($giai_thuong_goc != null) {
+            $count_giaithuong = DanhSachGiaiThuong::where('ma_giai_thuong_goc', $ma_giai_thuong_goc)->count();
+            $request_data = [];
+            $request_data['ma_giai_thuong_goc'] = $ma_giai_thuong_goc;
+            $request_data['noi_dung'] = $giai_thuong_goc->noi_dung . ' ' . ($count_giaithuong + 1);
+            $request_data['so_thu_tu'] = $giai_thuong_goc->so_thu_tu;
+            $request_data['ma_so_nhan_giai'] = '';
+            $request_data['ten_nguoi_nhan_giai'] = '';
+            $request_data['phan_loai_khach'] = $giai_thuong_goc->phan_loai_khach;
+            $request_data['thoi_gian_cho'] = $giai_thuong_goc->thoi_gian_cho;
+            $request_data['user_id'] =$giai_thuong_goc->user_id;
+    
+            $giaithuong_copy_obj = DanhSachGiaiThuong::create($request_data);            
+    
+            $data = Array(
+                'ma_giai_thuong' => $giaithuong_copy_obj->ma_giai_thuong,
+                'ten_giai_thuong' => $giaithuong_copy_obj->noi_dung,
+                'type' => 'begin',
+                'secret_value_admin' => $secret_value_admin
+            );
+            $options = array(
+                'cluster' => 'ap1',
+                'encrypted' => true
+            );
+    
+            $pusher = new Pusher(
+                env('PUSHER_APP_KEY'),
+                env('PUSHER_APP_SECRET'),
+                env('PUSHER_APP_ID'),
+                $options
+            );
+    
+            $pusher->trigger('NotificationEvent', 'send-message', $data);
+            return response()->json(['success'=> 'Tất cả sẵn sàng', 'ma_giai_thuong' => $giaithuong_copy_obj->ma_giai_thuong]);
+        }
+        return response()->json(['errors'=> 'Sao chép giải thưởng thất bại']);
+    }
+
     public function createSecretValueAdmin ($secret_value_admin) {
         if(Session::has('secret_value_admin')) {
             Session::forget('secret_value_admin');
@@ -332,6 +434,32 @@ class AdminController extends Controller
             return response()->json(['success'=> 'Bắt đầu thành công']);
         }
         return response()->json(['error'=> 'Khởi động không thành công']);
+    }
+
+    public function stopPrizeInControl (Request $request) {
+        if ($request->id != '') {
+            $secret_value_admin = $this->createSecretValueAdmin($request->secret_value_admin);
+            $data = Array(
+                'ma_giai_thuong' => $request->id,
+                'type' => 'stop',
+                'secret_value_admin' => $secret_value_admin
+            );
+            $options = array(
+                'cluster' => 'ap1',
+                'encrypted' => true
+            );
+    
+            $pusher = new Pusher(
+                env('PUSHER_APP_KEY'),
+                env('PUSHER_APP_SECRET'),
+                env('PUSHER_APP_ID'),
+                $options
+            );
+    
+            $pusher->trigger('NotificationEvent', 'send-message', $data);
+            return response()->json(['success'=> 'Dừng lại thành công']);
+        }
+        return response()->json(['error'=> 'Dừng lại không thành công']);
     }
 
     public function returnPrize (Request $request) {
