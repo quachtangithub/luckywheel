@@ -212,12 +212,12 @@ class AdminController extends Controller
         $file_name = '';
         $ds_import = [];
         if($request->import_user_file) {
-            $file_name = 'import_user_file.'.$request->import_user_file->extension();  
+            $file_name = time() . 'import_user_file.'.$request->import_user_file->extension();  
             $request->import_user_file->move(public_path('importexcel'), $file_name);
         }
-        if(File::exists(public_path('import_excel') . '/' . $file_name)) {
+        if(File::exists(public_path('importexcel') . '/' . $file_name)) {
             $import = new UserImport();
-            $excelData = Excel::toArray($import, public_path('import_excel') . '/' . $file_name);
+            $excelData = Excel::toArray($import, public_path('importexcel') . '/' . $file_name);
             if (isset($excelData[0])) {   
                 if ($request->delete_old_data == 1) {
                     DanhSachNguoiDung::where('loai_nguoi_dung', $request->loai_nguoi_dung)->delete();
