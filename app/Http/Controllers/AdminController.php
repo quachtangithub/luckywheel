@@ -213,7 +213,7 @@ class AdminController extends Controller
         $ds_import = [];
         if($request->import_user_file) {
             $file_name = 'import_user_file.'.$request->import_user_file->extension();  
-            $request->import_user_file->move(public_path('import_excel'), $file_name);
+            $request->import_user_file->move(public_path('importexcel'), $file_name);
         }
         if(File::exists(public_path('import_excel') . '/' . $file_name)) {
             $import = new UserImport();
