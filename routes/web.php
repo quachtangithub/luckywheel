@@ -16,6 +16,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/login', 'App\\Http\\Controllers\\AdminController@login')->name('login');
 Route::post('/login', 'App\\Http\\Controllers\\AdminController@loginAdmin')->name('login');
+Route::get('/clearcache', function() {
+    Artisan::call('view:clear');
+    Artisan::call('route:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    dd("Cache Clear All");
+});
 
 Route::group(['middleware' => ['CheckLogin']], function () {
     Route::get('/', 'App\\Http\\Controllers\\IndexController@index')->name('/');
